@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,14 +56,21 @@
     </ApplicationDefinition>
     <Compile Include="CommandHandler.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="NegativeConverter.cs" />
     <Compile Include="Views\AddNewCustomerDeposit.xaml.cs">
       <DependentUpon>AddNewCustomerDeposit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddNewDepositView.xaml.cs">
       <DependentUpon>AddNewDepositView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddNewManifest.xaml.cs">
+      <DependentUpon>AddNewManifest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddNewPTI.xaml.cs">
       <DependentUpon>AddNewPTI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewSchecule.xaml.cs">
+      <DependentUpon>AddNewSchecule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddNewSMU.xaml.cs">
       <DependentUpon>AddNewSMU.xaml</DependentUpon>
@@ -76,8 +84,14 @@
     <Compile Include="Views\CustomerDepositView.xaml.cs">
       <DependentUpon>CustomerDepositView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FlightView.xaml.cs">
+      <DependentUpon>FlightView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ManivestView.xaml.cs">
+      <DependentUpon>ManivestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PTIView.xaml.cs">
       <DependentUpon>PTIView.xaml</DependentUpon>
@@ -87,6 +101,12 @@
     </Compile>
     <Compile Include="Views\SMUView.xaml.cs">
       <DependentUpon>SMUView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplitSMUView.xaml.cs">
+      <DependentUpon>SplitSMUView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserManagementView.xaml.cs">
+      <DependentUpon>UserManagementView.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomeStyle.xaml">
       <SubType>Designer</SubType>
@@ -112,7 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddNewManifest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddNewPTI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewSchecule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,7 +160,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FlightView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ManivestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +181,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SMUView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplitSMUView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,6 +227,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BussinessLayer\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pexels1.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pexels2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\backAll.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

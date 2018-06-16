@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d" WindowState="Maximized"
+        mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
         Title="SMUView" Height="507.273" Width="820.455">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
@@ -35,11 +35,11 @@
                         <DataGridTextColumn MinWidth="120" Header="SMU Number" Binding="{Binding Code}"/>
                         <DataGridTextColumn Width="*" Header="Shiper" Binding="{Binding ShiperName}"/>
                         <DataGridTextColumn Width="*" Header="Reciever" Binding="{Binding RecieverName}"/>
-                        <DataGridTextColumn MinWidth="100" Header="Pcs" Binding="{Binding Pcs}"/>
-                        <DataGridTextColumn ElementStyle="{StaticResource RightCell}" MinWidth="100" Header="Weight" Binding="{Binding Weight,StringFormat={}{0:N2}}"/>
-                        <DataGridTextColumn ElementStyle="{StaticResource  RightCell }" MinWidth="120" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}"/>
-                        <DataGridTextColumn MinWidth="150" Header="Pcs" Binding="{Binding CreatedDate,StringFormat='dd MMMM yyyy HH:mm:ss'}"/>
-                        <DataGridCheckBoxColumn MinWidth="30" Header="Terkirim" Binding="{Binding IsSended}"/>
+                        <DataGridTextColumn MinWidth="50" Header="Pcs" ElementStyle="{StaticResource ResourceKey=RightCell}" Binding="{Binding Pcs}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource RightCell}" MinWidth="75" Header="Weight" Binding="{Binding Weight,StringFormat={}{0:N2}}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource  RightCell }" MinWidth="100" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}"/>
+                        <DataGridTextColumn Width="auto" Header="Tanggal" Binding="{Binding CreatedDate,StringFormat='dd MMMM yyyy'}"/>
+                        <DataGridCheckBoxColumn IsReadOnly="True" MinWidth="30" Header="Terkirim" Binding="{Binding IsSended}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>

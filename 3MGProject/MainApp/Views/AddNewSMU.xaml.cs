@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.DataModels;
+﻿using DataAccessLayer;
+using DataAccessLayer.DataModels;
 using DataAccessLayer.Models;
 using Ocph.DAL;
 using System;
@@ -80,6 +81,7 @@ namespace MainApp.Views
 
         private bool SaveValidate(object obj)
         {
+            SMUCode = CodeGenerate.SMU(CodeGenerate.GetNewSMUNumber().Result);
             if(Source.Where(O=>O.IsSended).Count()>0)
               return true;
             return false;
@@ -120,6 +122,17 @@ namespace MainApp.Views
             }
             SourceView.Refresh();
         }
+
+
+
+        private string smucode;
+
+        public string SMUCode
+        {
+            get { return smucode; }
+            set { SetProperty(ref smucode, value); }
+        }
+
     }
 
 

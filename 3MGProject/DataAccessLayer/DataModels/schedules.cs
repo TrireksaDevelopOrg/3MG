@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("schedules")]
-    internal class schedules :BaseNotify  
+    public class schedules :BaseNotify  
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -62,7 +62,7 @@ using Ocph.DAL;
           } 
 
           [DbColumn("Complete")] 
-          public string Complete 
+          public bool Complete 
           { 
                get{return _complete;} 
                set{ 
@@ -71,17 +71,39 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("PortId")] 
-          public int PortId 
+          [DbColumn("PortFrom")] 
+          public int PortFrom 
           { 
                get{return _portid;} 
                set{ 
 
                     SetProperty(ref _portid, value);
                      }
-          } 
+          }
 
-          [DbColumn("CreatedDate")] 
+        [DbColumn("PortTo")]
+        public int PortTo
+        {
+            get { return _portTo; }
+            set
+            {
+
+                SetProperty(ref _portTo, value);
+            }
+        }
+
+
+        private double _capacities;
+
+        [DbColumn("Capasities")]
+        public double Capacities
+        {
+            get { return _capacities; }
+            set { SetProperty(ref _capacities , value); }
+        }
+
+
+        [DbColumn("CreatedDate")] 
           public DateTime CreatedDate 
           { 
                get{return _createddate;} 
@@ -89,17 +111,20 @@ using Ocph.DAL;
 
                     SetProperty(ref _createddate, value);
                      }
-          } 
+          }
 
-          private int  _id;
+        public virtual string User { get; set; }
+
+        private int  _id;
            private DateTime  _tanggal;
            private TimeSpan  _start;
            private TimeSpan  _end;
            private int  _planeid;
-           private string  _complete;
+           private bool  _complete;
            private int  _portid;
            private DateTime  _createddate;
-      }
+        private int _portTo;
+    }
 }
 
 

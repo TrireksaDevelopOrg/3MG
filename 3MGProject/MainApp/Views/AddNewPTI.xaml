@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource WindowKey}"
         mc:Ignorable="d"  WindowState="Maximized" Title="Tambah PTI" Height="650" Width="800">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -51,32 +51,33 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="0">
                     <Label HorizontalAlignment="Right" Content="Nama"/>
+                    <Label Height="76" HorizontalAlignment="Right" Content="Alamat"/>
                     <Label HorizontalAlignment="Right" Content="HandPhone"/>
                     <Label HorizontalAlignment="Right" Content="Telepon"/>
-                    <Label HorizontalAlignment="Right" Content="Alamat"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <TextBox Text="{Binding Shiper.Name}" Name="shiper" KeyDown="shiper_KeyDown" ></TextBox>
+                    <TextBox Text="{Binding Shiper.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="76" ></TextBox>
                     <TextBox Text="{Binding Shiper.Handphone}" ></TextBox>
                     <TextBox Text="{Binding Shiper.Phone1}" ></TextBox>
-                    <TextBox Text="{Binding Shiper.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="76" ></TextBox>
-                </StackPanel>
+                   </StackPanel>
 
                 <StackPanel Grid.Row="2">
                     <Label FontSize="14" FontWeight="Bold" Content="Penerima" Height="38"></Label>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0">
                     <Label HorizontalAlignment="Right" Content="Nama"/>
+                    <Label Height="76" HorizontalAlignment="Right" Content="Alamat"/>
                     <Label HorizontalAlignment="Right" Content="HandPhone"/>
                     <Label HorizontalAlignment="Right" Content="Telepon"/>
-                    <Label HorizontalAlignment="Right" Content="Alamat"/>
+                   
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="2">
                     <TextBox Text="{Binding Reciever.Name}"></TextBox>
+                    <TextBox Text="{Binding Reciever.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="76" ></TextBox>
                     <TextBox Text="{Binding Reciever.Handphone}" ></TextBox>
                     <TextBox Text="{Binding Reciever.Phone1}" ></TextBox>
-                    <TextBox Text="{Binding Reciever.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="76" ></TextBox>
-                </StackPanel>
+                  </StackPanel>
 
 
             </Grid>
@@ -87,7 +88,7 @@
                 <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
                 <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
                 <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>
-                <DataGridTextColumn Binding="{Binding Biaya,StringFormat={}{0:N2}}" Width="*" Header="Biaya"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Biaya,StringFormat={}{0:N2}}" Width="*" Header="Biaya"/>
             </DataGrid.Columns>
         </DataGrid>
         <Border Margin="5"  BorderThickness="0.5" BorderBrush="#FF176BB2" Grid.Row="2" Grid.ColumnSpan="2">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ocph.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-  public  class PTI
+  public  class PTI:BaseNotify
     {
         private string _code;
+        private int _shiperid;
+        private int _reciever;
 
         public int Id { get; set; }
         public int PTINumber { get; set; }
@@ -16,6 +19,27 @@ namespace DataAccessLayer.Models
             get { return CodeGenerate.PTI(PTINumber); }
             set {
                 _code = value;
+            }
+        }
+
+        public int ShiperID
+        {
+            get { return _shiperid; }
+            set
+            {
+
+                SetProperty(ref _shiperid, value);
+            }
+        }
+
+
+        public int RecieverId
+        {
+            get { return _reciever; }
+            set
+            {
+
+                SetProperty(ref _reciever, value);
             }
         }
         public string ShiperName{ get; set; }
@@ -32,6 +56,8 @@ namespace DataAccessLayer.Models
         public DateTime CreatedDate { get; set; }
         public PayType PayType { get; set; }
         public string UserId { get; set; }
+        public string User { get; set; }
+        public bool OnSMU { get; set; }
 
 
     }

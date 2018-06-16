@@ -109,9 +109,19 @@ using Ocph.DAL;
 
                     SetProperty(ref _createddate, value);
                      }
-          } 
+          }
 
-          private int  _id;
+        public virtual double SisaSaldo {
+            get { return sisa;}
+            set
+            {
+                SetProperty(ref sisa, value);
+            }
+
+
+        }
+
+        private int  _id;
            private string  _name;
            private string  _contactname;
            private string  _phone1;
@@ -120,7 +130,8 @@ using Ocph.DAL;
            private string  _address;
            private string  _email;
            private DateTime  _createddate;
-      }
+        private double sisa;
+    }
 }
 
 

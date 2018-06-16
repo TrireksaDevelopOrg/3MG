@@ -1,0 +1,57 @@
+﻿<Window x:Class="MainApp.Views.AddNewSchecule"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
+        Title="AddNewSchecule" Height="356.604" Width="327.434">
+    <Window.Resources>
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Height" Value="27"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+    </Window.Resources>
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="121*"/>
+                <ColumnDefinition Width="191*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="1">
+                <Label Content="Pesawat"/>
+                <Label Content="Kode"/>
+                <Label Content="Dari"/>
+                <Label Content="Tujuan"/>
+                <Label Content="Berangkat"/>
+                <Label Content="Tiba"/>
+                <Label Content="Kapasitas"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <ComboBox SelectedItem="{ Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
+                          SelectedValuePath="Id" DisplayMemberPath="Name"                          
+                          ItemsSource="{Binding PlanesView}" />
+                <Label Content="{Binding PlaneSelected.Kode}"/>
+                <ComboBox SelectedItem="{ Binding OriginSelected}" SelectedValue="{Binding PortFrom}" 
+                          SelectedValuePath="Id" DisplayMemberPath="Name"  
+                          Name="origin" ItemsSource="{Binding Origins}"/>
+                <ComboBox SelectedItem="{ Binding DestinationSelected}" SelectedValue="{Binding PortTo}" 
+                          SelectedValuePath="Id" DisplayMemberPath="Name"   Name="destination" ItemsSource="{Binding Destinations}" />
+                <DatePickerTextBox Text="{Binding Start}"/>
+                <DatePickerTextBox Text="{Binding End}"/>
+                <TextBox Text="{Binding Capacities,StringFormat={}{0:N2}}"/>
+            </StackPanel>
+            <Border Margin="5"  BorderThickness="0.5" BorderBrush="#FF176BB2" Grid.Row="2" Grid.ColumnSpan="2">
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Command="{Binding SaveCommand}" Content="Simpan"></Button>
+                    <Button Command="{Binding CancelCommand}" Content="Batal"></Button>
+                </WrapPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

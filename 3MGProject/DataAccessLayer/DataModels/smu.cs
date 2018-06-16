@@ -22,7 +22,7 @@ using Ocph.DAL;
           } 
 
           [DbColumn("Kode")] 
-          public string Kode 
+          public int Kode 
           { 
                get{return _kode;} 
                set{ 
@@ -53,7 +53,7 @@ using Ocph.DAL;
 
 
         private int  _id;
-           private string  _kode;
+           private int _kode;
            private DateTime  _createddate;
       }
 }

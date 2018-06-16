@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
         Title="LoginView" Height="322" Width="292">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid Margin="10">
@@ -15,9 +15,9 @@
             </Grid.RowDefinitions>
             <Label Height="auto" FontSize="15" FontWeight="Bold" Content="Login"/>
             <StackPanel Margin="10" Grid.Row="1">
-                <Label Margin="5,0" Height="auto" FontSize="15" FontWeight="Bold" Content="User Name"/>
+                <Label Margin="5,0" Height="auto" FontSize="15"  Content="User Name"/>
                 <TextBox Margin="5,0" Text="{Binding UserName}"/>
-                <Label Height="auto" Margin="5,10,0,0" FontSize="15" FontWeight="Bold" Content="Password"/>
+                <Label Height="auto" Margin="5,10,0,0" FontSize="15" Content="Password"/>
                 <PasswordBox Name="password" PasswordChanged="password_PasswordChanged" Margin="5,0" Height="30"/>
             </StackPanel>
             <Border Grid.Row="2">

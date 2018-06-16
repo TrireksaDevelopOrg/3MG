@@ -33,8 +33,14 @@ namespace DataAccessLayer.DataModels
             }
         }
 
+        public virtual bool Selected {
+            get { return _selected; }
+            set { SetProperty(ref _selected, value); }
+        }
+
         private int _id;
         private string _name;
+        private bool _selected;
     }
 
 }

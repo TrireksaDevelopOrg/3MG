@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d" WindowState="Maximized"
+        mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
         Title="PTIView" Height="450" Width="660">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
@@ -15,7 +15,7 @@
             </Grid.RowDefinitions>
             <Border Style="{StaticResource BorderLayoutStyle}">
                 <Grid>
-                    <StackPanel HorizontalAlignment="Right">
+                    <StackPanel HorizontalAlignment="Left">
                         <WrapPanel>
                             <Label Content="Dari" Width="75"/>
                             <DatePicker SelectedDate="{Binding StartDate}" Height="35" Margin="5" Width="150"/>
@@ -25,20 +25,21 @@
                             <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="35"/>
                         </WrapPanel>
                     </StackPanel>
-                    <Button Command="{Binding AddNewPTICommand}" Height="60" Width="120" Content="Tambah PTI" HorizontalAlignment="Left"/>
+                    <Button Command="{Binding AddNewPTICommand}" Height="60" Width="120" Content="Tambah PTI" HorizontalAlignment="Right"/>
                 </Grid>
                 
             </Border>
             <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
                 <DataGrid ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Code}" Header="Number" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding Code}" Header="Number" MinWidth="100" Width="auto"/>
                         <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding Weight}" Header="Weight" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding CreatedDate}" Header="Tanggal" Width="*"/>
-                        <DataGridTextColumn Binding="{Binding UserId}" Header="Dibuat Oleh" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*" />
+                        <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" MinWidth="50" Width="auto" ElementStyle="{StaticResource RightCell}"/>
+                        <DataGridTextColumn Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Weight" MinWidth="75" ElementStyle="{StaticResource RightCell}"/>
+                        <DataGridTextColumn Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}" Header="Tanggal" MinWidth="110" />
+                        <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding OnSMU}" Header="On SMU" Width="auto"/>
+                        <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
                     </DataGrid.Columns>
                     <DataGrid.ContextMenu>
                         <ContextMenu>

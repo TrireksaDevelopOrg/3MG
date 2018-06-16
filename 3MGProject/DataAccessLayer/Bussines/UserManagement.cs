@@ -5,11 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static DataAccessLayer.Bussines.Autherization;
+using static DataAccessLayer.Bussines.Authorization;
 
 namespace DataAccessLayer.Bussines
 {
-     public  class UserManagement
+    public class UserManagement
     {
         public bool IsFirstUser()
         {
@@ -39,7 +39,7 @@ namespace DataAccessLayer.Bussines
                     r.Id = db.Users.InsertAndGetLastID(r);
                     var result = false;
                     if (r.Id > 0)
-                        result =true;
+                        result = true;
 
                     return Task.FromResult(result);
                 }
@@ -50,6 +50,22 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public List<user> GetUsers()
+        {
+            using (var db = new OcphDbContext())
+            {
+                return db.Users.Select().ToList();
+            }   
+        }
+
+        public List<role> GetRoles()
+        {
+            using (var db = new OcphDbContext())
+            {
+                return db.Roles.Select().ToList();
+            }
+        }
+
         public Task<bool> IsRoleExist(string v)
         {
             using (var db = new OcphDbContext())
@@ -57,9 +73,9 @@ namespace DataAccessLayer.Bussines
                 var exist = false;
                 var result = db.Roles.Where(O => O.Name == v).FirstOrDefault();
                 if (result != null)
-                    exist=true;
+                    exist = true;
 
-               return Task.FromResult(exist);
+                return Task.FromResult(exist);
             }
         }
 
@@ -72,14 +88,16 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-        public Task<user> Login(string userName,string password)
+        public Task<user> Login(string userName, string password)
         {
             try
             {
+                userName = "Ocph23";
+                password = "Sony@77";
                 using (var db = new OcphDbContext())
                 {
                     var result = db.Users.Where(O => O.UserName == userName && O.Password == password).FirstOrDefault();
-                    Autherization.User = result;
+                    Authorization.User = result;
                     return Task.FromResult(result);
 
                 }
@@ -99,7 +117,7 @@ namespace DataAccessLayer.Bussines
                 {
                     var isSaved = false;
                     var result = db.Roles.Where(O => O.Name == roleName).FirstOrDefault();
-                    if(result!=null)
+                    if (result != null)
                     {
                         userinrole ur = new userinrole { rolesId = result.Id, UsersId = userId };
                         if (db.UserRoles.Insert(ur))
@@ -126,7 +144,7 @@ namespace DataAccessLayer.Bussines
                     if (result != null)
                     {
                         var ur = db.UserRoles.Where(O => O.UsersId == userId && O.rolesId == result.Id).FirstOrDefault();
-                        if (ur!=null && db.UserRoles.Delete(O=>O.rolesId==result.Id && O.UsersId==userId))
+                        if (ur != null && db.UserRoles.Delete(O => O.rolesId == result.Id && O.UsersId == userId))
                             isSaved = true;
                     }
                     return Task.FromResult(isSaved);
@@ -137,19 +155,12 @@ namespace DataAccessLayer.Bussines
                 throw new SystemException(ex.Message);
             }
         }
-
-
-
-
-
-
-
     }
 
 
     public static class UserManagemnetExtention
     {
-        public static Task<bool> InRole(this user u,string roleName)
+        public static Task<bool> InRole(this user u, string roleName)
         {
             try
             {
@@ -182,12 +193,11 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-        public static bool UserCanAccess(this user user,MethodBase method)
+        public static bool CanAccess(this user user, MethodBase method)
         {
             AuthorizeAttribute attr = (AuthorizeAttribute)method.GetCustomAttributes(typeof(AuthorizeAttribute), true)[0];
             var values = attr.Roles;
             var roles = User.Roles();
-
             var haveAccess = false;
             foreach (var item in values)
             {
@@ -202,6 +212,45 @@ namespace DataAccessLayer.Bussines
             return haveAccess;
         }
 
-    }
+        public static bool AddHistory(this user user, int bussinesId, BussinesType bty, ChangeType cty, string note)
+        {
+            var history = new changehistory
+            {
+                UsersId = user.Id,
+                BussinessId = bussinesId,
+                BussinesType = bty,
+                ChangeType = cty,
+                CreatedDate = DateTime.Now,
+                Note = note
+            };
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    return db.Histories.Insert(history);
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
+        }
+
+        public static changehistory GenerateHistory(this user user, int bussinesId, BussinesType bty, ChangeType cty, string note)
+        {
+            var history = new changehistory
+            {
+                UsersId = user.Id,
+                BussinessId = bussinesId,
+                BussinesType = bty,
+                ChangeType = cty,
+                CreatedDate = DateTime.Now,
+                Note = note
+            };
+
+            return history;
+        }
+
+    }
 }

@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp"
-        mc:Ignorable="d" WindowState="Maximized"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
+        Title="MainWindow" Height="564" Width="1007">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="150"></Setter>
+            <Setter Property="Height" Value="75"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -28,12 +34,13 @@
             </Label>
         </StackPanel>
         <WrapPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"  >
-            <Button Name="pti" Click="pti_Click" Margin="10" Height="100" Width="200" Content="PTI"/>
-            <Button Name="customer" Click="customer_Click" Margin="10" Height="100" Width="200" Content="CUSTOMER"/>
-            <Button Name="smu" Click="smu_Click" Margin="10" Height="100" Width="200" Content="SMU"/>
-            <Button Name="manifest"  Margin="10" Height="100" Width="200" Content="MANIFEST"/>
-            <Button Name="laporan" Click="" Margin="10" Height="100" Width="200" Content="LAPORAN"/>
-            <Button Name="userManage" Click="" Margin="10" Height="100" Width="200" Content="User Management"/>
+            <Button Name="pti" Click="pti_Click" Margin="10"  Content="PTI"/>
+            <Button Name="customer" Click="customer_Click" Margin="10" Content="CUSTOMER"/>
+            <Button Name="smu" Click="smu_Click" Margin="10" Content="SMU"/>
+            <Button Name="manifest" Click="manifest_Click"  Margin="10" Content="MANIFEST"/>
+            <Button Name="schedule" Click="schedule_Click"  Margin="10" Content="SCHEDULE"/>
+            <Button Name="laporan" Click="laporan_Click" Margin="10" Content="LAPORAN"/>
+            <Button Name="userManage" Click="userManage_Click" Margin="10" Content="User Management"/>
         </WrapPanel>
     </Grid>
 </Window>

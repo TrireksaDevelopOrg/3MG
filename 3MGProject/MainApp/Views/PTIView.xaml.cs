@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataAccessLayer;
+using DataAccessLayer.Bussines;
 
 namespace MainApp.Views
 {
@@ -120,8 +122,8 @@ namespace MainApp.Views
                     PTINumber = vm.PTINumber,
                     RecieverName = vm.Reciever.Name,
                     ShiperName = vm.Shiper.Name,
-                    Biaya = vm.Collies.Sum(O=>O.Biaya),
-                    UserId = ""
+                    Biaya = vm.Collies.Sum(O => O.Biaya),
+                    User = Authorization.User.Name
                 };
                 Source.Add(p);
             }

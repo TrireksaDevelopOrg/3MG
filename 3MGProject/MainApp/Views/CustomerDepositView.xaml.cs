@@ -1,19 +1,11 @@
 ﻿using DataAccessLayer.DataModels;
 using Ocph.DAL;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using DataAccessLayer.Models;
 
 namespace MainApp.Views
 {
@@ -39,6 +31,8 @@ namespace MainApp.Views
         public Action WindowClose { get; internal set; }
         public ObservableCollection<customer> Source { get; }
         public CollectionView SourceView { get; }
+
+
         public CommandHandler AddNewCustomerCommand { get; }
         public CommandHandler CancelCommand { get; }
         public CommandHandler AddNewDepositCommand { get; }
@@ -51,25 +45,54 @@ namespace MainApp.Views
             get { return _customer; }
             set {
                 SetProperty(ref _customer ,value);
-                try
+                if(value!=null)
                 {
-                    var datas = context.GetDepositsOfCustomer(value);
-                    DepositSource.Clear();
-                    foreach (var item in datas)
-                    {
-                        DepositSource.Add(item);
-                    }
-                    DepositViewSource.Refresh();
+                    LoadDataSelectedCustomer();
                 }
-                catch (Exception ex)
-                {
-                    Helpers.ShowErrorMessage(ex.Message);
-                }
+         
             }
         }
 
-        public ObservableCollection<deposit> DepositSource { get; }
+        private async void LoadDataSelectedCustomer()
+        {
+            try
+            {
+                await Task.Delay(200);
+                var datas = await context.GetDepositsOfCustomer(SelectedCustomer);
+                DepositSource.Clear();
+                foreach (var item in datas)
+                {
+                    DepositSource.Add(item);
+                }
+                DepositViewSource.Refresh();
+                DebetDepositGetData(SelectedCustomer.Id);
+                SelectedCustomer.SisaSaldo = await context.GetSisaSaldo(SelectedCustomer.Id);
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+        }
+
+        private async void DebetDepositGetData(int id)
+        {
+           var result= await context.GetDebetDeposit(id);
+            DebetDepositSource.Clear();
+            foreach(var item in result)
+            {
+                DebetDepositSource.Add(item);
+            }
+
+            DebetDepositViewSource.Refresh();
+        }
+
+       
+
+
+        public ObservableCollection<Deposit> DepositSource { get; }
         public CollectionView DepositViewSource { get; }
+        public ObservableCollection<DebetDeposit> DebetDepositSource { get; }
+        public CollectionView DebetDepositViewSource { get; }
 
         public CustomerDepositViewModel()
         {
@@ -82,10 +105,15 @@ namespace MainApp.Views
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             SourceView.Refresh();
 
-            DepositSource = new ObservableCollection<deposit>();
+            DepositSource = new ObservableCollection<Deposit>();
             DepositViewSource = (CollectionView)CollectionViewSource.GetDefaultView(DepositSource);
+
+            DebetDepositSource = new ObservableCollection<DebetDeposit>();
+            DebetDepositViewSource = (CollectionView)CollectionViewSource.GetDefaultView(DebetDepositSource);
+
             DepositViewSource.Refresh();
             RefreshCommand.Execute(null);
+            SelectedCustomer = null;
         }
 
         private void AddNewDepositCommandAction(object obj)
@@ -96,7 +124,7 @@ namespace MainApp.Views
             form.ShowDialog();
             if(viemodel.Saved)
             {
-                DepositSource.Add((deposit)viemodel);
+                DepositSource.Add((Deposit)viemodel);
             }
             DepositViewSource.Refresh();
         }

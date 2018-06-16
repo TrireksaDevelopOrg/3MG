@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.DataModels;
+using DataAccessLayer.Models;
 using Ocph.DAL;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace MainApp.Views
     }
 
 
-    public class AddNewDepositViewModel:deposit,IDataErrorInfo
+    public class AddNewDepositViewModel:Deposit,IDataErrorInfo
     {
         private string error;
 
@@ -51,7 +52,7 @@ namespace MainApp.Views
             var context = new DataAccessLayer.Bussines.DepositBussines();
             try
             {
-                var dep=(deposit)this;
+                var dep=(Deposit)this;
                 context.AddNewDeposit(dep);
                 Helpers.ShowMessage("Data Tersimpan");
                 this.Saved = true;

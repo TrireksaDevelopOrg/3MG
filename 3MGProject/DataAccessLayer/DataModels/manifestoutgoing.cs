@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("manifestoutgoing")]
-    internal class manifestoutgoing :BaseNotify  
+    public class manifestoutgoing :BaseNotify  
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -41,25 +41,6 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("OnOriginPort")] 
-          public DateTime OnOriginPort 
-          { 
-               get{return _onoriginport;} 
-               set{ 
-
-                    SetProperty(ref _onoriginport, value);
-                     }
-          } 
-
-          [DbColumn("OnDestinationPort")] 
-          public DateTime OnDestinationPort 
-          { 
-               get{return _ondestinationport;} 
-               set{ 
-
-                    SetProperty(ref _ondestinationport, value);
-                     }
-          } 
 
           [DbColumn("CreatedDate")] 
           public DateTime CreatedDate 
@@ -69,13 +50,24 @@ using Ocph.DAL;
 
                     SetProperty(ref _createddate, value);
                      }
-          } 
+          }
 
-          private int  _id;
+        private string codeManifest;
+
+        public string ManifestCode
+        {
+            get {
+                if (string.IsNullOrEmpty(codeManifest))
+                    codeManifest = CodeGenerate.Manifest(Code);
+                return codeManifest; }
+            set { SetProperty(ref codeManifest ,value); }
+        }
+
+        public string User { get; internal set; }
+
+        private int  _id;
            private int  _schedulesid;
            private int  _code;
-           private DateTime  _onoriginport;
-           private DateTime  _ondestinationport;
            private DateTime  _createddate;
       }
 }

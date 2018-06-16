@@ -5,28 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using MySql.Data.MySqlClient;
+using Ocph.DAL.Mapping;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Bussines
 {
-    public class CustomerBussiness : Autherization
+    public class CustomerBussiness : Authorization
     {
         public CustomerBussiness() : base(typeof(CustomerBussiness)) { }
 
 
-        [Authorize("Operational")]
         public List<customer> GetCustomersDeposites()
         {
-            if (User.UserCanAccess(MethodBase.GetCurrentMethod()))
+            using (var db = new OcphDbContext())
             {
-                using (var db = new OcphDbContext())
-                {
-                    CustomerType ct = CustomerType.Deposit;
-                    return db.Customers.Where(O => O.CustomerType == ct).ToList();
-                }
+                CustomerType ct = CustomerType.Deposit;
+                return db.Customers.Where(O => O.CustomerType == ct).ToList();
             }
-            else
-                throw new SystemException(NotHaveAccess);
-
         }
         
         public void AddNewCustomerDeposit(customer cust)
@@ -58,20 +54,68 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-        public List<deposit> GetDepositsOfCustomer(customer value)
+        public Task<List<Deposit>> GetDepositsOfCustomer(customer value)
         {
             try
             {
                 using (var db = new OcphDbContext())
                 {
-                    var datas = db.Deposit.Where(O => O.CustomerId == value.Id).ToList();
-                    return datas;
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "DepositOfCustomer";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("id", value.Id));
+                    var reader = cmd.ExecuteReader();
+                    var list = MappingProperties<Deposit>.MappingTable(reader);
+                    return Task.FromResult(list);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                return Task.FromResult(new List<Deposit>());
+            }
+        }
 
-                throw new SystemException(ex.Message);
+
+        public Task<double> GetSisaSaldo(int shiperID)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "CustomerSaldo";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("cusId", shiperID));
+                    var data = cmd.ExecuteScalar();
+                    double saldo = double.Parse(data.ToString());
+                    return Task.FromResult(saldo);
+                }
+            }
+            catch (Exception)
+            {
+                double res = 0;
+                return Task.FromResult(res);
+            }
+        }
+
+        public Task<List<DebetDeposit>> GetDebetDeposit(int id)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "CustomerDebetDeposit";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("id", id));
+                    var reader = cmd.ExecuteReader();
+                    var list = MappingProperties<DebetDeposit>.MappingTable(reader);
+                    return Task.FromResult(list);
+                }
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(new List<DebetDeposit>());
             }
         }
     }

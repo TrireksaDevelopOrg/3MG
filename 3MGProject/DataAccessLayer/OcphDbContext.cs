@@ -27,6 +27,13 @@ namespace DataAccessLayer
         internal IRepository<user> Users=> new Repository<user>(this);
         internal IRepository<role> Roles=> new Repository<role>(this);
         internal IRepository<userinrole> UserRoles=> new Repository<userinrole>(this);
+        internal IRepository<changehistory> Histories=> new Repository<changehistory>(this);
 
+        internal IRepository<city> Cities=> new Repository<city>(this);
+        internal IRepository<planes> Planes=> new Repository<planes>(this);
+        internal IRepository<ports> Ports=> new Repository<ports>(this);
+        internal IRepository<schedules> Schedules => new Repository<schedules>(this);
+        internal IRepository<manifestdetails> ManifestDetail => new Repository<manifestdetails>(this);
+        internal IRepository<manifestoutgoing> Manifest => new Repository<manifestoutgoing>(this);
     }
 }

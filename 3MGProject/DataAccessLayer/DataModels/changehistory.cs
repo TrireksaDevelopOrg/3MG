@@ -8,7 +8,7 @@ using Ocph.DAL;
 namespace DataAccessLayer.DataModels
 {
     [TableName("changehistory")]
-    internal class changehistory : BaseNotify
+    public class changehistory : BaseNotify
     {
         [PrimaryKey("Id")]
         [DbColumn("Id")]
@@ -23,7 +23,7 @@ namespace DataAccessLayer.DataModels
         }
 
         [DbColumn("BussinesType")]
-        public string BussinesType
+        public BussinesType BussinesType
         {
             get { return _bussinestype; }
             set
@@ -56,7 +56,7 @@ namespace DataAccessLayer.DataModels
         }
 
         [DbColumn("ChangeType")]
-        public string ChangeType
+        public ChangeType ChangeType
         {
             get { return _changetype; }
             set
@@ -89,10 +89,10 @@ namespace DataAccessLayer.DataModels
         }
 
         private int _id;
-        private string _bussinestype;
+        private BussinesType _bussinestype;
         private string _note;
         private int _bussinessid;
-        private string _changetype;
+        private ChangeType _changetype;
         private DateTime _createddate;
         private int _usersid;
     }

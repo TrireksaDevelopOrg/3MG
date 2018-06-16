@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("manifestdetails")]
-    internal class manifestdetails :BaseNotify  
+    public class manifestdetails :BaseNotify  
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -31,8 +31,8 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("SMU_Id")] 
-          public int SMU_Id 
+          [DbColumn("SMUId")] 
+          public int SMUId 
           { 
                get{return _smu_id;} 
                set{ 

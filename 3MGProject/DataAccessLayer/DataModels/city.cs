@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("city")]
-    internal class city :BaseNotify
+    public class city :BaseNotify
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 

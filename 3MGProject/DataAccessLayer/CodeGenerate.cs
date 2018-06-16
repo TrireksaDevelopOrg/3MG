@@ -20,7 +20,7 @@ namespace DataAccessLayer
 
         public static string Manifest(int number)
         {
-            return string.Format("{0:D10}", null);
+            return string.Format("{0:D10}", number);
         }
 
         public static Task<int> GetNewPTINumber()
@@ -31,11 +31,45 @@ namespace DataAccessLayer
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.CommandText = "NewPTINumber";
                 var data = cmd.ExecuteScalar();
-                var result = Int32.Parse(data.ToString());
+                int result = 0;
+                if (data != null)
+                    result = Int32.Parse(data.ToString());
                 result++;
                 return Task.FromResult(result);
             }
         }
 
+
+        public static Task<int> GetNewSMUNumber()
+        {
+            using (var db = new OcphDbContext())
+            {
+                var cmd = db.CreateCommand();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "NewSMUNumber";
+                var data = cmd.ExecuteScalar();
+                int result = 0;
+                if (data != null)
+                    result = Int32.Parse(data.ToString());
+                result++;
+                return Task.FromResult(result);
+            }
+        }
+
+        public static Task<int> GetNewManifestNumber()
+        {
+            using (var db = new OcphDbContext())
+            {
+                var cmd = db.CreateCommand();
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandText = "NewManifestNumber";
+                var data = cmd.ExecuteScalar();
+                int result = 0;
+                if (data != null)
+                    result = Int32.Parse(data.ToString());
+                result++;
+                return Task.FromResult(result);
+            }
+        }
     }
 }

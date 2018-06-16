@@ -109,7 +109,17 @@ using Ocph.DAL;
                      }
           }
 
-            public ObservableCollection<collies> Collies { get; set; }
+
+        private bool onSMU;
+        [DbColumn("OnSMU")]
+
+        public bool OnSMU
+        {
+            get { return onSMU; }
+            set { SetProperty(ref onSMU ,value); }
+        }
+
+        public ObservableCollection<collies> Collies { get; set; }
 
         public customer Shiper
         {
@@ -143,6 +153,8 @@ using Ocph.DAL;
             }
             set {SetProperty(ref _code ,value); }
         }
+
+
 
 
         private int  _ptinumber;

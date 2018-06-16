@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("ports")]
-    internal class ports :BaseNotify  
+    public class ports :BaseNotify  
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -41,8 +41,7 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("City")] 
-          public string City 
+          public virtual string City 
           { 
                get{return _city;} 
                set{ 
@@ -51,15 +50,6 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("portscol")] 
-          public string portscol 
-          { 
-               get{return _portscol;} 
-               set{ 
-
-                    SetProperty(ref _portscol, value);
-                     }
-          } 
 
           [DbColumn("CityId")] 
           public int CityId 
@@ -75,7 +65,6 @@ using Ocph.DAL;
            private string  _name;
            private string  _code;
            private string  _city;
-           private string  _portscol;
            private int  _cityid;
       }
 }

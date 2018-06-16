@@ -6,65 +6,83 @@ using Ocph.DAL.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Bussines
 {
-    public class PtiBussines
+    public class PtiBussines:Authorization
     {
+        public PtiBussines() : base(typeof(PtiBussines)) { }
+
+        [Authorize("Admin")]
         public void SaveChange(pti item)
         {
-     
+            DateTime da = DateTime.Now;
             using (var db = new OcphDbContext())
             {
                 var trans = db.BeginTransaction();
                 try
                 {
-                        if (item.Id <= 0)
+                    if (User.CanAccess(MethodBase.GetCurrentMethod()))
                     {
-                        if(item.Shiper.Id<=0)
+                        if (item.Id <= 0)
                         {
-                            item.ShiperID = db.Customers.InsertAndGetLastID(item.Shiper);
-                            item.Shiper.Id = item.ShiperID;
-                            if (item.ShiperID <= 0)
+                            if (item.Shiper.Id <= 0)
+                            {
+                                item.Shiper.CreatedDate = da;
+                                item.ShiperID = db.Customers.InsertAndGetLastID(item.Shiper);
+                                item.Shiper.Id = item.ShiperID;
+                                if (item.ShiperID <= 0)
+                                    throw new SystemException("Data Tidak Tersimpan");
+                                var his = User.GenerateHistory(item.ShiperID, BussinesType.Customer, ChangeType.Create, "");
+                                db.Histories.Insert(his);
+                            }
+                            else
+                                item.ShiperID = item.Shiper.Id;
+
+                            if (item.Reciever.Id <= 0)
+                            {
+                                item.Reciever.CreatedDate = da;
+                                item.RecieverId = db.Customers.InsertAndGetLastID(item.Reciever);
+                                item.Reciever.Id = item.RecieverId;
+                                if (item.RecieverId <= 0)
+                                    throw new SystemException("Data Tidak Tersimpan");
+                                var his = User.GenerateHistory(item.RecieverId, BussinesType.Customer, ChangeType.Create, "");
+                                db.Histories.Insert(his);
+                            }
+                            else
+                                item.RecieverId = item.Reciever.Id;
+
+
+                            
+                            item.Id = db.PTI.InsertAndGetLastID(item);
+                            if (item.Id <= 0)
                                 throw new SystemException("Data Tidak Tersimpan");
+
+
+                            foreach (var data in item.Collies)
+                            {
+                                data.PtiId = item.Id;
+                                data.Id = db.Collies.InsertAndGetLastID(data);
+                                if (data.Id <= 0)
+                                    throw new SystemException("Data Tidak Tersimpan");
+                            }
+
+                            var history = User.GenerateHistory(item.Id, BussinesType.PTI, ChangeType.Create, "");
+                            db.Histories.Insert(history);
+                            trans.Commit();
+
                         }
                         else
-                            item.ShiperID = item.Shiper.Id;
-
-                        if (item.Reciever.Id <= 0)
                         {
-                            item.RecieverId = db.Customers.InsertAndGetLastID(item.Reciever);
-                            item.Reciever.Id = item.RecieverId;
-                            if (item.RecieverId <= 0)
+                            item.Id = db.PTI.InsertAndGetLastID(item);
+                            if (item.Id < 0)
                                 throw new SystemException("Data Tidak Tersimpan");
                         }
-                        else
-                            item.RecieverId = item.Reciever.Id;
-
-                        item.Id = db.PTI.InsertAndGetLastID(item);
-                        if (item.Id <= 0)
-                            throw new SystemException("Data Tidak Tersimpan");
-
-
-                        foreach(var data in item.Collies)
-                        {
-                            data.PtiId = item.Id;
-                            data.Id = db.Collies.InsertAndGetLastID(data);
-                            if (data.Id <= 0)
-                                throw new SystemException("Data Tidak Tersimpan");
-                        }
-
-                        trans.Commit();
-
-                    }
-                    else
-                    {
-                        item.Id = db.PTI.InsertAndGetLastID(item);
-                        if (item.Id < 0)
-                            throw new SystemException("Data Tidak Tersimpan");
-                    }
+                    }else
+                    throw new SystemException(NotHaveAccess);
                 }
                 catch (Exception ex)
                 {

@@ -1,0 +1,64 @@
+﻿<Window x:Class="MainApp.Views.ManivestView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
+        Title="ManivestView" Height="450" Width="800">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{StaticResource BorderLayoutStyle}">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Left">
+                        <WrapPanel>
+                            <Label Content="Dari" Width="75"/>
+                            <DatePicker SelectedDate="{Binding StartDate}" Height="35" Margin="5" Width="150"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Sampai" Width="75"/>
+                            <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="35"/>
+                        </WrapPanel>
+                    </StackPanel>
+                    <Button Command="{Binding AddNewManifestCommand}" Height="60" Width="120" Content="Tambah Manifest" HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+            <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
+                <DataGrid ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ManifestCode}" Header="Nomor Manifest" />
+                        <DataGridTextColumn Binding="{Binding Tanggal}" Header="Tanggal" />
+                        <DataGridTextColumn Binding="{Binding PlaneName}" Header="Nama Pesawat" />
+                        <DataGridTextColumn Binding="{Binding PlaneCode}" Header="Kode Penerbangan" />
+                        <DataGridTextColumn Binding="{Binding OriginPortName}" Header="Asal" />
+                        <DataGridTextColumn Binding="{Binding OriginPortCode}" Header="Kode" />
+                        <DataGridTextColumn Binding="{Binding DestinationPortName}" Header="Tujuan" />
+                        <DataGridTextColumn Binding="{Binding DestinationPortCode}" Header="Kode" />
+                        <DataGridTextColumn Binding="{Binding Start}" Header="Berangkat" />
+                        <DataGridTextColumn Binding="{Binding End}" Header="Berangkat"/>
+                        <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding IsTakeOff}" Header="TakeOff" Width="auto"/>
+                        <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding Complete}" Header="Departed" Width="auto"/>
+                        <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Create SMU" Command="{Binding CreateSMU}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                </DataGrid>
+            </Border>
+            <Border Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Command="{Binding CancelCommand}"  Content="Close"/>
+                </WrapPanel>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

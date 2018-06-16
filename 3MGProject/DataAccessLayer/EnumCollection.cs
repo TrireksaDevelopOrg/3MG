@@ -35,4 +35,15 @@ namespace DataAccessLayer
     {
         Pria,Wanita
     }
+
+    public enum ChangeType
+    {
+        Create,Update,Delete
+    }
+
+    public enum BussinesType
+    {
+        Deposit, DebetDeposit, PTI, SMU, Manifest, Schedule, Invoice, Customer
+    }
+
 }

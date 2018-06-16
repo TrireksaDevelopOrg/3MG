@@ -5,13 +5,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.DataModels;
+using Ocph.DAL;
 
 namespace DataAccessLayer.Bussines
 {
-    public class Autherization
+    public class Authorization:BaseNotify
     {
 
-        public Autherization(Type member)
+        public Authorization(Type member)
         {
             var me = member.GetMethods();
 
