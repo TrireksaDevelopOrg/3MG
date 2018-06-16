@@ -4,9 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold" Height="auto" Content="TRIMG AIRLAINES" Background="{x:Null}">
+                <Label.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF509AB0" Offset="0"/>
+                        <GradientStop Color="#FF0C7C9C" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Foreground>
+            </Label>
+        </StackPanel>
+        <WrapPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"  >
+            <Button Name="pti" Click="pti_Click" Margin="10" Height="100" Width="200" Content="PTI"/>
+            <Button Name="customer" Click="customer_Click" Margin="10" Height="100" Width="200" Content="CUSTOMER"/>
+            <Button Name="smu" Click="smu_Click" Margin="10" Height="100" Width="200" Content="SMU"/>
+            <Button Name="manifest"  Margin="10" Height="100" Width="200" Content="MANIFEST"/>
+            <Button Name="laporan" Click="" Margin="10" Height="100" Width="200" Content="LAPORAN"/>
+            <Button Name="userManage" Click="" Margin="10" Height="100" Width="200" Content="User Management"/>
+        </WrapPanel>
     </Grid>
 </Window>

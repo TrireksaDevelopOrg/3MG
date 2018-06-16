@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.Proxys;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,20 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public static class Proxy
+  public  class Proxy<T>
     {
-        private static CustomerProxy _customer;
-
-        public static CustomerProxy Customer
+        public Proxy()
         {
-            get
-            {
-                if (_customer == null)
-                    _customer = new CustomerProxy();
-                return _customer;
-            }
+            this.Type = typeof(T);
         }
-
+        public Type Type { get; }
 
 
 

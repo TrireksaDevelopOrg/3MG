@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseNotify.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ICustomer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EnumCollection.cs" />
   </ItemGroup>
 </Project>

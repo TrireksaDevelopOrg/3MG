@@ -1,0 +1,59 @@
+﻿<Window x:Class="MainApp.Views.PTIView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" WindowState="Maximized"
+        Title="PTIView" Height="450" Width="660">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{StaticResource BorderLayoutStyle}">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Right">
+                        <WrapPanel>
+                            <Label Content="Dari" Width="75"/>
+                            <DatePicker SelectedDate="{Binding StartDate}" Height="35" Margin="5" Width="150"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="Sampai" Width="75"/>
+                            <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="35"/>
+                        </WrapPanel>
+                    </StackPanel>
+                    <Button Command="{Binding AddNewPTICommand}" Height="60" Width="120" Content="Tambah PTI" HorizontalAlignment="Left"/>
+                </Grid>
+                
+            </Border>
+            <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
+                <DataGrid ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Code}" Header="Number" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding Weight}" Header="Weight" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding CreatedDate}" Header="Tanggal" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding UserId}" Header="Dibuat Oleh" Width="*"/>
+                    </DataGrid.Columns>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Create SMU" Command="{Binding CreateSMU}"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                </DataGrid>
+            </Border>
+            <Border Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Command="{Binding CancelCommand}"  Content="Close"/>
+                </WrapPanel>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

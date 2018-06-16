@@ -1,0 +1,56 @@
+﻿<Window x:Class="MainApp.Views.AddNewDepositView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d"
+        Title="AddNewDepositView" Height="306.883" Width="360.412">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{StaticResource BorderLayoutStyle}">
+                <StackPanel>
+                    <WrapPanel>
+                        <Label Content="Nama" Width="100"/>
+                        <Label Content="{Binding Customer.Name}"/>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label Content="Telepon" Width="100"/>
+                        <Label Content="{Binding Customer.Handphone}"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}" Grid.RowSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="189*"/>
+                        <ColumnDefinition Width="338*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <Label Content="Tanggal Bayar"/>
+                        <Label Margin="5" Content="Type Pembayaran"/>
+                        <Label Content="Jumlah"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <DatePicker Height="30" Margin="3" SelectedDate="{Binding TanggalBayar,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"/>
+                        <ComboBox Name="typeCombo" Margin="3" Height="30" SelectedItem="{Binding PaymentType}"/>
+                        <TextBox Text="{Binding Jumlah,StringFormat={}{0:N2},UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"/>
+                    </StackPanel>
+
+
+                </Grid>
+
+            </Border>
+            <WrapPanel HorizontalAlignment="Right" Grid.Row="2" Width="162">
+                <Button Command="{Binding SaveCommand}" Content="Simpan"></Button>
+                <Button Command="{Binding CancelCommand}" Content="Batal"></Button>
+            </WrapPanel>
+        </Grid>
+    </Border>
+</Window>

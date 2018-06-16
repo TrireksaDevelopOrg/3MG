@@ -53,6 +53,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommandHandler.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="Views\AddNewCustomerDeposit.xaml.cs">
+      <DependentUpon>AddNewCustomerDeposit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewDepositView.xaml.cs">
+      <DependentUpon>AddNewDepositView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewPTI.xaml.cs">
+      <DependentUpon>AddNewPTI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewSMU.xaml.cs">
+      <DependentUpon>AddNewSMU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BrowserCustomerDeposit.xaml.cs">
+      <DependentUpon>BrowserCustomerDeposit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangePassword.xaml.cs">
+      <DependentUpon>ChangePassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerDepositView.xaml.cs">
+      <DependentUpon>CustomerDepositView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PTIView.xaml.cs">
+      <DependentUpon>PTIView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SMUView.xaml.cs">
+      <DependentUpon>SMUView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CustomeStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,6 +104,50 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddNewCustomerDeposit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewDepositView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewPTI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewSMU.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BrowserCustomerDeposit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerDepositView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PTIView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SMUView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -91,6 +174,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{024C106A-4EAE-4E3F-ACB3-D01DB04B6B90}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BussinessLayer\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

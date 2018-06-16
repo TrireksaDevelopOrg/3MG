@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("deposit")]
-    internal class deposit :BaseNotify  
+    public class deposit :BaseNotify  
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -32,7 +32,7 @@ using Ocph.DAL;
           } 
 
           [DbColumn("PaymentType")] 
-          public string PaymentType 
+          public PaymentType PaymentType 
           { 
                get{return _paymenttype;} 
                set{ 
@@ -59,14 +59,27 @@ using Ocph.DAL;
 
                     SetProperty(ref _createddate, value);
                      }
-          } 
+          }
 
-          private int  _id;
+
+        [DbColumn("TanggalBayar")]
+        public DateTime TanggalBayar
+        {
+            get { return _tanggalBayar; }
+            set
+            {
+
+                SetProperty(ref _tanggalBayar, value);
+            }
+        }
+
+        private int  _id;
            private double  _jumlah;
-           private string  _paymenttype;
+           private PaymentType  _paymenttype;
            private int  _customerid;
            private DateTime  _createddate;
-      }
+        private DateTime _tanggalBayar;
+    }
 }
 
 

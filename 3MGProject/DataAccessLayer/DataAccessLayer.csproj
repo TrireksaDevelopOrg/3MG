@@ -30,11 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.9.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\OcphDAL.3.0.5\lib\net45\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Ocph.DAL, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OcphDAL.3.0.5\lib\net45\Ocph.DAL.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,23 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModelInterfaces\Ichangehistory.cs" />
-    <Compile Include="DataModelInterfaces\Icity.cs" />
-    <Compile Include="DataModelInterfaces\Icollies.cs" />
-    <Compile Include="DataModelInterfaces\Icustomer.cs" />
-    <Compile Include="DataModelInterfaces\Idebetdeposit.cs" />
-    <Compile Include="DataModelInterfaces\Ideposit.cs" />
-    <Compile Include="DataModelInterfaces\Iinvoicedetail.cs" />
-    <Compile Include="DataModelInterfaces\Iinvoices.cs" />
-    <Compile Include="DataModelInterfaces\Imanifestdetails.cs" />
-    <Compile Include="DataModelInterfaces\Imanifestoutgoing.cs" />
-    <Compile Include="DataModelInterfaces\Iplanes.cs" />
-    <Compile Include="DataModelInterfaces\Iports.cs" />
-    <Compile Include="DataModelInterfaces\Ipricetype.cs" />
-    <Compile Include="DataModelInterfaces\Ipti.cs" />
-    <Compile Include="DataModelInterfaces\Ischedules.cs" />
-    <Compile Include="DataModelInterfaces\Ismu.cs" />
-    <Compile Include="DataModelInterfaces\Ismudetails.cs" />
+    <Compile Include="Bussines\Autherization.cs" />
+    <Compile Include="Bussines\CustomerBussiness.cs" />
+    <Compile Include="Bussines\DepositBussines.cs" />
+    <Compile Include="Bussines\PtiBussines.cs" />
+    <Compile Include="Bussines\SMUBussines.cs" />
+    <Compile Include="Bussines\UserManagement.cs" />
+    <Compile Include="CodeGenerate.cs" />
     <Compile Include="DataModels\changehistory.cs" />
     <Compile Include="DataModels\city.cs" />
     <Compile Include="DataModels\collies.cs" />
@@ -77,17 +64,25 @@
     <Compile Include="DataModels\ports.cs" />
     <Compile Include="DataModels\pricetype.cs" />
     <Compile Include="DataModels\pti.cs" />
+    <Compile Include="DataModels\role.cs" />
     <Compile Include="DataModels\schedules.cs" />
     <Compile Include="DataModels\smu.cs" />
     <Compile Include="DataModels\smudetails.cs" />
+    <Compile Include="DataModels\user.cs" />
+    <Compile Include="DataModels\userinrole.cs" />
+    <Compile Include="EnumCollection.cs" />
+    <Compile Include="ModelExtentions.cs" />
+    <Compile Include="Models\PTI.cs" />
+    <Compile Include="Models\SMU.cs" />
     <Compile Include="OcphDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
-    <Compile Include="Proxys\CustomerProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
+  <Import Project="D:\Project Tools\OcphDAL\OcphDAL\Ocph.DAL\Ocph.DAL.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

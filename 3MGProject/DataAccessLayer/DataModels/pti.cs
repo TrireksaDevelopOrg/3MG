@@ -1,5 +1,6 @@
 using System; 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("pti")]
-    internal class pti :BaseNotify  
+    public class pti :BaseNotify  
    {
           [DbColumn("PTINumber")] 
           public int PTINumber 
@@ -39,20 +40,27 @@ using Ocph.DAL;
 
                     SetProperty(ref _shiperid, value);
                      }
-          } 
+          }
 
-          [DbColumn("TypeOfWeight")] 
-          public string TypeOfWeight 
-          { 
-               get{return _typeofweight;} 
-               set{ 
 
-                    SetProperty(ref _typeofweight, value);
-                     }
-          } 
+        [DbColumn("RecieverId")]
+        public int RecieverId
+        {
+            get { return _reciever; }
+            set
+            {
 
-          [DbColumn("PayType")] 
-          public string PayType 
+                SetProperty(ref _reciever, value);
+            }
+        }
+
+        private void SetProperty(ref object reciever, int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        [DbColumn("PayType")] 
+          public PayType PayType 
           { 
                get{return _paytype;} 
                set{ 
@@ -92,25 +100,63 @@ using Ocph.DAL;
           } 
 
           [DbColumn("ActiveStatus")] 
-          public string ActiveStatus 
+          public ActivedStatus ActiveStatus 
           { 
                get{return _activestatus;} 
                set{ 
 
                     SetProperty(ref _activestatus, value);
                      }
-          } 
+          }
 
-          private int  _ptinumber;
+            public ObservableCollection<collies> Collies { get; set; }
+
+        public customer Shiper
+        {
+            get { return shiper;}
+            set
+            {
+                SetProperty(ref shiper, value);
+            }
+        }
+
+        public customer Reciever
+        {
+            get { return reciever; }
+            set
+            {
+                SetProperty(ref reciever, value);
+            }
+        }
+
+
+        private string _code;
+
+        public string Code
+        {
+            get {
+                if(string.IsNullOrEmpty(_code))
+                {
+                    _code= CodeGenerate.PTI(PTINumber);
+                }
+                return _code;
+            }
+            set {SetProperty(ref _code ,value); }
+        }
+
+
+        private int  _ptinumber;
            private int  _id;
            private int  _shiperid;
-           private string  _typeofweight;
-           private string  _paytype;
+           private PayType _paytype;
            private double  _etc;
            private string  _note;
            private DateTime  _createddate;
-           private string  _activestatus;
-      }
+           private ActivedStatus _activestatus;
+        private int _reciever;
+        private customer shiper;
+        private customer reciever;
+    }
 }
 
 

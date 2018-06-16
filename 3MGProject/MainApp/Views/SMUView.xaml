@@ -1,0 +1,49 @@
+﻿<Window x:Class="MainApp.Views.SMUView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" WindowState="Maximized"
+        Title="SMUView" Height="507.273" Width="820.455">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="209*"/>
+                <ColumnDefinition Width="603*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Style="{StaticResource BorderLayoutStyle}" Grid.ColumnSpan="2" >
+                <StackPanel HorizontalAlignment="Left">
+                    <WrapPanel>
+                        <Label Content="Dari" Width="75"/>
+                        <DatePicker SelectedDate="{Binding StartDate}" Height="35" Margin="5" Width="150"/>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label Content="Sampai" Width="75"/>
+                        <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="35"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource BorderLayoutStyle}">
+                <DataGrid ItemsSource="{Binding SourceView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn MinWidth="120" Header="SMU Number" Binding="{Binding Code}"/>
+                        <DataGridTextColumn Width="*" Header="Shiper" Binding="{Binding ShiperName}"/>
+                        <DataGridTextColumn Width="*" Header="Reciever" Binding="{Binding RecieverName}"/>
+                        <DataGridTextColumn MinWidth="100" Header="Pcs" Binding="{Binding Pcs}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource RightCell}" MinWidth="100" Header="Weight" Binding="{Binding Weight,StringFormat={}{0:N2}}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource  RightCell }" MinWidth="120" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}"/>
+                        <DataGridTextColumn MinWidth="150" Header="Pcs" Binding="{Binding CreatedDate,StringFormat='dd MMMM yyyy HH:mm:ss'}"/>
+                        <DataGridCheckBoxColumn MinWidth="30" Header="Terkirim" Binding="{Binding IsSended}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Grid>
+    </Border>
+
+</Window>

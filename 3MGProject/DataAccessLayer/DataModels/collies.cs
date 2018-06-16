@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("collies")]
-    internal class collies :BaseNotify ,Icollies 
+    public class collies :BaseNotify 
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -38,61 +38,26 @@ using Ocph.DAL;
                set{ 
 
                     SetProperty(ref _pcs, value);
-                     }
+                Biaya = (Pcs *Weight) * Price;
+            }
           } 
 
           [DbColumn("Weight")] 
           public double Weight 
           { 
-               get{return _weight;} 
+               get{
+
+                return _weight;} 
                set{ 
 
                     SetProperty(ref _weight, value);
-                     }
+                Biaya = (Pcs * Weight) * Price;
+            }
           } 
 
-          [DbColumn("Long")] 
-          public double Long 
-          { 
-               get{return _long;} 
-               set{ 
-
-                    SetProperty(ref _long, value);
-                     }
-          } 
-
-          [DbColumn("Hight")] 
-          public double Hight 
-          { 
-               get{return _hight;} 
-               set{ 
-
-                    SetProperty(ref _hight, value);
-                     }
-          } 
-
-          [DbColumn("Wide")] 
-          public double Wide 
-          { 
-               get{return _wide;} 
-               set{ 
-
-                    SetProperty(ref _wide, value);
-                     }
-          } 
-
-          [DbColumn("TypeOfWeight")] 
-          public string TypeOfWeight 
-          { 
-               get{return _typeofweight;} 
-               set{ 
-
-                    SetProperty(ref _typeofweight, value);
-                     }
-          } 
 
           [DbColumn("IsSended")] 
-          public string IsSended 
+          public bool IsSended 
           { 
                get{return _issended;} 
                set{ 
@@ -118,18 +83,25 @@ using Ocph.DAL;
                set{ 
 
                     SetProperty(ref _price, value);
-                     }
-          } 
+                Biaya = (Pcs * Weight) * Price;
+            }
+          }
 
-          private int  _id;
+        private double _biaya;
+
+        public double Biaya
+        {
+            get { return _biaya; }
+            set {SetProperty(ref _biaya , value); }
+        }
+
+
+
+        private int  _id;
            private int  _ptiid;
            private int  _pcs;
            private double  _weight;
-           private double  _long;
-           private double  _hight;
-           private double  _wide;
-           private string  _typeofweight;
-           private string  _issended;
+           private bool  _issended;
            private string  _content;
            private double  _price;
       }

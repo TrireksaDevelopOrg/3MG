@@ -8,7 +8,7 @@ using Ocph.DAL;
  namespace DataAccessLayer.DataModels 
 { 
      [TableName("customer")]
-    internal class customer :BaseNotify,Icustomer
+    public class customer :BaseNotify
    {
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -89,9 +89,19 @@ using Ocph.DAL;
 
                     SetProperty(ref _email, value);
                      }
-          } 
+          }
 
-          [DbColumn("CreatedDate")] 
+
+
+        private CustomerType customerType;
+        [DbColumn("CustomerType")]
+        public CustomerType CustomerType
+        {
+            get { return customerType; }
+            set { SetProperty(ref customerType , value); }
+        }
+
+        [DbColumn("CreatedDate")] 
           public DateTime CreatedDate 
           { 
                get{return _createddate;} 

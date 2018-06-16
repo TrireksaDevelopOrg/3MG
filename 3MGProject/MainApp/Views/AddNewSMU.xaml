@@ -1,0 +1,122 @@
+﻿<Window x:Class="MainApp.Views.AddNewSMU"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" WindowState="Maximized"
+        Title="Tambah SMU" Height="450" Width="800">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="213*"/>
+                <ColumnDefinition Width="572*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+           
+            <Border Grid.RowSpan="2">
+                
+                <StackPanel>
+                    <Border Grid.Column="1" Style="{StaticResource BorderLayoutStyle}">
+                        <StackPanel>
+                            <WrapPanel>
+                                <Label Width="150" Margin="0" Height="auto" FontSize="16" FontWeight="DemiBold" Content="Nomor SMU  "/>
+                                <Label Margin="0" Height="auto" FontSize="16"  Content="{Binding SMU.Code}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="Mode Pembayaran"/>
+                                <Label Margin="0" Height="auto" FontSize="16" Content="{Binding PTISelected.PayType}"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="PTI"/>
+                                <Label Margin="0" Height="auto" FontSize="16" Content="{Binding PTISelected.Code}"/>
+                            </WrapPanel>
+                       
+                            <WrapPanel>
+                                <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="Dari"/>
+                                <Label Margin="0" Height="auto" FontSize="16" Content="Jayapura"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="Tujuan"/>
+                                <Label Margin="0" Height="auto" FontSize="16"  Content="Wamena"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderLayoutStyle}">
+                        <StackPanel >
+                            <Label FontSize="16" Height="35" FontWeight="DemiBold" Content="Pengirim"/>
+                            <WrapPanel Margin="10,0,0,0">
+                                <Label Width="100" Content="Nama"/>
+                                <Label Content="{Binding PTISelected.ShiperName}"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="10,0,0,0">
+                                <Label Width="100" Content="Handphone"/>
+                                <Label Content="{Binding PTISelected.ShiperHandphone}"/>
+                            </WrapPanel>
+
+                            <WrapPanel Margin="10,0,0,0" Height="50">
+                                <Label Width="100"  Content="Alamat"/>
+                                <TextBlock VerticalAlignment="Center" MaxWidth="200" TextWrapping="Wrap" Text="{Binding PTISelected.ShiperAddress}"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
+                        <StackPanel >
+                            <Label FontSize="16" Height="35" FontWeight="DemiBold" Content="Penerima"/>
+                            <WrapPanel Margin="10,0,0,0">
+                                <Label Width="100"  Content="Nama"/>
+                                <Label Content="{Binding PTISelected.RecieverName}"/>
+                            </WrapPanel>
+                            <WrapPanel Margin="10,0,0,0">
+                                <Label Width="100"  Content="Handphone"/>
+                                <Label Content="{Binding PTISelected.RecieverHandphone}"/>
+                            </WrapPanel>
+
+                            <WrapPanel Margin="10,0,0,0">
+                                <Label Width="100"  Content="Alamat"/>
+                                <TextBlock VerticalAlignment="Center" MaxWidth="200" TextWrapping="Wrap" Text="{Binding PTISelected.RecieverAddress}"/>
+                            </WrapPanel>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+      
+            <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}" Grid.Column="1">
+                <DataGrid Name="dg" ItemsSource="{Binding SourceView}" AutoGenerateColumns="False"
+                          CanUserAddRows="False"  CanUserDeleteRows="False"
+                          >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Width="*" Binding="{Binding Content}" Header="Content"/>
+                        <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="75" Binding="{Binding Pcs}" Header="Pcs"/>
+                        <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Berat Satuan"/>
+                        <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Price,StringFormat={}{0:N2}}" Header="Tarif"/>
+                        <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Biaya,StringFormat={}{0:N2}}" Header="Biaya"/>
+                        <DataGridCheckBoxColumn  MinWidth="35" Binding="{Binding IsSended}" Header="">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Margin="3" HorizontalAlignment="Right">
+                                        <CheckBox Name="checkALL" Click="checkALL_Click" HorizontalAlignment="Center" IsChecked="{Binding Path=CheckAll,Mode=TwoWay}"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+
+
+                </DataGrid>
+            </Border>
+            <Border Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
+                <WrapPanel HorizontalAlignment="Right">
+                    <Button Command="{Binding SaveCommand}" Content="Save"></Button>
+                    <Button Command="{Binding CancelCommand}" Content="Batal"></Button>
+                </WrapPanel>
+            </Border>
+        </Grid>
+    </Border>
+
+</Window>

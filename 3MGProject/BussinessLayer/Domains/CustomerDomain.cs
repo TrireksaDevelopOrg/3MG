@@ -1,23 +1,16 @@
 ﻿using BussinessLayer.Interfaces;
-using ModelShared.Interfaces;
-using ModelShared.Models;
+using BussinessLayer.Models;
 using System;
 using System.Collections.Generic;
 
 namespace BussinessLayer.Domains
 {
-    public class CustomerDomain : ICustomerDomain
+    public class CustomerDomain 
     {
 
         public CustomerDomain() { }
 
-        public CustomerDomain(ICustomer customer)
-        {
-            Customer = customer;
-        }
-
-
-        public List<ICustomer> GetAllCustomer()
+        public List<ICustomer> GetAll()
         {
             try
             {
@@ -45,14 +38,48 @@ namespace BussinessLayer.Domains
             {
                 throw new SystemException(ex.Message);
             }
-          
         }
 
-        public ICustomer CreateCustomer()
+        public List<Deposit> GetDeposites(int customerId)
         {
-            throw new NotImplementedException();
+            var customer = GetCustomerById(customerId);
+            if (customer != null)
+                return customer.GetDeposites();
+            else
+                throw new SystemException("Customer Tidak Ditemukan");
         }
 
-        public ICustomer Customer { get; }
+        public ICustomer GetCustomerById(int customerId)
+        {
+            var item = DataAccessLayer.Proxy.Customer.GetCustomerById(customerId);
+            return new Customer
+            {
+                Address = item.Address,
+                ContactName = item.ContactName,
+                CreatedDate = item.CreatedDate,
+                Email = item.Email,
+                Handphone = item.Handphone,
+                Id = item.Id,
+                Name = item.Name,
+                Phone1 = item.Phone1,
+                Phone2 = item.Phone2
+            };
+        }
+
+        public ICustomer SaveChange(Customer cust)
+        {
+            cust.SaveChanged();
+            return cust;
+        }
+
+        public ICustomer CreateEmptyCustomer()
+        {
+            return new Customer();
+        }
+
+        public void Delete(int id)
+        {
+            DataAccessLayer.Proxy.Customer.Delete(id);
+        }
     }
 }

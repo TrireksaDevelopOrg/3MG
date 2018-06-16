@@ -41,7 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domains\CustomerDomain.cs" />
-    <Compile Include="Interfaces\ICustomerDomain.cs" />
+    <Compile Include="Domains\PTIDomains.cs" />
+    <Compile Include="Interfaces\ICustomer.cs" />
+    <Compile Include="Interfaces\IDeposit.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Deposit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

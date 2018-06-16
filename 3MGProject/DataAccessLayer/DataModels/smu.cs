@@ -39,9 +39,20 @@ using Ocph.DAL;
 
                     SetProperty(ref _createddate, value);
                      }
-          } 
+          }
 
-          private int  _id;
+        private bool isSended;
+        [DbColumn("IsSended")]
+
+        public bool IsSended
+        {
+            get { return isSended; }
+            set {SetProperty(ref isSended ,value); }
+
+        }
+
+
+        private int  _id;
            private string  _kode;
            private DateTime  _createddate;
       }
