@@ -33,9 +33,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FoxLearn.License, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>BussinessLayer\FoxLearn.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -45,18 +72,38 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AboutBoxView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBoxView.Designer.cs">
+      <DependentUpon>AboutBoxView.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="HelperPrint.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="IBusyBase.cs" />
     <Compile Include="NegativeConverter.cs" />
+    <Compile Include="Reports\Forms\PTIPreview.xaml.cs">
+      <DependentUpon>PTIPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\ReportContent.xaml.cs">
+      <DependentUpon>ReportContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Views\AddNewCity.xaml.cs">
+      <DependentUpon>AddNewCity.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddNewCustomerDeposit.xaml.cs">
       <DependentUpon>AddNewCustomerDeposit.xaml</DependentUpon>
     </Compile>
@@ -65,6 +112,12 @@
     </Compile>
     <Compile Include="Views\AddNewManifest.xaml.cs">
       <DependentUpon>AddNewManifest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewPlanes.xaml.cs">
+      <DependentUpon>AddNewPlanes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddNewPort.xaml.cs">
+      <DependentUpon>AddNewPort.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddNewPTI.xaml.cs">
       <DependentUpon>AddNewPTI.xaml</DependentUpon>
@@ -99,6 +152,12 @@
     <Compile Include="Views\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegistrationProduct.xaml.cs">
+      <DependentUpon>RegistrationProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setting.xaml.cs">
+      <DependentUpon>Setting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SMUView.xaml.cs">
       <DependentUpon>SMUView.xaml</DependentUpon>
     </Compile>
@@ -124,6 +183,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Reports\Forms\PTIPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\Forms\ReportContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewCity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddNewCustomerDeposit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,6 +204,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNewManifest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewPlanes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewPort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -180,6 +259,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RegistrationProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Setting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SMUView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,10 +294,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="AboutBoxView.resx">
+      <DependentUpon>AboutBoxView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Layouts\CargoManifest.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\PTI.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\Rekening1.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\SMU.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\SuratMuatanUdara.rdlc" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\DataAccessLayer.DataModels.collies.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.DebetDeposit.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.Deposit.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.Manifest.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.PTI.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.Saldo.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.SMU.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.SMUDetail.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.SuratMuatanUdara.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -227,6 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BussinessLayer\Models\" />
+    <Folder Include="Reports\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pexels1.jpeg">
@@ -248,6 +354,26 @@
     <Resource Include="Images\right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BussinessLayer\FoxLearn.License.dll" />
+    <Resource Include="Images\TMG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <SplashScreen Include="SplashScreenView.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

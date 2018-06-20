@@ -23,7 +23,6 @@
                             <Label Content="Tanggal" Width="75"/>
                             <DatePicker SelectedDate="{Binding SelectedDate}" Height="35" Margin="5" Width="150"/>
                         </WrapPanel>
-
                     </StackPanel>
                     <Button Command="{Binding AddNewJadwal}" Margin="5" HorizontalAlignment="Right" Content="Tambah Jadwal" Width="151"/>
                 </Grid>

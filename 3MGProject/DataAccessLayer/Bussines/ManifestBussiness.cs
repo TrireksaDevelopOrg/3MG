@@ -36,7 +36,7 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-        public void CreateNewManifest(Schedule scheduleSelected, manifestoutgoing manifest, ObservableCollection<SMU> source)
+        public Task<manifestoutgoing> CreateNewManifest(Schedule scheduleSelected, manifestoutgoing manifest, ObservableCollection<SMU> source)
         {
           
             using (var db = new OcphDbContext())
@@ -71,14 +71,64 @@ namespace DataAccessLayer.Bussines
                         throw new SystemException("Manifest Tidak Tersimpan");
 
                     manifest.User = User.Name;
+                    
                     trans.Commit();
- 
+                    return Task.FromResult(manifest);
 
                 }
                 catch (Exception ex)
                 {
                     trans.Rollback();
                     throw new SyntaxErrorException(ex.Message);
+                }
+            }
+        }
+
+        public Task<List<SMU>> ManifestDetails(Manifest selected)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var cmd = db.CreateCommand();
+                cmd.CommandText = "ManifestDetails";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new MySqlParameter("id", selected.Id));
+                var reader = cmd.ExecuteReader();
+                var result = MappingProperties<SMU>.MappingTable(reader);
+                if (result.Count <= 0)
+                    throw new SystemException("Data TIdak Ada");
+
+                return Task.FromResult(result);
+            }
+        }
+
+        public void SetCancelManifest(Manifest manifestSelected, string alasan)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    if (manifestSelected.IsTakeOff)
+                        throw new SystemException(string.Format("Manifest Nomor  {0}  Tidak Dapat Dibatalkan.\r\n Pesawat Telah Berangkat Atau Tiba di tujuan", manifestSelected.Code));
+
+                    ActivedStatus actived = ActivedStatus.Cancel;
+                    var updated = db.Manifest.Update(O => new { O.ActiveStatus }, new manifestoutgoing { Id = manifestSelected.Id, ActiveStatus = actived },
+                        O => O.Id == manifestSelected.Id);
+                    if(updated)
+                    {
+                        var history = User.GenerateHistory(manifestSelected.Id, BussinesType.Manifest, ChangeType.Cancel, alasan);
+                        if (!db.Histories.Insert(history))
+                            throw new SyntaxErrorException("Manifest tidak dapat dibatalkan");
+
+                        manifestSelected.ActiveStatus = ActivedStatus.Cancel;
+                        trans.Commit();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw new SystemException(ex.Message);
                 }
             }
         }

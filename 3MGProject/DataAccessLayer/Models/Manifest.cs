@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.DataModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace DataAccessLayer.Models
 {
     public class Manifest : manifestoutgoing
     {
-        public bool IsTakeOff { get; set; }
         public DateTime Tanggal { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
@@ -29,6 +29,12 @@ namespace DataAccessLayer.Models
         public string DestinationCityCode { get; set; }
         public int OriginPortCityId { get; set; }
         public int DestinationPortCityId { get; set; }
+        public ObservableCollection<SMU> Details { get; set; }
+
+        public Manifest()
+        {
+            Details = new ObservableCollection<SMU>();
+        }
     }
  
 }

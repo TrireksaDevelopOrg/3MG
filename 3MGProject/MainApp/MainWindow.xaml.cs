@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Bussines;
+using FoxLearn.License;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,87 +28,134 @@ namespace MainApp
         {
             var loginSuccess = false;
             var closeApp = false;
-            while(!loginSuccess)
+
+            if(IsRegistration())
             {
-                UserManagement userManagement = new UserManagement();
-                if (userManagement.IsFirstUser())
+                while (!loginSuccess)
                 {
-                    var regForm = new Views.Registration();
-                    regForm.ShowDialog();
-                    var regVM = (Views.RegistrationViewModel)regForm.DataContext;
-                    if (regVM.UserCreated!=null)
+                    UserManagement userManagement = new UserManagement();
+                    if (userManagement.IsFirstUser())
                     {
-                        Helpers.UserLogin = regVM.UserCreated;
-                       if(!userManagement.IsRoleExist("Administrator").Result)
+                        var regForm = new Views.Registration();
+                        regForm.ShowDialog();
+                        var regVM = (Views.RegistrationViewModel)regForm.DataContext;
+                        if (regVM.UserCreated != null)
                         {
-                            userManagement.AddNewRole("Administrator");
-                        }
+                            Helpers.UserLogin = regVM.UserCreated;
+                            if (!userManagement.IsRoleExist("Administrator").Result)
+                            {
+                                userManagement.AddNewRole("Administrator");
+                            }
 
-                        if (!userManagement.IsRoleExist("Manager").Result)
+                            if (!userManagement.IsRoleExist("Manager").Result)
+                            {
+                                userManagement.AddNewRole("Manager");
+                            }
+
+                            if (!userManagement.IsRoleExist("Admin").Result)
+                            {
+                                userManagement.AddNewRole("Admin");
+                            }
+
+                            if (!userManagement.IsRoleExist("Operational").Result)
+                            {
+                                userManagement.AddNewRole("Operational");
+                            }
+
+                            if (!userManagement.IsRoleExist("Accounting").Result)
+                            {
+                                userManagement.AddNewRole("Accounting");
+                            }
+
+                            userManagement.AddUserInRole(Helpers.UserLogin.Id, "Administrator");
+
+                            var setting = new Views.Setting();
+                            setting.ShowDialog();
+
+
+
+                            loginSuccess = true;
+                        }
+                        else
                         {
-                            userManagement.AddNewRole("Manager");
+                            var result = MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                closeApp = true;
+                                loginSuccess = true;
+                            }
+
                         }
-
-                        if (!userManagement.IsRoleExist("Admin").Result)
-                        {
-                            userManagement.AddNewRole("Admin");
-                        }
-
-                        if (!userManagement.IsRoleExist("Operational").Result)
-                        {
-                            userManagement.AddNewRole("Operational");
-                        }
-
-                        if (!userManagement.IsRoleExist("Accounting").Result)
-                        {
-                            userManagement.AddNewRole("Accounting");
-                        }
-
-                        userManagement.AddUserInRole(Helpers.UserLogin.Id, "Administrator");
-
-                        loginSuccess = true;
                     }
                     else
                     {
-                        var result =MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if(result== MessageBoxResult.Yes)
+                        var loginForm = new Views.LoginView();
+                        loginForm.ShowDialog();
+                        var vm = (Views.LoginViewModel)loginForm.DataContext;
+                        if (vm.Success)
                         {
-                            closeApp = true;
+                            Helpers.UserLogin = vm.UserLogin;
                             loginSuccess = true;
                         }
-
-                    }
-                }
-                else
-                {
-                    var loginForm = new Views.LoginView();
-                    loginForm.ShowDialog();
-                    var vm = (Views.LoginViewModel)loginForm.DataContext;
-                    if(vm.Success)
-                    {
-                        Helpers.UserLogin = vm.UserLogin;
-                        loginSuccess = true;
-                    }else
-                    {
-
-                        var result = MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Yes)
+                        else
                         {
-                            closeApp = true;
-                            loginSuccess = true;
+
+                            var result = MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                closeApp = true;
+                                loginSuccess = true;
+                            }
                         }
                     }
-
-
                 }
-            }
+            }else
+                closeApp = true;
 
             if (closeApp)
                 this.Close();
 
             InitializeComponent();
-            viewmodel = new MainWindowViewModel();
+            viewmodel = new MainWindowViewModel() { WindowParent = this };
             this.DataContext = viewmodel;
+        }
+
+        private bool IsRegistration()
+        {
+
+            string ProductId = ComputerInfo.GetComputerId();
+            KeyManager key = new KeyManager(ProductId);
+
+            LicenseInfo lic = new LicenseInfo();
+            try
+            {
+                key.LoadSuretyFile(string.Format("Key.lic"), ref lic);
+                if(lic.ProductKey==null)
+                {
+                    var form = new Views.RegistrationProduct();
+                    form.ShowDialog();
+                    if (form.Success)
+                    {
+                        return true;
+                    }
+
+                }else
+                {
+                    string productKey = lic.ProductKey;
+                    if (key.ValidKey(ref productKey))
+                    {
+                        return true;
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            return false;
+         
         }
 
         private void pti_Click(object sender, RoutedEventArgs e)
@@ -153,17 +201,18 @@ namespace MainApp
     {
         public MainWindowViewModel() : base(typeof(MainWindowViewModel)) { }
 
+        public Window WindowParent { get; set; }
+
         [Authorize("Administrator,Manager,Accounting")]
         internal void LoadCustomerDeposit()
         {
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
             {
                 var form = new Views.CustomerDepositView();
-                form.ShowDialog();
+                Helpers.ShowChild(WindowParent, form);
             }
             else
                 Helpers.ShowErrorMessage(NotHaveAccess);
-         
         }
 
 
@@ -173,7 +222,7 @@ namespace MainApp
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
             {
                 var form = new Views.ManivestView();
-                form.ShowDialog();
+                Helpers.ShowChild(WindowParent, form);
             }
             else
                 Helpers.ShowErrorMessage(NotHaveAccess);
@@ -186,9 +235,9 @@ namespace MainApp
             {
 
                 var form = new Views.PTIView();
-                var viewmodel = new Views.PTIViewModel() { WindowClose = form.Close };
+                var viewmodel = new Views.PTIViewModel() { WindowParent=form, WindowClose = form.Close };
                 form.DataContext = viewmodel;
-                form.ShowDialog();
+                Helpers.ShowChild(WindowParent, form);
             }
             else
                 Helpers.ShowErrorMessage(NotHaveAccess);
@@ -199,7 +248,7 @@ namespace MainApp
         internal void LoadShcedule()
         {
             var form = new Views.FlightView();
-            form.ShowDialog();
+            Helpers.ShowChild(WindowParent, form);
         }
 
         [Authorize("Administrator,Admin,Manager")]
@@ -210,7 +259,7 @@ namespace MainApp
                 var form = new Views.SMUView();
                 var viewmodel = new Views.SMUViewModel() { WindowClose = form.Close };
                 form.DataContext = viewmodel;
-                form.ShowDialog();
+                Helpers.ShowChild(WindowParent, form);
             }
             else
                 Helpers.ShowErrorMessage(NotHaveAccess);
@@ -222,7 +271,7 @@ namespace MainApp
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
             {
                 var form = new Views.UserManagementView();
-                form.ShowDialog();
+                Helpers.ShowChild(WindowParent, form);
             }
             else
                 Helpers.ShowErrorMessage(NotHaveAccess);

@@ -1,51 +1,20 @@
 ﻿using Ocph.DAL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using DataAccessLayer.DataModels;
 
 namespace DataAccessLayer.Models
 {
-  public  class PTI:BaseNotify
+    public  class PTI:pti
     {
-        private string _code;
-        private int _shiperid;
-        private int _reciever;
-
-        public int Id { get; set; }
-        public int PTINumber { get; set; }
-        public virtual string Code {
-            get { return CodeGenerate.PTI(PTINumber); }
-            set {
-                _code = value;
-            }
-        }
-
-        public int ShiperID
+        public PTI()
         {
-            get { return _shiperid; }
-            set
-            {
-
-                SetProperty(ref _shiperid, value);
-            }
+            Details = new ObservableCollection<collies>();
         }
 
-
-        public int RecieverId
-        {
-            get { return _reciever; }
-            set
-            {
-
-                SetProperty(ref _reciever, value);
-            }
-        }
         public string ShiperName{ get; set; }
         public string ShiperHandphone { get; set; }
         public string ShiperAddress { get; set; }
-
         public string RecieverName{ get; set; }
         public string RecieverHandphone { get; set; }
         public string RecieverAddress { get; set; }
@@ -53,11 +22,14 @@ namespace DataAccessLayer.Models
         public int Pcs{ get; set; }
         public double Weight  { get; set; }
         public double Biaya{ get; set; }
-        public DateTime CreatedDate { get; set; }
-        public PayType PayType { get; set; }
         public string UserId { get; set; }
         public string User { get; set; }
-        public bool OnSMU { get; set; }
+        public string FromCityName { get; set; }
+        public string FromCityCode { get; set; }
+        public string  ToCityName { get; set; }
+        public string ToCityCode { get; set; }
+
+        public virtual ObservableCollection<collies> Details { get; set; }
 
 
     }

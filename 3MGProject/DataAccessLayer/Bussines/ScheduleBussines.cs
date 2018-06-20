@@ -44,6 +44,31 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public Task<city> CreateNewCity(city item)
+        {
+            using (var db = new OcphDbContext())
+            {
+                item.Id = db.Cities.InsertAndGetLastID(item);
+                if (item.Id <= 0)
+                    throw new SystemException("Data Tidak Tersimpan");
+                else
+                    return Task.FromResult(item);
+            }
+        }
+
+        public Task<planes> CreateNewPlane(planes item)
+        {
+
+            using (var db = new OcphDbContext())
+            {
+                item.Id = db.Planes.InsertAndGetLastID(item);
+                if (item.Id <= 0)
+                    throw new SystemException("Data Tidak Tersimpan");
+                else
+                    return Task.FromResult(item);
+            }
+        }
+
         public Task<List<Schedule>> GetSchedules(DateTime date)
         {
             try
@@ -63,6 +88,18 @@ namespace DataAccessLayer.Bussines
             {
 
                 throw new SystemException(ex.Message);
+            }
+        }
+
+        public Task<ports> CreateNewPort(ports item)
+        {
+            using (var db = new OcphDbContext())
+            {
+                item.Id = db.Ports.InsertAndGetLastID(item);
+                if (item.Id <= 0)
+                    throw new SystemException("Data Tidak Tersimpan");
+
+                return Task.FromResult(item);
             }
         }
 

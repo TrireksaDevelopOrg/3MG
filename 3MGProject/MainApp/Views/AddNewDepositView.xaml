@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d" Style="{StaticResource WindowKey}"
-        Title="AddNewDepositView" Height="306.883" Width="360.412">
+        mc:Ignorable="d" Style="{StaticResource WindowKey}" ShowInTaskbar="False"
+        Title="Tambah Deposite" >
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>
@@ -16,16 +16,16 @@
             <Border Style="{StaticResource BorderLayoutStyle}">
                 <StackPanel>
                     <WrapPanel>
-                        <Label Content="Nama" Width="100"/>
-                        <Label Content="{Binding Customer.Name}"/>
+                        <Label Content="ID :" />
+                        <Label Content="{Binding Customer.Id,StringFormat='{}{0:D5}'}"/>
                     </WrapPanel>
                     <WrapPanel>
-                        <Label Content="Telepon" Width="100"/>
-                        <Label Content="{Binding Customer.Handphone}"/>
+                        <Label Content="Nama" />
+                        <Label Content="{Binding Customer.Name}"/>
                     </WrapPanel>
                 </StackPanel>
             </Border>
-            <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}" Grid.RowSpan="2">
+            <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="189*"/>
@@ -47,7 +47,7 @@
                 </Grid>
 
             </Border>
-            <WrapPanel HorizontalAlignment="Right" Grid.Row="2" Width="162">
+            <WrapPanel Margin="5" HorizontalAlignment="Right" Grid.Row="2" >
                 <Button Command="{Binding SaveCommand}" Content="Simpan"></Button>
                 <Button Command="{Binding CancelCommand}" Content="Batal"></Button>
             </WrapPanel>

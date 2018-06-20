@@ -10,17 +10,17 @@ namespace DataAccessLayer
     {
         public static string PTI(int number)
         {
-            return string.Format("{0:D10}", number);
+            return string.Format("{0:D6}", number);
         }
 
         public static string SMU(int number)
         {
-            return string.Format("{0:D10}", number);
+            return string.Format("T{0:D9}", number);
         }
 
         public static string Manifest(int number)
         {
-            return string.Format("{0:D10}", number);
+            return string.Format("MT{0:D8}", number);
         }
 
         public static Task<int> GetNewPTINumber()

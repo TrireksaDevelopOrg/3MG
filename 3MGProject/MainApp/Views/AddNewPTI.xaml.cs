@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer;
 using DataAccessLayer.Bussines;
 using DataAccessLayer.DataModels;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,6 +35,8 @@ namespace MainApp.Views
 
         }
 
+
+
         private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
             var model = new collies {  PtiId=viewmodel.Id };
@@ -49,7 +52,7 @@ namespace MainApp.Views
         {
             if(e.Key== Key.Enter)
             {
-                var shiper = ((TextBox)sender).Text;
+                //var shiper = ((TextBox)sender).Text;
                 var forms = new Views.BrowserCustomerDeposit();
                 forms.ShowDialog();
                 var vm = (BrowseCustomerDepositViewModel)forms.DataContext;
@@ -57,29 +60,111 @@ namespace MainApp.Views
                 {
                     viewmodel.Shiper = vm.SelectedCustomer;
                     if (vm.SelectedCustomer.CustomerType == CustomerType.Deposit)
-                        viewmodel.PayType = PayType.Deposit;
+                    {
+                        viewmodel.ShiperID = vm.SelectedCustomer.Id;
+                        viewmodel.PayTypeSelected= PayType.Deposit;
+                        reciver.Focus();
+                        shiper.IsEnabled = false;
+                    }
                 }
+            }
+            else if(viewmodel.ShiperID>0)
+            {
+                viewmodel.Shiper = new customer();
+                viewmodel.ShiperID = 0;
+                viewmodel.PayTypeSelected = PayType.Chash;
             }
      
         }
+
+        private void reciver_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            viewmodel.Shiper = new customer();
+            viewmodel.ShiperID = 0;
+            viewmodel.PayTypeSelected = PayType.Chash;
+            shiper.IsEnabled = true;
+            shiper.Focus();
+        }
+
+       
     }
 
-    public class AddNewPTIViewModel:pti,IDataErrorInfo
+    public class AddNewPTIViewModel:pti,IDataErrorInfo,IBusyBase
     {
         PtiBussines context = new PtiBussines();
         private string error;
 
         public AddNewPTIViewModel()
         {
-          
+
             this.CreatedDate = DateTime.Now;
-            this.Collies= new ObservableCollection<collies>();
+            this.Collies = new ObservableCollection<collies>();
             this.SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Collies);
             this.SourceView.Refresh();
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
-            CancelCommand = new CommandHandler { CanExecuteAction =x=>true, ExecuteAction =x=>WindowClose()};
-
+            CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
+            PrintPreviewCommand = new CommandHandler { CanExecuteAction = PrintPreviewValidate, ExecuteAction = PrintPreviewAction };
+            AddNewCityCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewCityAction };
+            Cities = new ObservableCollection<city>();
+            CitiesSourceView = (CollectionView)CollectionViewSource.GetDefaultView(Cities);
+            LoadDataCities();
             SetNew();
+        }
+
+        private async void LoadDataCities()
+        {
+            var scheduleBussines = new ScheduleBussines();
+            var result =await scheduleBussines.GetCities();
+            var fromid = Helpers.GetIntValue("CityId");
+            if (result!=null)
+            {
+                foreach(var item in result.Where(O=>O.Id!=fromid).ToList())
+                {
+                    Cities.Add(item);
+                }
+            }
+
+            if(Cities.Count==1)
+            {
+                var city = Cities.FirstOrDefault();
+                this.ToId = city.Id;
+            }
+        }
+
+        private void AddNewCityAction(object obj)
+        {
+            var form = new Views.AddNewCity();
+            form.ShowDialog();
+            var vm = (AddNewCityViewModel)form.DataContext;
+            if(vm.SaveSuccess)
+            {
+                Cities.Add(vm.SavedResult);
+            }
+            CitiesSourceView.Refresh();
+        }
+
+        private bool PrintPreviewValidate(object obj)
+        {
+            if (string.IsNullOrEmpty(Shiper.Name) || string.IsNullOrEmpty(Reciever.Name))
+                return false;
+            return true;
+        }
+
+        private void PrintPreviewAction(object obj)
+        {
+                         ReportParameter[] parameters =
+                       {
+                        new ReportParameter("Petugas",context.GetUser()),
+                        new ReportParameter("Nomor",""),
+                        new ReportParameter("Pengirim",Shiper.Name),
+                        new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",Shiper.Address,Shiper.Handphone)),
+                        new ReportParameter("Penerima",Reciever.Name),
+                        new ReportParameter("AlamatPenerima",string.Format("{0}\r Hanphone :{1}",Reciever.Address,Reciever.Handphone)),
+                        new ReportParameter("Tanggal",this.CreatedDate.ToShortDateString())
+                        };
+
+            Helpers.PrintPreviewWithFormAction(new ReportDataSource { Value = Collies.ToList() }, "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+
         }
 
         private async void SetNew()
@@ -95,39 +180,102 @@ namespace MainApp.Views
             this.PayType = PayType.Chash;
             this.RecieverId = 0;
             this.ShiperID = 0;
-            
+            this.FromId = Helpers.GetIntValue("CityId");
         }
+
+
+        private PayType payTypeSelected;
+
+        public PayType PayTypeSelected
+        {
+            get { return payTypeSelected; }
+            set {
+                if (ShiperID <= 0 && value == PayType.Deposit)
+                {
+                    Helpers.ShowErrorMessage("Pengirim Bukan Customer Deposit");
+                    SetBackToCash();
+                }
+                else
+                {
+                    SetProperty(ref payTypeSelected, value);
+                    PayType = value;
+                }
+      
+
+
+
+
+            }
+        }
+        public async void SetBackToCash()
+        {
+            await Task.Delay(100);
+            PayTypeSelected = PayType.Chash;
+        }
+
 
         private bool SaveValidate(object obj)
         {
-            if (string.IsNullOrEmpty(Error)&& Collies.Count>0)
+            if (this.ToId<=0 || string.IsNullOrEmpty(Shiper.Name) || string.IsNullOrEmpty(Reciever.Name) || Collies.Count<=0 || (ShiperID<=0 && PayTypeSelected== PayType.Deposit))
             {
-                return true;
+                return false;
             }
             else
-                return false;
+                return true;
         }
 
         private void SaveAction(object obj)
         {
             try
             {
+                if (IsBusy)
+                    return;
+                IsBusy = true;
                 pti model = (pti)this;
+                model.FromId = Helpers.GetIntValue("CityId");
                 context.SaveChange(model);
                 Saved = true;
+
+                var resultDialog = MessageBox.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if(resultDialog== MessageBoxResult.Yes)
+                {
+                    using (var print = new HelperPrint())
+                    {
+                        ReportParameter[] parameters =
+                        {
+                        new ReportParameter("Petugas",context.GetUser()),
+                        new ReportParameter("Nomor",model.Code),
+                        new ReportParameter("Pengirim",Shiper.Name),
+                        new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",Shiper.Address,Shiper.Handphone)),
+                        new ReportParameter("Penerima",Reciever.Name),
+                        new ReportParameter("AlamatPenerima",string.Format("{0}\r Hanphone :{1}",Reciever.Address,Reciever.Handphone)),
+                        new ReportParameter("Tanggal",model.CreatedDate.ToShortDateString())
+                        };
+
+                        print.PrintDocument(model.Collies.ToList(), "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+                    }
+                }
+
+
                 WindowClose();
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }finally
+            {
+                IsBusy = false;
             }
         }
-
        
         public CollectionView SourceView { get; }
         public CommandHandler SaveCommand { get; }
         public CommandHandler CancelCommand { get; }
+        public CommandHandler PrintPreviewCommand { get; }
+        public CommandHandler AddNewCityCommand { get; }
+        public ObservableCollection<city> Cities { get; }
+        public CollectionView CitiesSourceView { get; }
         public bool IsNew { get; private set; }
 
         public string Error => error;
@@ -139,6 +287,7 @@ namespace MainApp.Views
         {
             get
             {
+
                 error = string.Empty;
                 if (columnName == "ShiperId")
                     error = ShiperID <= 0 ? "" : null;

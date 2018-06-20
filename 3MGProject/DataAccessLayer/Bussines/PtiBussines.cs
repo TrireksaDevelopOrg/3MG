@@ -92,6 +92,15 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public Task<List<collies>> GetDetailOfPTI(PTI selected)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var result = db.Collies.Where(O => O.PtiId == selected.Id).ToList();
+                return Task.FromResult(result);
+            }
+        }
+
         public Task<List<collies>> GetColliesOutOfSMU(int id)
         {
             try
@@ -112,6 +121,78 @@ namespace DataAccessLayer.Bussines
                 throw new SystemException(ex.Message);
             }
         }
+
+        public Task<List<PTI>> GetPTIForPrint(int id)
+        {
+            var list = new List<PTI>();
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+
+                    var sp = string.Format("PTIFORPRINT");
+                    var cmd = db.CreateCommand();
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = sp;
+                    cmd.Parameters.Add(new MySql.Data.MySqlClient.MySqlParameter("id", id));
+                    var dr = cmd.ExecuteReader();
+                    list = MappingProperties<PTI>.MappingTable(dr);
+                    dr.Close();
+
+                    return Task.FromResult(list);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException(ex.Message);
+            }
+        }
+
+        public Task<bool> SetCancelPTI(PTI selectedPTI,string alasan)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+
+                    if (selectedPTI.OnSMU)
+                    {
+                        ActivedStatus ac = ActivedStatus.Cancel;
+                        var result = db.SMU.Where(O => O.PTIId == selectedPTI.Id && O.ActiveStatus!=ac ).FirstOrDefault();
+                        if(result!=null)
+                            throw new SystemException("PTI Telah Dibuatkan SMU, Batalkan SMU Lebih Dulu");
+                    }
+                      
+                    ActivedStatus active = ActivedStatus.Cancel;
+                    var updated = db.PTI.Update(O => new { O.ActiveStatus }, new pti { Id = selectedPTI.Id, ActiveStatus = active }, O => O.Id == selectedPTI.Id);
+                    if (updated)
+                    {
+                        selectedPTI.ActiveStatus = ActivedStatus.Cancel;
+                        var his = User.GenerateHistory(selectedPTI.Id, BussinesType.PTI, ChangeType.Cancel, alasan);
+                        if(!db.Histories.Insert(his))
+                            throw new SystemException("Gagal Diubah");
+
+                        trans.Commit();
+
+                        return Task.FromResult(true);
+                    }
+                    else
+                    {
+                        throw new SystemException("Gagal Diubah");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+
+            }
+        }
+
+   
 
         public Task<List<PTI>> GetPTIFromTo(DateTime startDate, DateTime endDate)
         {

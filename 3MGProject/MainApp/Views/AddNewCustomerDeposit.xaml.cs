@@ -64,7 +64,7 @@ namespace MainApp.Views
             this.Email = cust.Email;
             this.Handphone = cust.Handphone;
             this.Phone1 = cust.Phone1;
-            this.Phone2 = cust.Phone2;
+            this.NoIdentitas = cust.NoIdentitas;
             this.TitleCaption = "Edit Customer";
 
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = CancelCommandaction };

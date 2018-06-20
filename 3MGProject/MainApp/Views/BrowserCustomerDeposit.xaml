@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views"  WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Style="{StaticResource WindowKey}"
         Title="Cari Customer" Height="500" Width="524">
     <Grid>
@@ -15,7 +15,7 @@
         <Border Style="{DynamicResource BorderLayoutStyle}">
             <WrapPanel>
                 <Label MinWidth="30" Content="Cari"/>
-                <TextBox Width="200"></TextBox>
+                <TextBox Width="200" Text="{Binding Search}"></TextBox>
             </WrapPanel>
         </Border>
         <Border Grid.Row="1"  Style="{DynamicResource BorderLayoutStyle}">

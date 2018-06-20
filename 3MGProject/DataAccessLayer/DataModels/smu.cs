@@ -51,11 +51,34 @@ using Ocph.DAL;
 
         }
 
+      
+        private int ptiId;
+        [DbColumn("PTIId")]
+        public int PTIId
+        {
+            get { return ptiId; }
+            set { SetProperty(ref ptiId ,value); }
+        }
+
+
+        [DbColumn("ActiveStatus")]
+        public ActivedStatus ActiveStatus
+        {
+            get { return _activestatus; }
+            set
+            {
+
+                SetProperty(ref _activestatus, value);
+            }
+        }
+
+
 
         private int  _id;
            private int _kode;
            private DateTime  _createddate;
-      }
+        private ActivedStatus _activestatus;
+    }
 }
 
 

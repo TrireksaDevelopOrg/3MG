@@ -44,7 +44,7 @@ namespace DataAccessLayer.Bussines
                         O.Handphone,
                         O.Name,
                         O.Phone1,
-                        O.Phone2
+                        O.NoIdentitas
                     }, cust, O => O.Id == cust.Id))
                     {
                         throw new SystemException("Data Tidak Tersimpan");
@@ -116,6 +116,56 @@ namespace DataAccessLayer.Bussines
             catch (Exception)
             {
                 return Task.FromResult(new List<DebetDeposit>());
+            }
+        }
+
+        public Task<List<Saldo>> GetRekeningKorang(DateTime tanggal,int ShiperId)
+        {
+            DateTime now = new DateTime(tanggal.Year, tanggal.Month, tanggal.Day);
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "SaldoAkhirSebelumTanggal";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("tanggal", now));
+                    cmd.Parameters.Add(new MySqlParameter("custId", ShiperId));
+                    var saldoAkhir =(double) cmd.ExecuteScalar();
+
+                    cmd.CommandText = "DebetFromDate";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            
+                    var reader =cmd.ExecuteReader();
+                    var DataDebet = MappingProperties<SMU>.MappingTable(reader);
+                    reader.Close();
+                    var deposit = db.Deposit.Where(O => O.CustomerId == ShiperId && O.CreatedDate >= now).ToList();
+
+                    List<Saldo> list = new List<Saldo>();
+                    list.Add(new Models.Saldo { SaldoAkhir = saldoAkhir, Tanggal = now.AddDays(-1), Description="Saldo Awal" });
+                    foreach(var item in DataDebet )
+                    {
+                        list.Add(new Saldo
+                        {
+                            Description = "SMU" + item.Code,
+                            Debet = item.Biaya,
+                            Tanggal = item.CreatedDate, ManifestCode=item.ManifestCode, Biaya=item.Biaya, CreatedDate=item.CreatedDate, 
+                              Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName,  SMUNumber=item.Kode, Total=item.Total, Weight=item.Weight
+                        });
+                    }
+
+
+                    foreach(var item in deposit)
+                    {
+                        list.Add(new Saldo { Description = "Deposit", Kredit = item.Jumlah , Tanggal=item.CreatedDate});
+                    }
+
+                    return Task.FromResult(list.OrderBy(O=>O.Tanggal).ToList());
+                }
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(new List<Saldo>());
             }
         }
     }

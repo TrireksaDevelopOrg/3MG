@@ -38,7 +38,8 @@ namespace DataAccessLayer
 
     public enum ChangeType
     {
-        Create,Update,Delete
+        Create,Update,Delete,
+        Cancel
     }
 
     public enum BussinesType

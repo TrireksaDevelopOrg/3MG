@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views" ShowInTaskbar="False"
         mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
         Title="Tambah SMU" Height="450" Width="800">
     <Border Style="{StaticResource BorderLayoutStyle}">
@@ -38,11 +38,11 @@
                        
                             <WrapPanel>
                                 <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="Dari"/>
-                                <Label Margin="0" Height="auto" FontSize="16" Content="Jayapura"/>
+                                <Label Margin="0" Height="auto" FontSize="16" Content="{Binding PTISelected.FromCityName}"/>
                             </WrapPanel>
                             <WrapPanel>
                                 <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="Tujuan"/>
-                                <Label Margin="0" Height="auto" FontSize="16"  Content="Wamena"/>
+                                <Label Margin="0" Height="auto" FontSize="16"  Content="{Binding PTISelected.ToCityName}"/>
                             </WrapPanel>
                         </StackPanel>
                     </Border>

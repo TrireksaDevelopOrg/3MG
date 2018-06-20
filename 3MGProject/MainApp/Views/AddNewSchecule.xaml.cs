@@ -44,7 +44,8 @@ namespace MainApp.Views
         {
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
             CancelCommand = new CommandHandler { CanExecuteAction =x=>true, ExecuteAction =x=> WindowClose()};
-
+            AddNewPortCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewPortAction };
+            AddNewPlaneCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddPlaneAction };
             Planes = new ObservableCollection<planes>();
             Ports = new ObservableCollection<ports>();
 
@@ -52,6 +53,31 @@ namespace MainApp.Views
             Destinations = (CollectionView)CollectionViewSource.GetDefaultView(Ports);
             Origins = (CollectionView)CollectionViewSource.GetDefaultView(Ports);
             LoadData();
+        }
+
+        private void AddNewPortAction(object obj)
+        {
+            var form = new Views.AddNewPort();
+            form.ShowDialog();
+            var vm = (AddNewPortViewModel)form.DataContext;
+            if(vm.SaveSuccess && vm.SaveResult!=null)
+            {
+                Ports.Add(vm.SaveResult);
+            }
+            Destinations.Refresh();
+            Origins.Refresh();
+        }
+
+        private void AddPlaneAction(object obj)
+        {
+            var form = new Views.AddNewPlanes();
+            form.ShowDialog();
+            var vm = (AddNewPlaneViewModel)form.DataContext;
+            if (vm.SaveSuccess && vm.SaveResult != null)
+            {
+                Planes.Add(vm.SaveResult);
+            }
+            PlanesView.Refresh();
         }
 
         private async void SaveAction(object obj)
@@ -99,7 +125,7 @@ namespace MainApp.Views
             if (this.End == new TimeSpan() || Start == new TimeSpan())
                 result = false;
 
-            if (Capacities<=0|| PlaneId <= 0 || PortTo <= 0 || PortFrom <= 0 || PlaneId <= 0)
+            if (Capacities<=0|| PlaneId <= 0 || PortTo <= 0 || PortFrom <= 0)
                 result = false;
 
             if (Start > End || Start == End)
@@ -131,6 +157,9 @@ namespace MainApp.Views
 
         public CommandHandler SaveCommand { get; }
         public CommandHandler CancelCommand { get; }
+
+        public CommandHandler AddNewPortCommand { get; }
+        public CommandHandler AddNewPlaneCommand { get; }
         public ObservableCollection<planes> Planes { get; }
         public ObservableCollection<ports> Ports { get; }
         public CollectionView PlanesView { get; }

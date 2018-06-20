@@ -27,7 +27,7 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     
-                    var smudata = new smu { CreatedDate = DateTime.Now, Kode= CodeGenerate.GetNewSMUNumber().Result };
+                    var smudata = new smu {  PTIId=pTISelected.Id, CreatedDate = DateTime.Now, Kode= CodeGenerate.GetNewSMUNumber().Result };
                     smudata.Id = db.SMU.InsertAndGetLastID(smudata);
                     if (smudata.Id <= 0)
                         throw new SystemException("Data Tidak Tersimpan");
@@ -105,10 +105,82 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-        
+        public Task<List<SuratMuatanUdara>> GetSMUHeader(int id)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "SMUHEADER";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("id", id));
+                    var reader = cmd.ExecuteReader();
+                    var result = MappingProperties<SuratMuatanUdara>.MappingTable(reader);
+                    if (result.Count < 0)
+                        throw new SystemException("Detail SMU Tidak Ditemukan");
+
+                    return Task.FromResult(result);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException(ex.Message);
+            }
+        }
+
+        public void SetCancelSMU(SMU selectedItem, string alasan)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    if(selectedItem.ActiveStatus!= ActivedStatus.Cancel)
+                    {
+
+                        var result = (from a in db.ManifestDetail.Where(O => O.SMUId == selectedItem.Id)
+                                      join b in db.Manifest.Select() on a.manifestoutgoingId equals b.Id
+                                      select b).FirstOrDefault();
 
 
+                        if (result != null && result.IsTakeOff)
+                            throw new SystemException(string.Format("{0} Tidak Dapat Dibatalkan \r\n Telah Berangkat Dengan Manifest Nomor {1}", selectedItem.Code, result.Code));
 
+                        if (result != null && !result.IsTakeOff)
+                            throw new SystemException(string.Format("Batalkan {0} Dari Manifest Nomor {1}", selectedItem.Code, result.Code));
+
+
+                        ActivedStatus active = ActivedStatus.Cancel;
+                        var updated = db.SMU.Update(O => new { O.ActiveStatus }, new smu { Id = selectedItem.Id, ActiveStatus = active }, O => O.Id == selectedItem.Id);
+                        if (updated)
+                        {
+                            selectedItem.ActiveStatus = ActivedStatus.Cancel;
+                            var his = User.GenerateHistory(selectedItem.Id, BussinesType.SMU, ChangeType.Cancel, alasan);
+                            if (!db.Histories.Insert(his))
+                                throw new SystemException("Gagal Diubah");
+
+                            trans.Commit();
+                        }
+                        else
+                        {
+                            throw new SystemException("Gagal Diubah");
+                        }
+                    }else
+
+                        throw new SystemException("SMU Telah Batal");
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+
+            }
+        }
 
         public Task<Tuple<SMU,SMU>> SplitSMU(SMU smuSelected, ObservableCollection<SMUDetail> originSource, ObservableCollection<SMUDetail> destinationSource)
         {

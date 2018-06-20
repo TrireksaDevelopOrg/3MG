@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
-        Title="AddNewSchecule" Height="356.604" Width="327.434">
+        Title="AddNewSchecule" Height="375" Width="400">
     <Window.Resources>
         <Style TargetType="DatePickerTextBox">
             <Setter Property="Height" Value="27"/>
@@ -28,20 +28,44 @@
                 <Label Content="Kode"/>
                 <Label Content="Dari"/>
                 <Label Content="Tujuan"/>
-                <Label Content="Berangkat"/>
-                <Label Content="Tiba"/>
-                <Label Content="Kapasitas"/>
+                <Label Content="Jam Berangkat"/>
+                <Label Content="Jam Tiba"/>
+                <Label Content="Kapasitas (Kg)"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <ComboBox SelectedItem="{ Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
+                <Grid Margin="0,0,3,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" Margin="3,3,0,3"  SelectedItem="{ Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
                           SelectedValuePath="Id" DisplayMemberPath="Name"                          
-                          ItemsSource="{Binding PlanesView}" />
+                          ItemsSource="{Binding PlanesView}"  />
+                    <Button Command="{Binding AddNewPlaneCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                </Grid>
                 <Label Content="{Binding PlaneSelected.Kode}"/>
-                <ComboBox SelectedItem="{ Binding OriginSelected}" SelectedValue="{Binding PortFrom}" 
-                          SelectedValuePath="Id" DisplayMemberPath="Name"  
-                          Name="origin" ItemsSource="{Binding Origins}"/>
-                <ComboBox SelectedItem="{ Binding DestinationSelected}" SelectedValue="{Binding PortTo}" 
-                          SelectedValuePath="Id" DisplayMemberPath="Name"   Name="destination" ItemsSource="{Binding Destinations}" />
+
+
+                <Grid Margin="0,0,3,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" Margin="3,3,0,3" SelectedItem="{Binding OriginSelected}" SelectedValue="{Binding PortFrom}" 
+                       DisplayMemberPath="Name" SelectedValuePath="Id"  Name="origin" ItemsSource="{Binding Origins}"/>
+                    <Button Command="{Binding AddNewPortCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                </Grid>
+
+
+                <Grid Margin="0,0,3,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90*"/>
+                        <ColumnDefinition Width="10*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" Margin="3,3,0,3" SelectedItem="{Binding DestinationSelected}" SelectedValue="{Binding PortTo}" 
+                          SelectedValuePath="Id" DisplayMemberPath="Name"   Name="destination" ItemsSource="{Binding Destinations}"/>
+                    <Button Command="{Binding AddNewPortCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                </Grid>
                 <DatePickerTextBox Text="{Binding Start}"/>
                 <DatePickerTextBox Text="{Binding End}"/>
                 <TextBox Text="{Binding Capacities,StringFormat={}{0:N2}}"/>

@@ -89,13 +89,39 @@ namespace MainApp.Views
             return false;
         }
 
-        private void SaveAction(object obj)
+        private async void SaveAction(object obj)
         {
             try
             {
                 manifestoutgoing manifest = (manifestoutgoing)this;
-                context.CreateNewManifest(ScheduleSelected, manifest, Source);
+                var result = await context.CreateNewManifest(ScheduleSelected, manifest, Source);
                 Success = true;
+
+                var man = new Manifest
+                {
+                    Code = result.Code,
+                    Complete = false,
+                    CreatedDate = result.CreatedDate,
+                    OriginPortName = ScheduleSelected.OriginPortName,
+                    DestinationPortName = ScheduleSelected.DestinationPortName,
+                    DestinationPortCode = ScheduleSelected.DestinationPortCode,
+                    OriginPortCode = ScheduleSelected.OriginPortCode,
+                    PlaneName = ScheduleSelected.PlaneName,
+                    PlaneCode = ScheduleSelected.PlaneCode,
+                    End = ScheduleSelected.End,
+                    Start = ScheduleSelected.Start,
+                    IsTakeOff = false,
+                    User = result.User,
+                    Tanggal = result.CreatedDate,
+                    Id = result.Id,
+                    PlaneId = ScheduleSelected.PlaneId,
+                    PortFrom = ScheduleSelected.PortFrom,
+                    PortTo = ScheduleSelected.PortTo,
+                    ManifestCode = result.ManifestCode,
+                    SchedulesId = SchedulesId
+                };
+
+                this.SavedResult = man;
                 WindowClose();
             }
             catch (Exception ex)
@@ -187,5 +213,6 @@ namespace MainApp.Views
         public bool IsNew { get; }
         public Action WindowClose { get; internal set; }
         public bool Success { get; private set; }
+        public Manifest SavedResult { get; private set; }
     }
 }

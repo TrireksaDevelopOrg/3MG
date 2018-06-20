@@ -19,6 +19,16 @@ namespace DataAccessLayer.Bussines
         }
         public string NotHaveAccess { get { return "Anda Tidak Memiliki Akses"; } }
         public static user User { get; internal set; }
+
+        public string GetUser()
+        {
+            return User.Name;
+        }
+
+        public Task<bool> IsInRole(string role)
+        {
+            return User.InRole(role);
+        }
     }
 
     [AttributeUsage(AttributeTargets.Method)]

@@ -41,7 +41,7 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("Phone1")] 
+          [DbColumn("Phone")] 
           public string Phone1 
           { 
                get{return _phone1;} 
@@ -51,8 +51,8 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("Phone2")] 
-          public string Phone2 
+          [DbColumn("NoIdentitas")] 
+          public string NoIdentitas 
           { 
                get{return _phone2;} 
                set{ 

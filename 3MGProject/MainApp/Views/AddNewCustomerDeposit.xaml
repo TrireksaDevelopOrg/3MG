@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views" ShowInTaskbar="False"
         mc:Ignorable="d" Style="{StaticResource WindowKey}"
-        Title="{Binding TitleCaption}" Height="413.157" Width="382.255">
+        Title="{Binding TitleCaption}" Height="363.157" Width="386.255">
     <Grid  Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -19,8 +19,8 @@
             <Label Content="Nama"/>
             <Label Content="Contact Person"/>
             <Label Content="Handphone"/>
-            <Label Content="Telepon 1"/>
-            <Label Content="Telepon 2"/>
+            <Label Content="Telepon"/>
+            <Label Content="Nomor Identitas"/>
             <Label Content="Email"/>
             <Label Content="Alamat"/>
         </StackPanel>

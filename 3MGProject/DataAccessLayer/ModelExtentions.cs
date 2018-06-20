@@ -21,7 +21,7 @@ namespace DataAccessLayer
                 Id = cust.Id,
                 Name = cust.Name,
                 Phone1 = cust.Phone1,
-                Phone2 = cust.Phone2
+                NoIdentitas = cust.NoIdentitas
             };
         }
     }

@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp"
         mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
-        Title="MainWindow" Height="564" Width="1007">
+        Title="Aplikasi Cargo TRIMG" Height="564" Width="1007">
     <Window.Resources>
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Width" Value="150"></Setter>
             <Setter Property="Height" Value="75"></Setter>
+            <Setter Property="BorderBrush" Value="AntiqueWhite"/>
         </Style>
     </Window.Resources>
     <Grid>

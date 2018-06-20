@@ -11,6 +11,8 @@ namespace DataAccessLayer.Models
     {
         private string _code;
         private bool _isSended;
+        private double _ppn;
+        private double total;
 
         public int Id { get; set; }
         public int Kode { get; set; }
@@ -22,6 +24,8 @@ namespace DataAccessLayer.Models
         public double Weight { get; set; }
         public double Biaya { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int ManifestCode { get; set; }
+      
         public bool IsSended {
             get { return _isSended; }
             set
@@ -29,6 +33,18 @@ namespace DataAccessLayer.Models
                 SetProperty(ref _isSended, value);
             }
         }
+
+        public double PPN {
+            get {
+                if (_ppn <= 0)
+                    _ppn=Biaya+(Biaya * 10/100);
+                return _ppn;
+            }
+            set { SetProperty(ref _ppn, value); }
+        }
+
+        public virtual double Total { get { return Biaya + PPN; } set { total = value; } }
+
         public virtual string Code
         { get
             {
@@ -43,5 +59,6 @@ namespace DataAccessLayer.Models
             }
         }
 
+        public ActivedStatus ActiveStatus { get;  set; }
     }
 }

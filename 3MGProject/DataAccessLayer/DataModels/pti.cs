@@ -119,6 +119,29 @@ using Ocph.DAL;
             set { SetProperty(ref onSMU ,value); }
         }
 
+        [DbColumn("FromId")]
+        public int FromId
+        {
+            get { return _portid; }
+            set
+            {
+
+                SetProperty(ref _portid, value);
+            }
+        }
+
+        [DbColumn("ToId")]
+        public int ToId
+        {
+            get { return _portTo; }
+            set
+            {
+
+                SetProperty(ref _portTo, value);
+            }
+        }
+      
+
         public ObservableCollection<collies> Collies { get; set; }
 
         public customer Shiper
@@ -163,7 +186,9 @@ using Ocph.DAL;
            private PayType _paytype;
            private double  _etc;
            private string  _note;
-           private DateTime  _createddate;
+        private int _portTo;
+        private int _portid;
+        private DateTime  _createddate;
            private ActivedStatus _activestatus;
         private int _reciever;
         private customer shiper;

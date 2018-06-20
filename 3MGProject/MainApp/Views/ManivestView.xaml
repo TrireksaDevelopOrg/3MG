@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
-        Title="ManivestView" Height="450" Width="800">
+        Title="Manifest" Height="450" Width="800">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>
@@ -18,40 +18,112 @@
                     <StackPanel HorizontalAlignment="Left">
                         <WrapPanel>
                             <Label Content="Dari" Width="75"/>
-                            <DatePicker SelectedDate="{Binding StartDate}" Height="35" Margin="5" Width="150"/>
+                            <DatePicker SelectedDate="{Binding StartDate}" Height="25" Margin="5" Width="150"/>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Content="Sampai" Width="75"/>
-                            <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="35"/>
+                            <DatePicker SelectedDate="{Binding EndDate}" Width="150" Margin="5" Height="25"/>
                         </WrapPanel>
                     </StackPanel>
                     <Button Command="{Binding AddNewManifestCommand}" Height="60" Width="120" Content="Tambah Manifest" HorizontalAlignment="Right"/>
                 </Grid>
             </Border>
             <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
-                <DataGrid ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ManifestCode}" Header="Nomor Manifest" />
-                        <DataGridTextColumn Binding="{Binding Tanggal}" Header="Tanggal" />
-                        <DataGridTextColumn Binding="{Binding PlaneName}" Header="Nama Pesawat" />
-                        <DataGridTextColumn Binding="{Binding PlaneCode}" Header="Kode Penerbangan" />
-                        <DataGridTextColumn Binding="{Binding OriginPortName}" Header="Asal" />
-                        <DataGridTextColumn Binding="{Binding OriginPortCode}" Header="Kode" />
-                        <DataGridTextColumn Binding="{Binding DestinationPortName}" Header="Tujuan" />
-                        <DataGridTextColumn Binding="{Binding DestinationPortCode}" Header="Kode" />
-                        <DataGridTextColumn Binding="{Binding Start}" Header="Berangkat" />
-                        <DataGridTextColumn Binding="{Binding End}" Header="Berangkat"/>
-                        <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding IsTakeOff}" Header="TakeOff" Width="auto"/>
-                        <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding Complete}" Header="Departed" Width="auto"/>
-                        <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
-                    </DataGrid.Columns>
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Create SMU" Command="{Binding CreateSMU}"/>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="{Binding GridWidth}"/>
+                    </Grid.ColumnDefinitions>
 
-                </DataGrid>
+                    <DataGrid Name="dg" Grid.Column="0" ItemsSource="{Binding SourceView}" SelectedItem="{Binding ManifestSelected}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ManifestCode}" Header="Nomor Manifest" />
+                            <DataGridTextColumn Binding="{Binding Tanggal,StringFormat=dd MMMM yyyy}" Header="Tanggal" />
+                            <DataGridTextColumn Binding="{Binding PlaneName}" Header="Nama Pesawat" />
+                            <DataGridTextColumn Binding="{Binding PlaneCode}" Header="Kode Penerbangan" />
+                            <DataGridTextColumn Width="*" Binding="{Binding OriginPortName}" Header="Asal" />
+                            <DataGridTextColumn  Binding="{Binding OriginPortCode}" Header="Kode" />
+                            <DataGridTextColumn Width="*" Binding="{Binding DestinationPortName}" Header="Tujuan" />
+                            <DataGridTextColumn Binding="{Binding DestinationPortCode}" Header="Kode" />
+                            <DataGridTextColumn Binding="{Binding Start}" Header="Berangkat" />
+                            <DataGridTextColumn Binding="{Binding End}" Header="Berangkat"/>
+                            <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding IsTakeOff}" Header="TakeOff" Width="auto"/>
+                            <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding Complete}" Header="Departed" Width="auto"/>
+                            <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                                <MenuItem Header="Print Preview" Command="{Binding PrintPreviewCommand}"/>
+                                <MenuItem Header="Print" Command="{Binding PrintCommand}"/>
+                                <MenuItem Height="auto" Header="Sort">
+                                    <MenuItem Height="auto" Header="Sort">
+                                        <MenuItem.Template>
+                                            <ControlTemplate>
+                                                <Grid Margin="30,3">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label  Content="Status"/>
+                                                    <WrapPanel Margin="3,0" Grid.Row="1">
+                                                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding Aktif}"/>
+                                                        <Label VerticalAlignment="Center" Content="OK"/>
+                                                    </WrapPanel>
+                                                    <WrapPanel Margin="3,0" Grid.Row="2" >
+                                                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
+                                                        <Label VerticalAlignment="Center" Content="Batal"/>
+
+                                                    </WrapPanel>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </MenuItem.Template>
+                                    </MenuItem>
+                                </MenuItem>
+                                <MenuItem Header="Batalkan Manifes" Command="{Binding CreateManifest}">
+                                    <MenuItem Height="auto" Header="Alasan">
+                                        <MenuItem.Template>
+                                            <ControlTemplate>
+                                                <Grid Margin="25,3">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Label Content="Alasan Pembatalan"></Label>
+                                                    <WrapPanel Margin="3" Grid.Row="1">
+                                                        <TextBox  Name="alasan" MinWidth="150" Width="auto"></TextBox>
+                                                    </WrapPanel>
+                                                    <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding CancelManifest}" 
+                                                        CommandParameter="{Binding Text, ElementName=alasan}" 
+                                                        Content="Batalkan" 
+                                                        IsDefault="{Binding IsFocused, ElementName=alasan}" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </MenuItem.Template>
+                                    </MenuItem>
+                                </MenuItem>
+                                
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+
+                    </DataGrid>
+                    <DataGrid ItemsSource="{Binding ManifestSelected.Details}" 
+                              AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
+                              Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nomor SMU" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Width="*" Header="Pengirim" Binding="{Binding ShiperName}"/>
+                            <DataGridTextColumn Width="*" Header="Penerima" Binding="{Binding RecieverName}"/>
+                            <DataGridTextColumn Header="pcs" Binding="{Binding Pcs, StringFormat={}{0:N2}}"/>
+                            <DataGridTextColumn Header="Berat" Binding="{Binding Weight, StringFormat={}{0:N2}}"/>
+                            <DataGridTextColumn Header="Biaya" Binding="{Binding Biaya, StringFormat={}{0:N2}}"/>
+                            <DataGridTextColumn Header="Tanggal" Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>   
             </Border>
             <Border Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
                 <WrapPanel HorizontalAlignment="Right">

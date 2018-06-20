@@ -52,6 +52,30 @@ using Ocph.DAL;
                      }
           }
 
+
+
+
+        private bool isTakeOff;
+
+        [DbColumn("IsTakeOff")]
+        public bool IsTakeOff
+        {
+            get { return isTakeOff; }
+            set { isTakeOff = value; }
+        }
+
+        [DbColumn("ActiveStatus")]
+        public ActivedStatus ActiveStatus
+        {
+            get { return _activestatus; }
+            set
+            {
+
+                SetProperty(ref _activestatus, value);
+            }
+        }
+
+
         private string codeManifest;
 
         public string ManifestCode
@@ -63,13 +87,14 @@ using Ocph.DAL;
             set { SetProperty(ref codeManifest ,value); }
         }
 
-        public string User { get; internal set; }
+        public string User { get;  set; }
 
         private int  _id;
            private int  _schedulesid;
            private int  _code;
            private DateTime  _createddate;
-      }
+        private ActivedStatus _activestatus;
+    }
 }
 
 

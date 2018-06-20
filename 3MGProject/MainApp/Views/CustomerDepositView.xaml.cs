@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using DataAccessLayer.Models;
+using Microsoft.Reporting.WinForms;
 
 namespace MainApp.Views
 {
@@ -21,6 +22,7 @@ namespace MainApp.Views
             viewmodel = new CustomerDepositViewModel { WindowClose = this.Close };
             this.DataContext = viewmodel;
         }
+
     }
 
 
@@ -32,7 +34,7 @@ namespace MainApp.Views
         public ObservableCollection<customer> Source { get; }
         public CollectionView SourceView { get; }
 
-
+        public CommandHandler PrintRekening { get; }
         public CommandHandler AddNewCustomerCommand { get; }
         public CommandHandler CancelCommand { get; }
         public CommandHandler AddNewDepositCommand { get; }
@@ -96,6 +98,7 @@ namespace MainApp.Views
 
         public CustomerDepositViewModel()
         {
+            PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<=DateTime.Now, ExecuteAction = PrintRekeningKoran };
             AddNewDepositCommand = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null, ExecuteAction = AddNewDepositCommandAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshCommandaction };
             AddNewCustomerCommand = new CommandHandler { CanExecuteAction = AddNewCustomerCommandValidate, ExecuteAction = AddNewCustomerCommandAction };
@@ -114,7 +117,10 @@ namespace MainApp.Views
             DepositViewSource.Refresh();
             RefreshCommand.Execute(null);
             SelectedCustomer = null;
+            SelectedDate = DateTime.Now;
         }
+
+       
 
         private void AddNewDepositCommandAction(object obj)
         {
@@ -175,5 +181,41 @@ namespace MainApp.Views
             }
 
         }
+
+       
+        public async void PrintRekeningKoran(object obj)
+        {
+           var result = await  context.GetRekeningKorang(SelectedDate,SelectedCustomer.Id);
+            ReportParameter[] parameters =
+                 {
+                       new ReportParameter("User",context.GetUser()),
+                    new ReportParameter("Nomor",string.Format("{0:D6}",SelectedCustomer.Id)),
+                    new ReportParameter("Shiper",SelectedCustomer.Name.ToString()),
+                    new ReportParameter("Address",string.Format("{0}\r\n Hanphone :{1}",SelectedCustomer.Address,SelectedCustomer.Handphone)),
+                    new ReportParameter("Tanggal",DateTime.Now.ToShortDateString())
+
+
+                };
+           double saldo = 0;
+
+            foreach(var item in result)
+            {
+                saldo = saldo + item.Kredit - item.Total+ item.SaldoAkhir;
+                item.SaldoAkhir = saldo;
+
+            }
+
+            result.Add(new Saldo { Tanggal = DateTime.Now, SaldoAkhir = saldo, Description = "Saldo Akhir" });
+            var source = new ReportDataSource { Value = result };
+            Helpers.PrintPreviewWithFormAction(source, "MainApp.Reports.Layouts.Rekening1.rdlc", parameters);
+        }
+        private DateTime selectedDate;
+
+        public DateTime SelectedDate
+        {
+            get { return selectedDate; }
+            set { SetProperty(ref selectedDate ,value); }
+        }
+
     }
 }

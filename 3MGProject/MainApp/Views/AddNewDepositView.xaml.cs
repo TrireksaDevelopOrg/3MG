@@ -54,6 +54,7 @@ namespace MainApp.Views
             {
                 var dep=(Deposit)this;
                 context.AddNewDeposit(dep);
+                this.User = context.GetUser();
                 Helpers.ShowMessage("Data Tersimpan");
                 this.Saved = true;
                 WindowClose();

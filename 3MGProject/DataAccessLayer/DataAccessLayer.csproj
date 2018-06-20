@@ -67,6 +67,7 @@
     <Compile Include="DataModels\pricetype.cs" />
     <Compile Include="DataModels\pti.cs" />
     <Compile Include="DataModels\role.cs" />
+    <Compile Include="Models\Saldo.cs" />
     <Compile Include="DataModels\schedules.cs" />
     <Compile Include="DataModels\smu.cs" />
     <Compile Include="DataModels\smudetails.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Models\Schedule.cs" />
     <Compile Include="Models\SMU.cs" />
     <Compile Include="Models\SMUDetail.cs" />
+    <Compile Include="Models\SuratMuatanUdara.cs" />
     <Compile Include="OcphDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy.cs" />
