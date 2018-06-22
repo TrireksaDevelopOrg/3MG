@@ -35,7 +35,7 @@ namespace MainApp.Views
     public class AddNewDepositViewModel:Deposit,IDataErrorInfo
     {
         private string error;
-
+        public new string MyTitle { get; set; } = "TAMBAH DEPOSITE";
         public AddNewDepositViewModel(customer customer)
         {
             this.CreatedDate = DateTime.Now;

@@ -5,9 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource WindowKey}"
         xmlns:bConvert="clr-namespace:MainApp" ShowInTaskbar="False"
+        xmlns:kemas ="clr-namespace:MainApp.Views"
         mc:Ignorable="d"  WindowState="Maximized" Title="Tambah PTI" Height="650" Width="800">
     <Window.Resources>
         <bConvert:BusyConverter x:Key="busyConverter"/>
+        <kemas:Kemasan x:Key="Kemasans"/>
+        <Style x:Key="dgCell" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{StaticResource clrSecound}"/>
+                    <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
+                    <Setter Property="BorderBrush" Value="Orange"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="BorderBrush" Value="OrangeRed"/>
+                    <Setter Property="BorderThickness" Value="3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Control Visibility="{Binding IsBusy, Converter={StaticResource busyConverter}}" Style="{StaticResource BusyAnimationStyle}"/>
@@ -102,9 +117,12 @@
 
                 </Grid>
             </Border>
-            <DataGrid Margin="5" ItemsSource="{Binding SourceView,ValidatesOnDataErrors=True,NotifyOnValidationError=True}" AddingNewItem="DataGrid_AddingNewItem" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2">
+            <DataGrid Name="dg" Margin="5" CellStyle="{StaticResource dgCell}" ItemsSource="{Binding SourceView,ValidatesOnDataErrors=True,NotifyOnValidationError=True}" AddingNewItem="DataGrid_AddingNewItem" RowEditEnding="DataGrid_RowEditEnding" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Isi"/>
+                    <DataGridComboBoxColumn Width="100" x:Name="kemasan" Header="Kemasan"
+                    SelectedValueBinding="{Binding Kemasan, Mode=TwoWay}"  
+                    DisplayMemberPath="{Binding Kemasan}" ItemsSource="{Binding Source={StaticResource Kemasans}}" />
                     <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
                     <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
                     <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>
@@ -115,7 +133,7 @@
                 <WrapPanel HorizontalAlignment="Right">
                     <Button Command="{Binding SaveCommand}" Content="Simpan"></Button>
                     <Button Command="{Binding PrintPreviewCommand}" Content="Preview"/>
-                    <Button Command="{Binding CancelCommand}" Content="Batal"></Button>
+                    <Button Command="{Binding CancelCommand}" Content="Close"></Button>
                 </WrapPanel>
             </Border>
         </Grid>

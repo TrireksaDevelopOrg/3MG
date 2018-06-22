@@ -81,6 +81,7 @@ namespace MainApp.Views
 
         public SettingViewModel()
         {
+            MyTitle = "SETTING";
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidation, ExecuteAction = SaveAction };
             AddNewPortCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewPortAction };
             AddNewCityCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewCitytAction };

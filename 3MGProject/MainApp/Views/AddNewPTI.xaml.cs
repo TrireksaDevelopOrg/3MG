@@ -39,7 +39,7 @@ namespace MainApp.Views
 
         private void DataGrid_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-            var model = new collies {  PtiId=viewmodel.Id };
+            var model = new collies { PtiId = viewmodel.Id, Kemasan="Pcs", Pcs=1 };
             e.NewItem = model;
         }
 
@@ -86,14 +86,28 @@ namespace MainApp.Views
             shiper.Focus();
         }
 
-       
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+          
+        }
+    }
+
+    public class Kemasan:List<string>
+    {
+        public Kemasan()
+        {
+            this.Add("Pcs");
+            this.Add("Karung");
+            this.Add("Box");
+            this.Add("Drum");
+        }
     }
 
     public class AddNewPTIViewModel:pti,IDataErrorInfo,IBusyBase
     {
         PtiBussines context = new PtiBussines();
         private string error;
-
+        public new string MyTitle { get; set; } = "PTI BARU";
         public AddNewPTIViewModel()
         {
 
@@ -152,18 +166,8 @@ namespace MainApp.Views
 
         private void PrintPreviewAction(object obj)
         {
-                         ReportParameter[] parameters =
-                       {
-                        new ReportParameter("Petugas",context.GetUser()),
-                        new ReportParameter("Nomor",""),
-                        new ReportParameter("Pengirim",Shiper.Name),
-                        new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",Shiper.Address,Shiper.Handphone)),
-                        new ReportParameter("Penerima",Reciever.Name),
-                        new ReportParameter("AlamatPenerima",string.Format("{0}\r Hanphone :{1}",Reciever.Address,Reciever.Handphone)),
-                        new ReportParameter("Tanggal",this.CreatedDate.ToShortDateString())
-                        };
 
-            Helpers.PrintPreviewWithFormAction(new ReportDataSource { Value = Collies.ToList() }, "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+            Helpers.PrintPreviewWithFormAction("Print Preview",new ReportDataSource { Value = Collies.ToList() }, "MainApp.Reports.Layouts.PTI.rdlc", null);
 
         }
 
@@ -233,16 +237,18 @@ namespace MainApp.Views
                 IsBusy = true;
                 pti model = (pti)this;
                 model.FromId = Helpers.GetIntValue("CityId");
-                context.SaveChange(model);
-                Saved = true;
-
-                var resultDialog = MessageBox.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if(resultDialog== MessageBoxResult.Yes)
+                if (IsListValid(model.Collies))
                 {
-                    using (var print = new HelperPrint())
+                    context.SaveChange(model);
+                    Saved = true;
+
+                    var resultDialog = MessageBox.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (resultDialog == MessageBoxResult.Yes)
                     {
-                        ReportParameter[] parameters =
+                        using (var print = new HelperPrint())
                         {
+                            ReportParameter[] parameters =
+                            {
                         new ReportParameter("Petugas",context.GetUser()),
                         new ReportParameter("Nomor",model.Code),
                         new ReportParameter("Pengirim",Shiper.Name),
@@ -252,12 +258,16 @@ namespace MainApp.Views
                         new ReportParameter("Tanggal",model.CreatedDate.ToShortDateString())
                         };
 
-                        print.PrintDocument(model.Collies.ToList(), "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+                            print.PrintDocument(model.Collies.ToList(), "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+                        }
                     }
+
+
+                    WindowClose();
                 }
-
-
-                WindowClose();
+                else
+                    Helpers.ShowErrorMessage("Item Data Tidak Lengkap, Periksa Kembali");
+       
             }
             catch (Exception ex)
             {
@@ -268,7 +278,16 @@ namespace MainApp.Views
                 IsBusy = false;
             }
         }
-       
+
+        private bool IsListValid(ObservableCollection<collies> collies)
+        {
+            if (collies.Where(O => string.IsNullOrEmpty(O.Kemasan) || string.IsNullOrEmpty(O.Content)).Count() > 0)
+                return false;
+            if (collies.Where(O => O.Pcs == 0 || O.Weight == 0 || O.Price == 0).Count() > 0)
+                return false;
+            return true;
+        }
+
         public CollectionView SourceView { get; }
         public CommandHandler SaveCommand { get; }
         public CommandHandler CancelCommand { get; }

@@ -9,6 +9,7 @@ using System.Xml;
 using DataAccessLayer.DataModels;
 using MainApp.Reports.Forms;
 using Microsoft.Reporting.WinForms;
+using Ocph.DAL;
 
 namespace MainApp
 {
@@ -113,32 +114,44 @@ namespace MainApp
             return IsExists;
         }
 
-        internal static void PrintWithFormActionTwoSource(ReportDataSource dataHeader, ReportDataSource items, string layout, ReportParameter[] parameters)
+        internal static void PrintWithFormActionTwoSource(string title, ReportDataSource dataHeader, ReportDataSource items, string layout, ReportParameter[] parameters)
         {
             var content = new ReportContent(dataHeader, items, layout, parameters);
+            Style style = Application.Current.FindResource("WindowKey") as Style;
             var dlg = new Window
             {
-                Content = content,
+                Style=style,
+                Content = content, AllowsTransparency=false,
                 Title = "",
                 ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip,
                 WindowState = WindowState.Maximized,
             };
 
+            content.WindowClose = dlg.Close;
+            var vm = new BaseNotify();
+            vm.MyTitle = title;
+            dlg.DataContext = vm;
             dlg.ShowDialog();
         }
 
-        internal static void PrintPreviewWithFormAction(ReportDataSource source, string layout, ReportParameter[] parameters)
+        internal static void PrintPreviewWithFormAction(string title, ReportDataSource source, string layout, ReportParameter[] parameters)
         {
             //TrireksaApp.Reports.Layouts.Nota.rdlc"
             var content = new ReportContent(source, layout, parameters);
+            Style style = Application.Current.FindResource("WindowKey") as Style;
             var dlg = new Window
             {
+                Style=style,
                 Content = content,
                 Title = "",
                 ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip,
                 WindowState = WindowState.Maximized,
             };
 
+            content.WindowClose = dlg.Close;
+            var vm = new BaseNotify();
+            vm.MyTitle = title;
+            dlg.DataContext = vm;
             dlg.ShowDialog();
         }
 

@@ -31,16 +31,9 @@ namespace MainApp.Views
 
     public class AddNewCustomerDepositViewModel:customer,IDataErrorInfo
     {
-        private string title;
         private string error;
 
-        public string TitleCaption
-        {
-            get { return title; }
-            set { SetProperty(ref title ,value); }
-        }
-
-      
+        public new string MyTitle { get; set; } = "CUSTOMER DEPOSITE BARU";
 
         public CommandHandler CancelCommand { get; }
         public CommandHandler SaveCommand { get; }
@@ -65,7 +58,7 @@ namespace MainApp.Views
             this.Handphone = cust.Handphone;
             this.Phone1 = cust.Phone1;
             this.NoIdentitas = cust.NoIdentitas;
-            this.TitleCaption = "Edit Customer";
+            this.MyTitle= "Edit Customer";
 
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = CancelCommandaction };
             SaveCommand = new CommandHandler { CanExecuteAction = SaveCommandValidate, ExecuteAction = SaveCommandAction };

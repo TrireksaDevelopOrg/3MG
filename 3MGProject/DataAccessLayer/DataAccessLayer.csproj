@@ -46,6 +46,7 @@
     <Compile Include="Bussines\Authorization.cs" />
     <Compile Include="Bussines\CustomerBussiness.cs" />
     <Compile Include="Bussines\DepositBussines.cs" />
+    <Compile Include="Bussines\LaporanBussines.cs" />
     <Compile Include="Bussines\ManifestBussiness.cs" />
     <Compile Include="Bussines\PtiBussines.cs" />
     <Compile Include="Bussines\ScheduleBussines.cs" />
@@ -67,6 +68,8 @@
     <Compile Include="DataModels\pricetype.cs" />
     <Compile Include="DataModels\pti.cs" />
     <Compile Include="DataModels\role.cs" />
+    <Compile Include="Models\History.cs" />
+    <Compile Include="Models\Penjualan.cs" />
     <Compile Include="Models\Saldo.cs" />
     <Compile Include="DataModels\schedules.cs" />
     <Compile Include="DataModels\smu.cs" />

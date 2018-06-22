@@ -94,6 +94,9 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="IBusyBase.cs" />
     <Compile Include="NegativeConverter.cs" />
+    <Compile Include="Reports\Forms\PenjualanForm.xaml.cs">
+      <DependentUpon>PenjualanForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Forms\PTIPreview.xaml.cs">
       <DependentUpon>PTIPreview.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Reports\Forms\PenjualanForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Reports\Forms\PTIPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -302,6 +309,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Layouts\CargoManifest.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\Penjualan.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\PTI.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Rekening1.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\SMU.rdlc" />
@@ -311,6 +319,7 @@
     <None Include="Properties\DataSources\DataAccessLayer.Models.DebetDeposit.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Deposit.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Manifest.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.Penjualan.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.PTI.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Saldo.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.SMU.datasource" />
@@ -332,6 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BussinessLayer\Models\" />
+    <Folder Include="DataAccessLayer\Bussines\" />
     <Folder Include="Reports\Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +370,7 @@
     <Resource Include="Images\TMG.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\background.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

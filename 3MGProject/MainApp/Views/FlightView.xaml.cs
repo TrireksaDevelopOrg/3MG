@@ -26,7 +26,7 @@ namespace MainApp.Views
         public FlightView()
         {
             InitializeComponent();
-            this.DataContext = new FlightViewModel();
+            this.DataContext = new FlightViewModel() { WindowClose = Close };
         }
     }
 
@@ -50,6 +50,8 @@ namespace MainApp.Views
 
         public FlightViewModel():base(typeof(ScheduleBussines))
         {
+            MyTitle = "FLIGHT SCHEDULE";
+            CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
             AddNewJadwal = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewJadwalAction };
             Source = new ObservableCollection<Schedule>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
@@ -76,9 +78,11 @@ namespace MainApp.Views
             }
         }
 
+        public CommandHandler CancelCommand { get; }
         public CommandHandler AddNewJadwal { get; }
         public ObservableCollection<Schedule> Source { get; }
         public CollectionView SourceView { get; }
+        public Action WindowClose { get; internal set; }
 
         private void AddNewJadwalAction(object obj)
         {

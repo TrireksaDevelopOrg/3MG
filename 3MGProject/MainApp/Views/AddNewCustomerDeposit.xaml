@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" ShowInTaskbar="False"
-        mc:Ignorable="d" Style="{StaticResource WindowKey}"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowStartupLocation="CenterScreen"
         Title="{Binding TitleCaption}" Height="363.157" Width="386.255">
     <Grid  Margin="10">
         <Grid.RowDefinitions>
@@ -31,7 +31,7 @@
             <TextBox Text="{Binding Phone1}"/>
             <TextBox Text="{Binding Phone2}"/>
             <TextBox Text="{Binding Email}"/>
-            <TextBox AcceptsReturn="True" Text="{Binding Address,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Height="81"/>
+            <TextBox AcceptsReturn="True" Text="{Binding Address,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Height="50"/>
         </StackPanel>
         <Border Style="{StaticResource BorderLayoutStyle}" Grid.ColumnSpan="2" Grid.Row="1">
             <WrapPanel HorizontalAlignment="Right">

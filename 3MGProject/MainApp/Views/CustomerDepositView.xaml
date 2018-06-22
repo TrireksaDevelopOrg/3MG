@@ -9,7 +9,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30*"/>
@@ -24,6 +26,7 @@
         <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
             <DataGrid Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedCustomer}">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id,StringFormat={}{0:D6}}" Width="*" MinWidth="50" Header="ID"/>
                     <DataGridTextColumn Binding="{Binding Name}" Width="*" MinWidth="100" Header="Nama"/>
                     <DataGridTextColumn Binding="{Binding Handphone}" MinWidth="100" Width="auto" Header="Handphone"/>
                     <DataGridTextColumn Binding="{Binding Phone1}" MinWidth="100" Width="auto" Header="Telepon"/>
@@ -40,19 +43,27 @@
                     <RowDefinition Height="25*"/>
                     <RowDefinition Height="75*"/>
                 </Grid.RowDefinitions>
-                <StackPanel>
-                    <Label Content="Contact Person"/>
-                    <Label Content="Email"/>
-                    <Label Content="Terdaftar Sejak"/>
-                    <Label Content="Alamat"/>
-                </StackPanel>
-                    <StackPanel >
-                        <Label Content="{Binding  SelectedCustomer.ContactName}"/>
-                        <Label Content="{Binding SelectedCustomer.Email}"/>
-                        <Label Content="{Binding SelectedCustomer.CreatedDate}"/>
-                        <TextBlock Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" Width="300"  Text="{Binding SelectedCustomer.Address}" Height="43"/>
-                    </StackPanel>
+                <Border Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <Label Content="Contact Person"/>
+                            <Label Content="Email"/>
+                            <Label Content="Terdaftar Sejak"/>
+                            <Label Content="Alamat"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" >
+                            <Label Content="{Binding  SelectedCustomer.ContactName}"/>
+                            <Label Content="{Binding SelectedCustomer.Email}"/>
+                            <Label Content="{Binding SelectedCustomer.CreatedDate}"/>
+                            <TextBlock Margin="5" HorizontalAlignment="Left" TextWrapping="Wrap" Width="300"  Text="{Binding SelectedCustomer.Address}" Height="43"/>
+                        </StackPanel>
 
+                    </Grid>
+                </Border>
                 <TabControl  Grid.ColumnSpan="2" Grid.Row="1">
                     <TabItem Header="Riwayat Deposit">
                         <Border Style="{StaticResource BorderLayoutStyle}">
@@ -75,7 +86,7 @@
                                         <DataGridTextColumn Width="*" Binding="{Binding TanggalBayar}" Header="Tanggal"/>
                                         <DataGridTextColumn Width="*" Binding="{Binding PaymentType}" Header="Jenis Pembayaran"/>
                                         <DataGridTextColumn Width="*" ElementStyle="{StaticResource RightCell}" Binding="{Binding Jumlah,StringFormat={}{0:N2}}" Header="Jumlah"/>
-                                        <DataGridTextColumn  Binding="{Binding User}" Width="*" Header="User"/>
+                                        <DataGridTextColumn  Binding="{Binding User}" MinWidth="100" Width="auto" Header="User"/>
                                     </DataGrid.Columns>
                                     <DataGrid.ContextMenu>
                                         <ContextMenu>
@@ -88,7 +99,7 @@
                                                                 <RowDefinition/>
                                                             </Grid.RowDefinitions>
                                                             <Label Grid.Row="0" Content="Cetak Rekening"/>
-                                                            <Border Padding="5" Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
+                                                            <Border Background="{StaticResource clrSecound}" Padding="5" Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
                                                                 <StackPanel Margin="3">
                                                                     <WrapPanel >
                                                                         <Label Content="Dari Tanggal"></Label>
@@ -172,6 +183,9 @@
                 </TabControl>
                 
             </Grid>
+        </Border>
+        <Border Grid.Row="2" Grid.ColumnSpan="2">
+            <Button HorizontalAlignment="Right" Command="{Binding CancelCommand}" Content="Close"/>
         </Border>
     </Grid>
 </Window>

@@ -30,6 +30,7 @@ namespace MainApp.Views
 
     public class AddNewPlaneViewModel:planes
     {
+        public new string MyTitle { get; set; } = "PESAWAT BARU";
         ScheduleBussines context = new ScheduleBussines();
         public Action WindowClose { get; set; }
         public CommandHandler SaveCommand { get; }

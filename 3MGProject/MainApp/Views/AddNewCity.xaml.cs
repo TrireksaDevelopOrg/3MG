@@ -39,7 +39,7 @@ namespace MainApp.Views
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction =x=>WindowClose() };
         }
 
-
+        public new string MyTitle { get; set; } = "KOTA BARU";
         public CommandHandler SaveCommand { get; set; }
         public CommandHandler CancelCommand { get; set; }
 

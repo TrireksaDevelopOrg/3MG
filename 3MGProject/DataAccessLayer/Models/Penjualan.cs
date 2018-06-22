@@ -7,40 +7,31 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-    public class SMU:BaseNotify
+   public class Penjualan:BaseNotify
     {
+
         private string _code;
-        private bool _isSended;
         private double _ppn;
         private double total;
+        private string _jenis;
 
         public int Id { get; set; }
         public int Kode { get; set; }
         public string ShiperName { get; set; }
-        public string   RecieverName{ get; set; }
+        public string RecieverName { get; set; }
         public int ShiperId { get; set; }
-        public int RecieverId{ get; set; }
         public int Pcs { get; set; }
         public double Weight { get; set; }
         public double Biaya { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int ManifestCode { get; set; }
-        public int PTIId { get; set; }
-
         public PayType PayType { get; set; }
-      
-        public bool IsSended {
-            get { return _isSended; }
-            set
-            {
-                SetProperty(ref _isSended, value);
-            }
-        }
 
-        public double PPN {
-            get {
+        public double PPN
+        {
+            get
+            {
                 if (_ppn <= 0)
-                    _ppn=Biaya+(Biaya * 10/100);
+                    _ppn = Biaya + (Biaya * 10 / 100);
                 return _ppn;
             }
             set { SetProperty(ref _ppn, value); }
@@ -49,19 +40,30 @@ namespace DataAccessLayer.Models
         public virtual double Total { get { return Biaya + PPN; } set { total = value; } }
 
         public virtual string Code
-        { get
+        {
+            get
             {
-                if(string.IsNullOrEmpty(_code))
+                if (string.IsNullOrEmpty(_code))
                 {
                     _code = CodeGenerate.SMU(Kode);
                 }
-                return _code; }
+                return _code;
+            }
             set
             {
-                 _code = value;
+                _code = value;
             }
         }
-
-        public ActivedStatus ActiveStatus { get;  set; }
+        
+        public string Jenis
+        {
+            get {
+                _jenis = PayType.ToString();
+                return _jenis; }
+            set
+            {
+                _jenis = value;
+            }
+        }
     }
 }

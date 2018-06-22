@@ -13,12 +13,11 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label Height="auto" FontSize="15" FontWeight="Bold" Content="Login"/>
             <StackPanel Margin="10" Grid.Row="1">
                 <Label Margin="5,0" Height="auto" FontSize="15"  Content="User Name"/>
                 <TextBox Margin="5,0" Text="{Binding UserName}"/>
                 <Label Height="auto" Margin="5,10,0,0" FontSize="15" Content="Password"/>
-                <PasswordBox Name="password" PasswordChanged="password_PasswordChanged" Margin="5,0" Height="30"/>
+                <PasswordBox Name="password" PasswordChanged="password_PasswordChanged" Margin="5,0" Height="30" Style="{DynamicResource PasswordBoxStyle1}"/>
             </StackPanel>
             <Border Grid.Row="2">
                 <WrapPanel Margin="5" HorizontalAlignment="Right">

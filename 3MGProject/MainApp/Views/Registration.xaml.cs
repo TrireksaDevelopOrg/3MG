@@ -41,6 +41,8 @@ namespace MainApp.Views
 
     public class RegistrationViewModel : user, IDataErrorInfo
     {
+        public new string MyTitle { get; set; } = "USER BARU";
+
         private string error;
         private UserManagement userManager= new UserManagement();
 

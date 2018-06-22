@@ -52,21 +52,46 @@
                                 <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" MinWidth="50" Width="auto" ElementStyle="{StaticResource RightCell}"/>
                                 <DataGridTextColumn Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Weight" MinWidth="75" ElementStyle="{StaticResource RightCell}"/>
                                 <DataGridTextColumn Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}" Header="Tanggal" MinWidth="110" />
-                                <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding OnSMU}" Header="On SMU" Width="auto"/>
-                                <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
+                                <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding OnSMU}" Header="On SMU" MinWidth="60" Width="auto"/>
+                                <DataGridTextColumn  MinWidth="100" Width="AUTO" Binding="{Binding User}" Header="User" />
                             </DataGrid.Columns>
                            
                             <DataGrid.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                                    <MenuItem Header="Sort" >
+                                        <MenuItem  Height="auto">
+                                            <MenuItem.Template>
+                                                <ControlTemplate>
+                                                    <Grid Background="{StaticResource clrSecound}">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="auto"/>
+                                                            <RowDefinition Height="auto"/>
+                                                            <RowDefinition Height="auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Label Grid.Row="0" Content="Status"/>
+                                                        <WrapPanel Margin="3,0" Grid.Row="1">
+                                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Aktif}"/>
+                                                            <Label VerticalAlignment="Center" Content="OK"/>
+                                                        </WrapPanel>
+                                                        <WrapPanel Margin="3,0" Grid.Row="2" >
+                                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
+                                                            <Label Content="Batal" VerticalAlignment="Center"/>
+
+                                                        </WrapPanel>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </MenuItem.Template>
+                                        </MenuItem>
+                                    </MenuItem>
                                     <MenuItem Header="PTI Print" Command="{Binding PrintCommand}"/>
                                     <MenuItem Header="PTI Print Preview" Command="{Binding PrintPreviewhCommand}"/>
                                     <MenuItem Header="Create SMU" Command="{Binding CreateSMU}"/>
-                                    <MenuItem Header="Batalkan PTI">
-                                        <MenuItem Height="auto" Header="Alasan">
+                                    <MenuItem Header="Batalkan PTI" Style="{StaticResource subMenuStyle}">
+                                        <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Alasan">
                                             <MenuItem.Template>
                                                 <ControlTemplate>
-                                                    <Grid Margin="25,3">
+                                                    <Grid Background="{StaticResource clrSecound}" >
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="auto"/>
                                                             <RowDefinition Height="auto"/>
@@ -77,9 +102,9 @@
                                                             <Label Content="Alasan Pembatalan"/>
                                                             <TextBox Name="alasan" MinWidth="100" Width="auto"></TextBox>
                                                         </WrapPanel>
-                                                        <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding CancelPTI}" 
+                                                        <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding CancelPTI}" 
                                                         CommandParameter="{Binding Text, ElementName=alasan}" 
-                                                        Content="Batalkan" 
+                                                        Content="Batalkan PTI" 
                                                         IsDefault="{Binding IsFocused, ElementName=alasan}" />
                                                     </Grid>
                                                 </ControlTemplate>
@@ -92,6 +117,7 @@
                         <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedPTI.Details}"  Margin="10,0,0,10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Content}"/>
+                                <DataGridTextColumn Width="*" Header="Kemasan" Binding="{Binding Kemasan}"/>
                                 <DataGridTextColumn Width="auto" Header="Pcs" Binding="{Binding Pcs}" ElementStyle="{StaticResource RightCell}"/>
                                 <DataGridTextColumn Width="auto" Header="Berat" Binding="{Binding Weight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
                                 <DataGridTextColumn Width="auto" Header="Harga" Binding="{Binding Price,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>

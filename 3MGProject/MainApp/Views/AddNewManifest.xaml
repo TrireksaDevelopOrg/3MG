@@ -154,7 +154,7 @@
                             </StackPanel>
                             <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                 <Button Content="Simpan" Command="{Binding SaveCommand}"/>
-                                <Button Content="Batal" Command="{Binding CancelCommand}"/>
+                                <Button Content="Close" Command="{Binding CancelCommand}"/>
                             </WrapPanel>
                         </Grid>
                     </Border>

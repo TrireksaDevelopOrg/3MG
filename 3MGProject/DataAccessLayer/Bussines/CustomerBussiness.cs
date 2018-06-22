@@ -132,10 +132,11 @@ namespace DataAccessLayer.Bussines
                     cmd.Parameters.Add(new MySqlParameter("tanggal", now));
                     cmd.Parameters.Add(new MySqlParameter("custId", ShiperId));
                     var saldoAkhir =(double) cmd.ExecuteScalar();
-
+                    cmd.Parameters.Clear();
                     cmd.CommandText = "DebetFromDate";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            
+                    cmd.Parameters.Add(new MySqlParameter("tanggal", now));
+                    cmd.Parameters.Add(new MySqlParameter("custId", ShiperId));
                     var reader =cmd.ExecuteReader();
                     var DataDebet = MappingProperties<SMU>.MappingTable(reader);
                     reader.Close();

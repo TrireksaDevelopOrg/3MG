@@ -48,7 +48,6 @@ namespace MainApp.Views
 
     public class PTIViewModel : BaseNotify,IBusyBase
     {
-
         private DateTime startDate;
 
         public DateTime StartDate
@@ -98,6 +97,7 @@ namespace MainApp.Views
 
         public PTIViewModel()
         {
+            MyTitle = "PEMBERITAHUAN TENTANG ISI ( P T I )";
             CancelPTI = new CommandHandler { CanExecuteAction = CancelPTIValidate, ExecuteAction = CancelPTIAction };
             PrintCommand = new CommandHandler { CanExecuteAction = x => SelectedPTI != null, ExecuteAction = PrintCommandAction };
             PrintPreviewhCommand = new CommandHandler { CanExecuteAction = x => SelectedPTI != null, ExecuteAction = PrintPreviewAction };
@@ -110,9 +110,23 @@ namespace MainApp.Views
             endDate = startDate.AddMonths(1).AddDays(-1);
             Source = new ObservableCollection<PTI>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
+            SourceView.Filter = DataFilter;
+            Aktif = true;
             SourceView.Refresh();
             RefreshCommand.Execute(null);
         }
+
+        private bool DataFilter(object obj)
+        {
+            var data = (PTI)obj;
+            if (data != null && data.ActiveStatus == DataAccessLayer.ActivedStatus.OK && this.Aktif)
+                return true;
+            if (data != null && data.ActiveStatus == DataAccessLayer.ActivedStatus.Cancel && this.Batal)
+                return true;
+
+            return false;
+        }
+
 
         private bool CancelPTIValidate(object obj)
         {
@@ -128,7 +142,14 @@ namespace MainApp.Views
             {
                 if (obj == null || string.IsNullOrEmpty(obj.ToString()))
                     Helpers.ShowErrorMessage("Tambahkan Alasan Pembatalan");
-                ptiContext.SetCancelPTI(SelectedPTI, obj.ToString());
+                else if(SelectedPTI.ActiveStatus== ActivedStatus.Cancel)
+                    Helpers.ShowErrorMessage(string.Format("PTI NO {0} Telah Berstatus Batal", SelectedPTI.Code));
+                else
+                {
+                    ptiContext.SetCancelPTI(SelectedPTI, obj.ToString());
+                    Helpers.ShowMessage(string.Format("PTI NO {0} Berhasil Dibatalkan", SelectedPTI.Code));
+                }
+  
             }
             catch (Exception ex)
             {
@@ -152,7 +173,7 @@ namespace MainApp.Views
                 };
                 var source = new ReportDataSource() { Name="Detail", Value = SelectedPTI.Details };
 
-                Helpers.PrintWithFormActionTwoSource(header,source, "MainApp.Reports.Layouts.PTI.rdlc", null);
+                Helpers.PrintWithFormActionTwoSource("Print Preview",header,source, "MainApp.Reports.Layouts.PTI.rdlc", null);
             }
         }
 
@@ -231,6 +252,7 @@ namespace MainApp.Views
                 {
                     PTI p = new PTI
                     {
+                         ShiperID=vm.ShiperID, RecieverId=vm.RecieverId,
                         CreatedDate = vm.CreatedDate,
                         Id = vm.Id,
                         PayType = vm.PayType,
@@ -286,6 +308,9 @@ namespace MainApp.Views
         }
 
         private GridLength myHorizontalInputRegionSize = new GridLength(0, GridUnitType.Pixel);
+        private bool _showAktif;
+        private bool _showCancel;
+
         public GridLength GridWidth
         {
             get
@@ -300,5 +325,25 @@ namespace MainApp.Views
         }
 
         public Window WindowParent { get; internal set; }
+
+        public bool Aktif
+        {
+            get { return _showAktif; }
+            set
+            {
+                SetProperty(ref _showAktif, value);
+                SourceView.Refresh();
+            }
+        }
+
+        public bool Batal
+        {
+            get { return _showCancel; }
+            set
+            {
+                SetProperty(ref _showCancel, value);
+                SourceView.Refresh();
+            }
+        }
     }
 }

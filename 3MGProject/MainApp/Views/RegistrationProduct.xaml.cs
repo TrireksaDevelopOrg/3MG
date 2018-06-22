@@ -26,7 +26,10 @@ namespace MainApp.Views
         {
             InitializeComponent();
             Loaded += RegistrationProduct_Loaded;
+            this.DataContext = this;
         }
+
+        public string MyTitle { get; set; } = "REGISTRATION PRODUCT";
 
         private void RegistrationProduct_Loaded(object sender, RoutedEventArgs e)
         {

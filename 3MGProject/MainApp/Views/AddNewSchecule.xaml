@@ -24,16 +24,16 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1">
-                <Label Content="Pesawat"/>
-                <Label Content="Kode"/>
-                <Label Content="Dari"/>
-                <Label Content="Tujuan"/>
-                <Label Content="Jam Berangkat"/>
-                <Label Content="Jam Tiba"/>
-                <Label Content="Kapasitas (Kg)"/>
+                <Label Margin="3" Content="Pesawat"/>
+                <Label Margin="3" Content="Kode"/>
+                <Label Margin="3" Content="Dari"/>
+                <Label Margin="3" Content="Tujuan"/>
+                <Label Margin="3" Content="Jam Berangkat"/>
+                <Label Margin="3" Content="Jam Tiba"/>
+                <Label  Content="Kapasitas (Kg)"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <Grid Margin="0,0,3,0">
+                <Grid Margin="0,3,3,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*"/>
                         <ColumnDefinition Width="10*"/>
@@ -43,7 +43,7 @@
                           ItemsSource="{Binding PlanesView}"  />
                     <Button Command="{Binding AddNewPlaneCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                 </Grid>
-                <Label Content="{Binding PlaneSelected.Kode}"/>
+                <Label BorderThickness="1" BorderBrush="AliceBlue" Margin="3" Content="{Binding PlaneSelected.Kode}"/>
 
 
                 <Grid Margin="0,0,3,0">

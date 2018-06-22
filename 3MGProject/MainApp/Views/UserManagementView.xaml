@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
-        Title="UserManagementView" Height="562" Width="788">
+        Title="UserManagementView" Height="600" Width="788">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="77*"/>
-                <ColumnDefinition Width="32*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
             <Border Grid.ColumnSpan="2" Style="{StaticResource BorderLayoutStyle}">
                 <Button Width="150" HorizontalAlignment="Left" Content="Tambah User" Command="{Binding AddNewUserCommand}"/>
@@ -32,9 +33,12 @@
                 <DataGrid ItemsSource="{Binding SourceViewRole}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="*" Header="Role Name" Binding="{Binding Name}"/>
-                        <DataGridCheckBoxColumn Width="auto" Header="" Binding="{Binding Selected}"/>
+                        <DataGridCheckBoxColumn MinWidth="40" Width="auto" Header="" Binding="{Binding Selected}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+            </Border>
+            <Border Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource BorderLayoutStyle}" >
+                <Button Content="Close" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
             </Border>
         </Grid>
     </Border>

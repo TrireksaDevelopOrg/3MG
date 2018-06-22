@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Bussines;
 using DataAccessLayer.DataModels;
+using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,18 +26,22 @@ namespace MainApp.Views
         public UserManagementView()
         {
             InitializeComponent();
-            this.DataContext = new UserManagementViewModel();
+            this.DataContext = new UserManagementViewModel() { WindowClose=Close};
         }
     }
 
-    public class UserManagementViewModel:Authorization
+    public class UserManagementViewModel:BaseNotify
     {
         private UserManagement context = new UserManagement();
-        public UserManagementViewModel():base(typeof(UserManagementViewModel))
+        public UserManagementViewModel()
         {
+            MyTitle = "Management User";
             AddNewUserCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewUserAction };
             var datas = context.GetUsers();
             allroles = context.GetRoles();
+
+            CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
+
             Source = new  ObservableCollection<user>(datas);
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             SourceView.Refresh();
@@ -59,6 +64,7 @@ namespace MainApp.Views
 
         private List<role> allroles;
 
+        public CommandHandler CancelCommand { get; }
         public ObservableCollection<user> Source { get; }
         public CollectionView SourceView { get; }
         public ObservableCollection<role> SourceRole { get; }
@@ -92,6 +98,7 @@ namespace MainApp.Views
         }
 
         public CommandHandler AddNewUserCommand { get; }
+        public Action WindowClose { get; internal set; }
 
         private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

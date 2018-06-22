@@ -105,6 +105,7 @@ namespace MainApp.Views
 
         public SMUViewModel()
         {
+            MyTitle = "SURAT MUATAN UDARA";
             var date = DateTime.Now;
             startDate = new DateTime(date.Year, date.Month, 1);
             endDate = startDate.AddMonths(1).AddDays(-1);
@@ -134,7 +135,7 @@ namespace MainApp.Views
             List<SMUDetail> datas = await context.GetSMUDetail(SelectedItem.Id);
 
             var items = new ReportDataSource { Name = "Details", Value = datas};
-            Helpers.PrintWithFormActionTwoSource(dataHeader,items,"MainApp.Reports.Layouts.SuratMuatanUdara.rdlc",null );
+            Helpers.PrintWithFormActionTwoSource("Print Preview",dataHeader,items,"MainApp.Reports.Layouts.SuratMuatanUdara.rdlc",null );
         }
 
         private void RefreshAction(object obj)

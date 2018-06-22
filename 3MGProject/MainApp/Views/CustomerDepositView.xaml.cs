@@ -28,6 +28,7 @@ namespace MainApp.Views
 
     public class CustomerDepositViewModel : BaseNotify
     {
+
         DataAccessLayer.Bussines.CustomerBussiness context = new DataAccessLayer.Bussines.CustomerBussiness();
 
         public Action WindowClose { get; internal set; }
@@ -98,6 +99,7 @@ namespace MainApp.Views
 
         public CustomerDepositViewModel()
         {
+            MyTitle = "CUSTOMER DEPOSIT";
             PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<=DateTime.Now, ExecuteAction = PrintRekeningKoran };
             AddNewDepositCommand = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null, ExecuteAction = AddNewDepositCommandAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshCommandaction };
@@ -110,9 +112,11 @@ namespace MainApp.Views
 
             DepositSource = new ObservableCollection<Deposit>();
             DepositViewSource = (CollectionView)CollectionViewSource.GetDefaultView(DepositSource);
+            DepositViewSource.SortDescriptions.Add(new System.ComponentModel.SortDescription { Direction = System.ComponentModel.ListSortDirection.Descending, PropertyName = "TanggalBayar" });
 
             DebetDepositSource = new ObservableCollection<DebetDeposit>();
             DebetDepositViewSource = (CollectionView)CollectionViewSource.GetDefaultView(DebetDepositSource);
+            DebetDepositViewSource.SortDescriptions.Add(new System.ComponentModel.SortDescription { Direction = System.ComponentModel.ListSortDirection.Descending, PropertyName = "CreatedDate" });
 
             DepositViewSource.Refresh();
             RefreshCommand.Execute(null);
@@ -122,7 +126,7 @@ namespace MainApp.Views
 
        
 
-        private void AddNewDepositCommandAction(object obj)
+        private async void AddNewDepositCommandAction(object obj)
         {
             var form = new AddNewDepositView();
             var viemodel = new AddNewDepositViewModel(SelectedCustomer) { WindowClose=form.Close};
@@ -131,6 +135,7 @@ namespace MainApp.Views
             if(viemodel.Saved)
             {
                 DepositSource.Add((Deposit)viemodel);
+                SelectedCustomer.SisaSaldo = await context.GetSisaSaldo(SelectedCustomer.Id);
             }
             DepositViewSource.Refresh();
         }
@@ -207,7 +212,7 @@ namespace MainApp.Views
 
             result.Add(new Saldo { Tanggal = DateTime.Now, SaldoAkhir = saldo, Description = "Saldo Akhir" });
             var source = new ReportDataSource { Value = result };
-            Helpers.PrintPreviewWithFormAction(source, "MainApp.Reports.Layouts.Rekening1.rdlc", parameters);
+            Helpers.PrintPreviewWithFormAction("Print Preview",source, "MainApp.Reports.Layouts.Rekening1.rdlc", parameters);
         }
         private DateTime selectedDate;
 

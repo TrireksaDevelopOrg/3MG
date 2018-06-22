@@ -31,6 +31,7 @@ namespace MainApp.Views
 
     public class AddNewPortViewModel : ports
     {
+        public new string MyTitle { get; set; } = "BANDARA BARU";
         ScheduleBussines context = new ScheduleBussines();
         public Action WindowClose { get; internal set; }
         public ObservableCollection<city> Cities { get; }

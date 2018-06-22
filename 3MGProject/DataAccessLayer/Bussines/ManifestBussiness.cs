@@ -60,7 +60,7 @@ namespace DataAccessLayer.Bussines
                         if (!db.SMU.Update(O => new { O.IsSended }, new smu { Id = item.Id, IsSended = true }, O => O.Id == item.Id))
                             throw new SystemException("Manifest Tidak Tersimpan");
 
-                        var his = User.GenerateHistory(item.Id, BussinesType.SMU, ChangeType.Update, "Set SMU Terkirim");
+                        var his = User.GenerateHistory(item.Id, BussinesType.SMU, ChangeType.Update, string.Format("Ditambahkan Ke Manifest MT{0:D8}",manifest.Code));
                         if(!db.Histories.Insert(his))
                             throw new SystemException("Manifest Tidak Tersimpan");
 

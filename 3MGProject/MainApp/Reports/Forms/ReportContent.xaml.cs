@@ -47,5 +47,12 @@ namespace MainApp.Reports.Forms
                 reportViewer.LocalReport.SetParameters(parameters);
             reportViewer.RefreshReport();
         }
+
+        public Action WindowClose { get; internal set; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WindowClose();
+        }
     }
 }

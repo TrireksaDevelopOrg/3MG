@@ -9,8 +9,12 @@ using static DataAccessLayer.Bussines.Authorization;
 
 namespace DataAccessLayer.Bussines
 {
-    public class UserManagement
+    public class UserManagement:Authorization
     {
+        public UserManagement():base(typeof(UserManagement))
+        {
+
+        }
         public bool IsFirstUser()
         {
             try
@@ -92,8 +96,8 @@ namespace DataAccessLayer.Bussines
         {
             try
             {
-                userName = "Ocph23";
-                password = "Sony@77";
+               // userName = "Ocph23";
+                //password = "Sony@77";
                 using (var db = new OcphDbContext())
                 {
                     var result = db.Users.Where(O => O.UserName == userName && O.Password == password).FirstOrDefault();

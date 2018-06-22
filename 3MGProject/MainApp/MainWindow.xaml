@@ -9,27 +9,28 @@
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Width" Value="150"></Setter>
-            <Setter Property="Height" Value="75"></Setter>
+            <Setter Property="Height" Value="100"></Setter>
             <Setter Property="BorderBrush" Value="AntiqueWhite"/>
         </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="15*"/>
             <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="Bold" Height="auto" Content="TRIMG AIRLAINES" Background="{x:Null}">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="60" FontWeight="Bold" Height="auto" Content="TRIMG AIRLAINES" Background="{x:Null}">
                 <Label.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF509AB0" Offset="0"/>
-                        <GradientStop Color="#FF0C7C9C" Offset="1"/>
+                        <GradientStop Color="#FF509AB0" Offset="0.479"/>
+                        <GradientStop Color="#FFAAE2F1" Offset="1"/>
+                        <GradientStop Color="#FF9CD7E7" Offset="0.038"/>
                     </LinearGradientBrush>
                 </Label.Foreground>
             </Label>
@@ -40,8 +41,9 @@
             <Button Name="smu" Click="smu_Click" Margin="10" Content="SMU"/>
             <Button Name="manifest" Click="manifest_Click"  Margin="10" Content="MANIFEST"/>
             <Button Name="schedule" Click="schedule_Click"  Margin="10" Content="SCHEDULE"/>
-            <Button Name="laporan" Click="laporan_Click" Margin="10" Content="LAPORAN"/>
-            <Button Name="userManage" Click="userManage_Click" Margin="10" Content="User Management"/>
+            <Button Name="laporan" Click="laporan_Click" Margin="10" Content="PENJUALAN"/>
+            <Button Name="userManage" Click="userManage_Click" Margin="10" Content="USER MANAGEMENT"/>
+            <Button Name="logout" Click="logout_Click" Margin="10" Content="LOGOUT"/>
         </WrapPanel>
     </Grid>
 </Window>

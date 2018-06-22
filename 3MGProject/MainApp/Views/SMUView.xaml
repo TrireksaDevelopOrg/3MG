@@ -48,11 +48,11 @@
                         <ContextMenu>
                             <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"></MenuItem>
                             <MenuItem Header="Print Preview" Command="{Binding PrintPreviewSMUCommand }"/>
-                            <MenuItem Height="auto" Header="Sort">
-                                <MenuItem Height="auto" Header="Sort">
+                            <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Sort">
+                                <MenuItem Height="auto" Header="Sort" Style="{StaticResource subMenuStyle}">
                                     <MenuItem.Template>
                                         <ControlTemplate>
-                                            <Grid Margin="30,3">
+                                            <Grid Background="{StaticResource clrSecound}" >
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"/>
                                                     <RowDefinition Height="auto"/>
@@ -64,20 +64,19 @@
                                                     <Label VerticalAlignment="Center" Content="OK"/>
                                                 </WrapPanel>
                                                 <WrapPanel Margin="3,0" Grid.Row="2" >
-                                                    <CheckBox IsChecked="{Binding Batal}"/>
-                                                    <Label Content="Batal"/>
-
+                                                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
+                                                    <Label Content="Batal" VerticalAlignment="Center"/>
                                                 </WrapPanel>
                                             </Grid>
                                         </ControlTemplate>
                                     </MenuItem.Template>
                                 </MenuItem>
                             </MenuItem>
-                            <MenuItem Height="auto" Header="Batalkan SMU">
-                                <MenuItem Height="auto" Header="Alasan">
+                            <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Batalkan SMU">
+                                <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Alasan">
                                     <MenuItem.Template>
                                         <ControlTemplate>
-                                            <Grid Margin="25,3">
+                                            <Grid Background="{StaticResource clrSecound}">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto"/>
                                                     <RowDefinition Height="auto"/>
@@ -87,9 +86,9 @@
                                                 <WrapPanel Margin="3" Grid.Row="1">
                                                     <TextBox  Name="alasan" MinWidth="150" Width="auto"></TextBox>
                                                 </WrapPanel>
-                                                <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding CancelSMU}" 
+                                                <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding CancelSMU}" 
                                                         CommandParameter="{Binding Text, ElementName=alasan}" 
-                                                        Content="Batalkan" 
+                                                        Content="Batalkan SMU" 
                                                         IsDefault="{Binding IsFocused, ElementName=alasan}" />
                                             </Grid>
                                         </ControlTemplate>
@@ -99,6 +98,9 @@
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>
+            </Border>
+            <Border Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
+                <Button Content="Close" HorizontalAlignment="Right" Command="{Binding CancelCommand}"/>
             </Border>
         </Grid>
     </Border>

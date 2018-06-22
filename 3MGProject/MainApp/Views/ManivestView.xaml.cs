@@ -29,7 +29,7 @@ namespace MainApp.Views
         public ManivestView()
         {
             InitializeComponent();
-            viewmodel = new ManifestViewModel();
+            viewmodel = new ManifestViewModel() { WindowClose=Close};
             this.DataContext = viewmodel;
            dg.PreviewKeyDown += Dg_PreviewKeyDown;
         }
@@ -89,7 +89,8 @@ namespace MainApp.Views
 
         public ManifestViewModel()
         {
-
+            MyTitle = "MANIFEST";
+            CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
             PrintCommand = new CommandHandler { CanExecuteAction = x => ManifestSelected != null, ExecuteAction = PrintCommandAction };
             PrintPreviewCommand = new CommandHandler { CanExecuteAction = x => ManifestSelected != null, ExecuteAction = PrintPreviewCommandAction };
             CancelManifest = new CommandHandler { CanExecuteAction = Cancelmanifest, ExecuteAction = CancelManifestAction };
@@ -114,7 +115,7 @@ namespace MainApp.Views
                 header.Add(ManifestSelected);
                 var details = await context.ManifestDetails(ManifestSelected);
 
-                Helpers.PrintWithFormActionTwoSource(new ReportDataSource { Name = "Header", Value = header },
+                Helpers.PrintWithFormActionTwoSource("Print Preview",new ReportDataSource { Name = "Header", Value = header },
                     new ReportDataSource { Name = "Details", Value = details },
                     "MainApp.Reports.Layouts.CargoManifest.rdlc", null);
 
@@ -195,7 +196,8 @@ namespace MainApp.Views
 
                 IsBusy = true;
                 var result = await context.GetManifest(start, end);
-                foreach(var item in result)
+                Source.Clear();
+                foreach (var item in result)
                 {
                     Source.Add(item);
                 }
@@ -214,6 +216,7 @@ namespace MainApp.Views
             
         }
 
+        public CommandHandler CancelCommand { get; }
         public CommandHandler PrintCommand { get; }
         public CommandHandler PrintPreviewCommand { get; }
         public CommandHandler CancelManifest { get; }
@@ -226,7 +229,7 @@ namespace MainApp.Views
         private void AddNewManifestAction(object obj)
         {
             var form = new Views.AddNewManifest();
-            form.ShowDialog();
+                     form.ShowDialog();
             var vm = (AddNewManifestViewModel)form.DataContext;
             if(vm.Success && vm.SavedResult!=null)
             {
@@ -272,6 +275,9 @@ namespace MainApp.Views
                 SourceView.Refresh();
             }
         }
+
+        public Action WindowClose { get; internal set; }
+
         private bool DataFilter(object obj)
         {
             var data = (Manifest)obj;

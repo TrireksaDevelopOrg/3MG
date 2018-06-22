@@ -26,137 +26,14 @@ namespace MainApp
         MainWindowViewModel viewmodel;
         public MainWindow()
         {
-            var loginSuccess = false;
-            var closeApp = false;
-
-            if(IsRegistration())
-            {
-                while (!loginSuccess)
-                {
-                    UserManagement userManagement = new UserManagement();
-                    if (userManagement.IsFirstUser())
-                    {
-                        var regForm = new Views.Registration();
-                        regForm.ShowDialog();
-                        var regVM = (Views.RegistrationViewModel)regForm.DataContext;
-                        if (regVM.UserCreated != null)
-                        {
-                            Helpers.UserLogin = regVM.UserCreated;
-                            if (!userManagement.IsRoleExist("Administrator").Result)
-                            {
-                                userManagement.AddNewRole("Administrator");
-                            }
-
-                            if (!userManagement.IsRoleExist("Manager").Result)
-                            {
-                                userManagement.AddNewRole("Manager");
-                            }
-
-                            if (!userManagement.IsRoleExist("Admin").Result)
-                            {
-                                userManagement.AddNewRole("Admin");
-                            }
-
-                            if (!userManagement.IsRoleExist("Operational").Result)
-                            {
-                                userManagement.AddNewRole("Operational");
-                            }
-
-                            if (!userManagement.IsRoleExist("Accounting").Result)
-                            {
-                                userManagement.AddNewRole("Accounting");
-                            }
-
-                            userManagement.AddUserInRole(Helpers.UserLogin.Id, "Administrator");
-
-                            var setting = new Views.Setting();
-                            setting.ShowDialog();
-
-
-
-                            loginSuccess = true;
-                        }
-                        else
-                        {
-                            var result = MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                            if (result == MessageBoxResult.Yes)
-                            {
-                                closeApp = true;
-                                loginSuccess = true;
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        var loginForm = new Views.LoginView();
-                        loginForm.ShowDialog();
-                        var vm = (Views.LoginViewModel)loginForm.DataContext;
-                        if (vm.Success)
-                        {
-                            Helpers.UserLogin = vm.UserLogin;
-                            loginSuccess = true;
-                        }
-                        else
-                        {
-
-                            var result = MessageBox.Show("Yakin Menutup Aplikasi ?", "Menutup Aplikasi", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                            if (result == MessageBoxResult.Yes)
-                            {
-                                closeApp = true;
-                                loginSuccess = true;
-                            }
-                        }
-                    }
-                }
-            }else
-                closeApp = true;
-
-            if (closeApp)
-                this.Close();
+            
 
             InitializeComponent();
             viewmodel = new MainWindowViewModel() { WindowParent = this };
             this.DataContext = viewmodel;
         }
 
-        private bool IsRegistration()
-        {
-
-            string ProductId = ComputerInfo.GetComputerId();
-            KeyManager key = new KeyManager(ProductId);
-
-            LicenseInfo lic = new LicenseInfo();
-            try
-            {
-                key.LoadSuretyFile(string.Format("Key.lic"), ref lic);
-                if(lic.ProductKey==null)
-                {
-                    var form = new Views.RegistrationProduct();
-                    form.ShowDialog();
-                    if (form.Success)
-                    {
-                        return true;
-                    }
-
-                }else
-                {
-                    string productKey = lic.ProductKey;
-                    if (key.ValidKey(ref productKey))
-                    {
-                        return true;
-                    }
-                   
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-            }
-            return false;
-         
-        }
+       
 
         private void pti_Click(object sender, RoutedEventArgs e)
         {
@@ -182,7 +59,8 @@ namespace MainApp
 
         private void laporan_Click(object sender, RoutedEventArgs e)
         {
-
+            var form = new Reports.Forms.PenjualanForm();
+            form.ShowDialog();
         }
 
         private void manifest_Click(object sender, RoutedEventArgs e)
@@ -193,6 +71,13 @@ namespace MainApp
         private void schedule_Click(object sender, RoutedEventArgs e)
         {
             viewmodel.LoadShcedule();
+        }
+
+        private void logout_Click(object sender, RoutedEventArgs e)
+        {
+            var login = new Views.LoginView();
+            login.Show();
+            this.Close();
         }
     }
 

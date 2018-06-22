@@ -47,6 +47,7 @@ namespace MainApp.Views
 
         public SplitSMUViewModel(SMU SMUSelected)
         {
+            MyTitle = "SPLIT SMU";
             SmuSelected = SMUSelected;
             SmuCode = CodeGenerate.SMU(SMUSelected.Kode);
             PindahkanCommand = new CommandHandler { CanExecuteAction = PindahkanValidate, ExecuteAction = PindahkanAction };
@@ -154,8 +155,8 @@ namespace MainApp.Views
             await Task.Delay(200);
             DestinationView.Refresh();
             OriginView.Refresh();
-            TotalDestination = DestinationSource.Sum(O => O.Weight);
-            TOtalOrigin = OriginSource.Sum(O => O.Weight);
+            TotalDestination = DestinationSource.Sum(O => O.Pcs* O.Weight);
+            TOtalOrigin = OriginSource.Sum(O => O.Pcs* O.Weight);
         }
 
 

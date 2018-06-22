@@ -70,6 +70,7 @@ namespace MainApp.Views
 
         public AddNewSMUViewModel(PTI ptiSelected)
         {
+            MyTitle = "SMU BARU";
             this.PTISelected = ptiSelected;
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };

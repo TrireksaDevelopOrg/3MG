@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:MainApp.Views" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}"
         Title="" Height="207.498" Width="413.682">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Registrasi Product" Grid.ColumnSpan="2" FontSize="18" Height="auto"/>
+        <Label Content="" Grid.ColumnSpan="2"  Height="auto"/>
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Label Height="30" Margin="5" Content="Product Id"/>
             <Label Height="30" Margin="5" Content="Serial Key"/>

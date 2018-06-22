@@ -36,6 +36,12 @@ namespace MainApp.Views
         {
 
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            viewmodel.Search = ((TextBox)sender).Text;
+       
+        }
     }
 
 
@@ -59,12 +65,29 @@ namespace MainApp.Views
 
         public BrowseCustomerDepositViewModel()
         {
+            MyTitle = "CARI CUSOMER";
             var data = context.GetCustomersDeposites();
             this.Source = new ObservableCollection<customer>(data);
             this.SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
+            this.SourceView.Filter = SearchFilter;
             SourceView.Refresh();
             SelectedCommand = new CommandHandler { CanExecuteAction = SelectedCommandValidate, ExecuteAction = SelectedCommandAction };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = CancelCommandaction };
+        }
+
+        private bool SearchFilter(object obj)
+        {
+            var item = (customer)obj;
+            if(item!=null && !string.IsNullOrEmpty(Search))
+            {
+                var cond = Search.ToUpper();
+                if (item.Name.ToUpper().Contains(cond) || item.ContactName.ToUpper().Contains(cond) || item.Id.ToString().Contains(cond))
+                    return true;
+                else
+                    return false;
+            }
+
+            return true;
         }
 
         private void CancelCommandaction(object obj)
@@ -84,5 +107,17 @@ namespace MainApp.Views
         {
             WindowClose();
         }
+
+
+        private string search;
+
+        public string Search
+        {
+            get { return search; }
+            set {SetProperty(ref search ,value);
+                SourceView.Refresh();
+            }
+        }
+
     }
 }

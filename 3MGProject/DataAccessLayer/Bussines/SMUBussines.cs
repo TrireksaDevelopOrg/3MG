@@ -46,7 +46,7 @@ namespace DataAccessLayer.Bussines
                         if(!db.PTI.Update(O => new { O.OnSMU }, new pti { Id = pTISelected.Id, OnSMU = true }, O => O.Id == pTISelected.Id))
                             throw new SystemException("Data Tidak Tersimpan");
 
-                        var h = User.GenerateHistory(pTISelected.Id, BussinesType.PTI, ChangeType.Update, "Updare OnSMU Complete");
+                        var h = User.GenerateHistory(pTISelected.Id, BussinesType.PTI, ChangeType.Update, string.Format("Dibuatkan SMU dengan Nomor T{0:D9}",smudata.Kode));
                         if (!db.Histories.Insert(h))
                             throw new SystemException("Gagal Simpan Data");
                     }
@@ -79,7 +79,7 @@ namespace DataAccessLayer.Bussines
 
                     SMU sm = new SMU
                     {
-                        CreatedDate = date,
+                        CreatedDate = date, 
                         Id = smudata.Id,
                         IsSended = false,
                         Kode = smudata.Kode,
@@ -91,7 +91,7 @@ namespace DataAccessLayer.Bussines
                         Weight = source.Sum(O => O.Weight),
                         Biaya = source.Sum(O=>O.Biaya)
                     };
-
+                    pTISelected.OnSMU = true;
                     trans.Commit();
                     return Task.FromResult(sm);
                   
@@ -209,7 +209,7 @@ namespace DataAccessLayer.Bussines
                     smuSelected.Biaya = originSource.Sum(O => O.Biaya);
 
                     //SUMU
-                    var smudata = new smu { CreatedDate = DateTime.Now, Kode = CodeGenerate.GetNewSMUNumber().Result };
+                    var smudata = new smu { PTIId=smuSelected.PTIId, CreatedDate = DateTime.Now, Kode = CodeGenerate.GetNewSMUNumber().Result };
                     smudata.Id = db.SMU.InsertAndGetLastID(smudata);
                     if (smudata.Id <= 0)
                         throw new SystemException("Data Tidak Tersimpan");

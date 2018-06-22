@@ -35,6 +35,7 @@ namespace MainApp.Views
 
     public class AddNewScheduleViewModel : schedules,IDataErrorInfo
     {
+        public new string MyTitle { get; set; } = "SCHEDULE BARU";
         ScheduleBussines context = new ScheduleBussines();
         private planes _planeSelected;
         private ports _destiSelected;
@@ -102,7 +103,7 @@ namespace MainApp.Views
                         OriginCityName = OriginSelected.City,
                         OriginPortCode = OriginSelected.Code,
                         OriginPortName = OriginSelected.Name,
-                        PlaneId = result.PlaneId,
+                        PlaneId = result.PlaneId, PlaneName=PlaneSelected.Name, PlaneCode=PlaneSelected.Kode,
                         PortFrom = result.PortFrom,
                         Start = result.Start,
                         Tanggal = result.Tanggal, PortTo=result.PortTo, Capasities=result.Capacities

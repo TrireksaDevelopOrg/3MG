@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"  WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Style="{StaticResource WindowKey}"
-        Title="Cari Customer" Height="500" Width="524">
+        Title="Cari Customer" Height="500" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -13,15 +13,16 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Border Style="{DynamicResource BorderLayoutStyle}">
-            <WrapPanel>
+            <WrapPanel Margin="5">
                 <Label MinWidth="30" Content="Cari"/>
-                <TextBox Width="200" Text="{Binding Search}"></TextBox>
+                <TextBox Width="200" TextChanged="TextBox_TextChanged" Text="{Binding Search}"></TextBox>
             </WrapPanel>
         </Border>
         <Border Grid.Row="1"  Style="{DynamicResource BorderLayoutStyle}">
             <DataGrid Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" TouchEnter="DataGrid_TouchEnter" SelectedItem="{Binding SelectedCustomer}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn MinWidth="150" Header="Nama" Width="auto" Binding="{Binding Name}"/>
+                    <DataGridTextColumn MinWidth="50" Header="Nama" Width="auto" Binding="{Binding Id,StringFormat={}{0:D6}}"/>
+                    <DataGridTextColumn MinWidth="150" Header="Nama" Width="*" Binding="{Binding Name}"/>
                     <DataGridTextColumn MinWidth="100" Header="Handphone" Width="auto" Binding="{Binding Handphone}"/>
                     <DataGridTextColumn Header="Alamat" Width="*" Binding="{Binding Address}"/>
                 </DataGrid.Columns>

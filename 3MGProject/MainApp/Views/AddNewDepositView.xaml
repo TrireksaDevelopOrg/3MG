@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" ShowInTaskbar="False"
-        Title="Tambah Deposite" >
+        Title="Tambah Deposite" Width="450" Height="320">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>

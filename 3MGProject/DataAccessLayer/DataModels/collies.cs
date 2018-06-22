@@ -87,6 +87,17 @@ using Ocph.DAL;
             }
           }
 
+        [DbColumn("Kemasan")]
+        public string Kemasan
+        {
+            get { return _kemasan; }
+            set
+            {
+
+                SetProperty(ref _kemasan, value);
+            }
+        }
+
         private double _biaya;
 
         public double Biaya
@@ -104,7 +115,8 @@ using Ocph.DAL;
            private bool  _issended;
            private string  _content;
            private double  _price;
-      }
+        private string _kemasan;
+    }
 }
 
 

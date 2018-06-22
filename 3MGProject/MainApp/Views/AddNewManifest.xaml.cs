@@ -24,19 +24,20 @@ namespace MainApp.Views
     /// </summary>
     public partial class AddNewManifest : Window
     {
-        private AddNewManifestViewModel viewmodel;
+        private AddNewManifestViewModel vm;
+
         public AddNewManifest()
         {
             InitializeComponent();
-            viewmodel = new AddNewManifestViewModel() { WindowClose = Close };
-            this.DataContext = viewmodel;
-           
+            vm = new AddNewManifestViewModel() { WindowClose = this.Close};
+            this.DataContext = vm;
         }
     }
 
 
     public class AddNewManifestViewModel:manifestoutgoing
     {
+        public new string MyTitle { get; set; } = "MANIFEST BARU";
         ManifestBussiness context = new ManifestBussiness();
         ScheduleBussines scheduleBussines = new ScheduleBussines();
         SMUBussines smuBUssines = new SMUBussines();
@@ -133,18 +134,30 @@ namespace MainApp.Views
 
         private async void LoadData()
         {
-            this.CreatedDate = DateTime.Now;
-            this.Code = await CodeGenerate.GetNewManifestNumber();
-            var scedules = await scheduleBussines.GetSchedules(DateTime.Now);
-            foreach (var item in scedules.Where(O => !O.Complete))
+            try
             {
-           this.SourceSchedules.Add(item);
+                this.CreatedDate = DateTime.Now;
+                this.Code = await CodeGenerate.GetNewManifestNumber();
+                var scedules = await scheduleBussines.GetSchedules(DateTime.Now);
+                foreach (var item in scedules.Where(O => !O.Complete))
+                {
+                    this.SourceSchedules.Add(item);
+                }
+                var data = await context.GetSMUForCreateManifest();
+                foreach (var item in data)
+                {
+                    item.PropertyChanged += Item_PropertyChanged;
+                    Source.Add(item);
+                }
             }
-            var data = await context.GetSMUForCreateManifest();
-            foreach(var item in data)
+            catch (Exception EX)
             {
-                item.PropertyChanged += Item_PropertyChanged;
-                Source.Add(item);
+
+                Helpers.ShowErrorMessage(EX.Message);
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 
@@ -211,7 +224,7 @@ namespace MainApp.Views
         public ObservableCollection<Schedule> SourceSchedules { get; }
         public CollectionView SourceViewSchedules { get; }
         public bool IsNew { get; }
-        public Action WindowClose { get; internal set; }
+        public Action WindowClose { get;  set; }
         public bool Success { get; private set; }
         public Manifest SavedResult { get; private set; }
     }
