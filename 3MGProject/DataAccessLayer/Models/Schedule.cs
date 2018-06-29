@@ -116,7 +116,7 @@ namespace DataAccessLayer.Models
         public string DestinationCityCode { get; set; }
         public string PlaneName { get; set; }
         public string PlaneCode { get; set; }
-
+        public string FlightNumber { get; set; }
 
         private int _id;
         private DateTime _tanggal;

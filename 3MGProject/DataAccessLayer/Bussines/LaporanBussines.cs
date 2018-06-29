@@ -16,7 +16,7 @@ namespace DataAccessLayer.Bussines
 
         public Task<List<Penjualan>> GetDataLaporan(DateTime start, DateTime end)
         {
-
+            end = end.AddDays(1);
             using (var db = new OcphDbContext())
             {
                 try
@@ -31,6 +31,73 @@ namespace DataAccessLayer.Bussines
                     return Task.FromResult(result);
                 }
                 catch (Exception ex )
+                {
+
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
+        public Task<List<BorderelCargoModel>> GetDataBorderelCargo(DateTime from)
+        {
+            using (var db = new OcphDbContext())
+            {
+                try
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "BorderelCargo";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("indate", from));
+                    var reader = cmd.ExecuteReader();
+                    var result = MappingProperties<BorderelCargoModel>.MappingTable(reader);
+                    return Task.FromResult(result);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
+        public Task<List<PreFligtManifest>> GetDataBufferStock()
+        {
+            using (var db = new OcphDbContext())
+            {
+                try
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "bufferstock";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    var reader = cmd.ExecuteReader();
+                    var result = MappingProperties<PreFligtManifest>.MappingTable(reader);
+                    return Task.FromResult(result);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
+        public Task<List<PreFligtManifest>> GetDataCargoterangkut(int siperID, DateTime from, DateTime to)
+        {
+            using (var db = new OcphDbContext())
+            {
+                try
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "terangkut";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("custId", siperID));
+                    cmd.Parameters.Add(new MySqlParameter("startDate", from));
+                    cmd.Parameters.Add(new MySqlParameter("endDate", to));
+                    var reader = cmd.ExecuteReader();
+                    var result = MappingProperties<PreFligtManifest>.MappingTable(reader);
+                    return Task.FromResult(result);
+                }
+                catch (Exception ex)
                 {
 
                     throw new SystemException(ex.Message);

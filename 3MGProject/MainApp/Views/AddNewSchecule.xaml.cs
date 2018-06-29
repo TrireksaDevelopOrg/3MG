@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataAccessLayer;
 using DataAccessLayer.Bussines;
 using DataAccessLayer.DataModels;
 using DataAccessLayer.Models;
@@ -99,6 +100,7 @@ namespace MainApp.Views
                         DestinationPortName = DestinationSelected.Name,
                         End = result.End,
                         Id = result.Id,
+                        FlightNumber = FlightNumber,
                         OriginCityCode = OriginSelected.Code,
                         OriginCityName = OriginSelected.City,
                         OriginPortCode = OriginSelected.Code,
@@ -138,6 +140,7 @@ namespace MainApp.Views
 
         private async void LoadData()
         {
+       
             var planes = await context.GetPlanes();
             var ports = await context.GetPorts();
 
@@ -154,6 +157,12 @@ namespace MainApp.Views
             }
 
             PlanesView.Refresh();
+            this.PortFrom = SettingConfiguration.GetIntValue("PortId");
+
+            var portTo = ports.Where(O => O.Id != SettingConfiguration.GetIntValue("PortId")).FirstOrDefault();
+            if (portTo != null)
+                this.PortTo = portTo.Id;
+
         }
 
         public CommandHandler SaveCommand { get; }
@@ -175,6 +184,7 @@ namespace MainApp.Views
             set
             {
                 SetProperty(ref _planeSelected, value);
+                FlightNumber = value.Kode + "-";
             }
         }
 

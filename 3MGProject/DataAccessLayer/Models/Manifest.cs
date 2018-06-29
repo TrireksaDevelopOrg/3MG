@@ -29,6 +29,7 @@ namespace DataAccessLayer.Models
         public string DestinationCityCode { get; set; }
         public int OriginPortCityId { get; set; }
         public int DestinationPortCityId { get; set; }
+        public string FlightNumber { get; set; }
         public ObservableCollection<SMU> Details { get; set; }
 
         public Manifest()

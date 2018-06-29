@@ -33,7 +33,7 @@
                             </WrapPanel>
                             <WrapPanel>
                                 <Label Width="150" Margin="0" Height="auto" FontSize="15" FontWeight="DemiBold" Content="PTI"/>
-                                <Label Margin="0" Height="auto" FontSize="16" Content="{Binding PTISelected.Code}"/>
+                                <TextBlock Margin="0" Height="auto" FontSize="16" Text="{Binding PTISelected.Id,StringFormat={}{0:d6}}"/>
                             </WrapPanel>
                        
                             <WrapPanel>
@@ -92,10 +92,14 @@
                           >
                     <DataGrid.Columns>
                         <DataGridTextColumn IsReadOnly="True" Width="*" Binding="{Binding Content}" Header="Content"/>
+                        <DataGridTextColumn IsReadOnly="True" Width="*" Binding="{Binding Kemasan}" Header="Kemasan"/>
                         <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="75" Binding="{Binding Pcs}" Header="Pcs"/>
                         <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Berat Satuan"/>
                         <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Price,StringFormat={}{0:N2}}" Header="Tarif"/>
+                        <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}" Header="Berat Satuan"/>
+
                         <DataGridTextColumn IsReadOnly="True" ElementStyle="{StaticResource RightCell}" MinWidth="100" Binding="{Binding Biaya,StringFormat={}{0:N2}}" Header="Biaya"/>
+                        
                         <DataGridCheckBoxColumn  MinWidth="35" Binding="{Binding IsSended}" Header="">
                             <DataGridCheckBoxColumn.HeaderTemplate>
                                 <DataTemplate>

@@ -21,7 +21,7 @@ namespace MainApp.Reports.Forms
     /// <summary>
     /// Interaction logic for PenjualanForm.xaml
     /// </summary>
-    public partial class PenjualanForm : Window
+    public partial class PenjualanForm : Page
     {
         PenjualanViewModel viewmodel = new PenjualanViewModel();
         public PenjualanForm()
@@ -29,8 +29,6 @@ namespace MainApp.Reports.Forms
             InitializeComponent();
 
             this.DataContext = new PenjualanViewModel();
-
-
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.Penjualan.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer.ZoomMode = ZoomMode.PageWidth;
@@ -63,11 +61,6 @@ namespace MainApp.Reports.Forms
                 Refresh(data,dari,sampai);
             }
          
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 

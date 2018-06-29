@@ -18,7 +18,7 @@ namespace DataAccessLayer.Bussines
 
         }
         public string NotHaveAccess { get { return "Anda Tidak Memiliki Akses"; } }
-        public static user User { get; internal set; }
+        public static user User { get; set; }
 
         public string GetUser()
         {

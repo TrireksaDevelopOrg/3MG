@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Ocph.DAL.Provider.MySql;
 using DataAccessLayer.DataModels;
+using System.Data;
 
 namespace DataAccessLayer
 {
    internal class OcphDbContext:MySqlDbConnection
     {
-        private string stringConnection = "Server=localhost;database=trimgpenjualan;UID=root;password=;CharSet=utf8;Persist Security Info=True";
+       // private string stringConnection = "Server=localhost;database=trimgpenjualan;UID=root;password=;CharSet=utf8;Persist Security Info=True";
         public OcphDbContext()
         {
-            this.ConnectionString = stringConnection;
+            this.ConnectionString = SettingConfiguration.GetStringValue("ConnectionString");
         }
 
         internal IRepository<customer> Customers => new Repository<customer>(this);
@@ -35,5 +36,8 @@ namespace DataAccessLayer
         internal IRepository<schedules> Schedules => new Repository<schedules>(this);
         internal IRepository<manifestdetails> ManifestDetail => new Repository<manifestdetails>(this);
         internal IRepository<manifestoutgoing> Manifest => new Repository<manifestoutgoing>(this);
+
+       
+
     }
 }

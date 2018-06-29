@@ -49,7 +49,6 @@ namespace MainApp.Views
         {
             MyTitle = "SPLIT SMU";
             SmuSelected = SMUSelected;
-            SmuCode = CodeGenerate.SMU(SMUSelected.Kode);
             PindahkanCommand = new CommandHandler { CanExecuteAction = PindahkanValidate, ExecuteAction = PindahkanAction };
             KembaliCommand = new CommandHandler { CanExecuteAction = KembaliValidate, ExecuteAction = KembaliAction };
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
@@ -184,13 +183,10 @@ namespace MainApp.Views
 
         public SMU SmuSelected { get; }
 
-        public string SmuCode { get { return smuCode;} set { SetProperty(ref smuCode, value); } }
-
-
+       
 
         private double _totalDestination;
         private double _totalOrigin;
-        private string smuCode;
     }
 
 }

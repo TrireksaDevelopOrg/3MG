@@ -33,7 +33,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="auto" Header="Tanggal" Binding="{Binding Tanggal,StringFormat=dd MMMM yyyy}"/>
                         <DataGridTextColumn Width="*" Header="Pesawat" Binding="{Binding PlaneName}"/>
-                        <DataGridTextColumn Width="*" Header="Code" Binding="{Binding PlaneCode}"/>
+                        <DataGridTextColumn Width="*" Header="Code" Binding="{Binding FlightNumber}"/>
                         <DataGridTextColumn Width="auto" Header="Kapasitas" Binding="{Binding Capasities,StringFormat={}{0:N2}}"/>
                         <DataGridTextColumn Width="*" Header="Dari" Binding="{Binding OriginPortName}"/>
                         <DataGridTextColumn Width="*" Header="Tujuan" Binding="{Binding DestinationPortName}"/>

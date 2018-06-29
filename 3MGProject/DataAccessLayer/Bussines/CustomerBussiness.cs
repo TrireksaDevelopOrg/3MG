@@ -135,7 +135,7 @@ namespace DataAccessLayer.Bussines
                     cmd.Parameters.Clear();
                     cmd.CommandText = "DebetFromDate";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new MySqlParameter("tanggal", now));
+                    cmd.Parameters.Add(new MySqlParameter("tanggal", tanggal));
                     cmd.Parameters.Add(new MySqlParameter("custId", ShiperId));
                     var reader =cmd.ExecuteReader();
                     var DataDebet = MappingProperties<SMU>.MappingTable(reader);
@@ -148,10 +148,10 @@ namespace DataAccessLayer.Bussines
                     {
                         list.Add(new Saldo
                         {
-                            Description = "SMU" + item.Code,
-                            Debet = item.Biaya,
-                            Tanggal = item.CreatedDate, ManifestCode=item.ManifestCode, Biaya=item.Biaya, CreatedDate=item.CreatedDate, 
-                              Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName,  SMUNumber=item.Kode, Total=item.Total, Weight=item.Weight
+                            Description = string.Format("SMU {0}",item.Id),
+                            Debet = item.Biaya, SMUId=item.Id,
+                            Tanggal = item.CreatedDate,  Biaya=item.Biaya, CreatedDate=item.CreatedDate, ManifestId=item.ManifestId,
+                              Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName, Total=item.Total, Weight=item.Weight
                         });
                     }
 

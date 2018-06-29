@@ -49,7 +49,7 @@
                         <Label Content="Kapasitas Muatan"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <Label Content="{Binding ManifestCode}"/>
+                        <TextBlock Text="{Binding Id,StringFormat=MT{0:D8}}"/>
                         <Border Height="27" Margin="3">
                             <TextBlock VerticalAlignment="Center" Text="{Binding CreatedDate,StringFormat=dd MMMM yyyy}"/>
                         </Border>
@@ -102,7 +102,7 @@
                             </ComboBox.ItemContainerStyle>
                         </ComboBox>
                         <Label Content="{Binding ScheduleSelected.PlaneName}"/>
-                        <Label Content="{Binding ScheduleSelected.PlaneCode}"/>
+                        <Label Content="{Binding ScheduleSelected.FlightNumber}"/>
                         <Label Content="{Binding ScheduleSelected.OriginPortName}"/>
                         <Label Content="{Binding ScheduleSelected.DestinationPortName}"/>
                         <Border Height="27" Margin="5">
@@ -118,15 +118,15 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid  ItemsSource="{Binding SourceView}" SelectedItem="{Binding SMUSelected}"
+                    <DataGrid MouseDoubleClick="DataGrid_MouseDoubleClick" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SMUSelected}"
                           AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding IsSended}"/>
-                            <DataGridTextColumn IsReadOnly="True"  Width="auto" Header="SMU" Binding="{Binding Code}"/>
+                            <DataGridTextColumn IsReadOnly="True"  Width="auto" Header="SMU" Binding="{Binding Id,StringFormat=T{0:d9}}"/>
                             <DataGridTextColumn IsReadOnly="True"  Width="*" Header="Pengirim" Binding="{Binding ShiperName}"/>
                             <DataGridTextColumn IsReadOnly="True"  Width="*" Header="Penerima" Binding="{Binding RecieverName}"/>
-                            <DataGridTextColumn IsReadOnly="True"  MinWidth="40" Width="auto" Binding="{Binding Pcs}" Header="Pcs"/>
-                            <DataGridTextColumn IsReadOnly="True"  MinWidth="50" Width="auto" Header="Berat" Binding="{Binding Weight,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>
+                            <DataGridTextColumn IsReadOnly="True"  MinWidth="60" Width="auto" Binding="{Binding Pcs}" Header="Total Coli"/>
+                            <DataGridTextColumn IsReadOnly="True"  MinWidth="80" Width="auto" Header="Total Berat" Binding="{Binding Weight,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>
                             <DataGridTextColumn IsReadOnly="True"  MinWidth="75" Width="auto" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>
                             <DataGridTextColumn IsReadOnly="True"  MinWidth="75" Width="auto" Header="Tanggal" Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}"/>
                         </DataGrid.Columns>

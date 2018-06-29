@@ -4,7 +4,7 @@
 
     <SolidColorBrush x:Key="clrPrimary" Color="#FFEFF0F1" />
     <SolidColorBrush x:Key="clrSecound" Color="#FF143A47"/>
-    <SolidColorBrush x:Key="clrBorder" Color="OrangeRed"/>
+    <SolidColorBrush x:Key="clrBorder" Color="#4390FC"/>
 
     <Style TargetType="{x:Type TextBlock}" x:Key="RightCell">
         <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
@@ -75,6 +75,51 @@
         </Style.Triggers>
     </Style>
 
+
+    <Style TargetType="{x:Type PasswordBox}">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Margin" Value="3,1"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
 
 
     <Style x:Key="FocusVisual">
@@ -148,7 +193,7 @@
 
     <Style x:Key="BorderLayoutStyle" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="3"/>
-        <Setter Property="BorderThickness" Value="0.4"/>
+        <Setter Property="BorderThickness" Value="0.7"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrBorder}"/>
     </Style>
 
@@ -432,22 +477,21 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="MinHeight" Value="46"/>
         <!--CaptionHeight + ResizeBorderThickness * 2-->
-        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderBrush" Value="#E33200"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
-                    <Border Padding="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                    <Border Padding="10" BorderBrush="{StaticResource clrBorder}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0">
-                                <TextBlock Margin="10" FontSize="15" Text="{Binding MyTitle}"/>
+                            <Border Margin="3" HorizontalAlignment="Left" Padding="0,0,4,0" Width="auto" Grid.Row="0" Height="auto" BorderThickness="0,0,0,3" BorderBrush="OrangeRed">
+                                <TextBlock  FontSize="15" Text="{Binding MyTitle}"/>
                             </Border>
                             <AdornerDecorator Grid.Row="1">
                                 <ContentPresenter></ContentPresenter>

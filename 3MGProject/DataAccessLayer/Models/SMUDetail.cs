@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-    public class SMUDetail : BaseNotify, ICloneable
+    public class SMUDetail :BaseNotify, ICloneable
     {
 
         public int Id { get; set; }
@@ -20,7 +20,9 @@ namespace DataAccessLayer.Models
         public double Price { get; set; }
         public bool Sended { get; set; }
         public int PTIId { get; set; }
-        public int CollyId { get; set; }
+        public int ColliesId { get; set; }
+        public string Kemasan { get; set; }
+
 
         public PayType PayType { get; set; }
 
@@ -33,15 +35,28 @@ namespace DataAccessLayer.Models
             set { SetProperty(ref _biaya, value); }
         }
 
+        public double TotalWeight
+        {
+            get
+            {
+                if (_totalWeight <= 0)
+                    _totalWeight = Pcs * Weight;
+                return _totalWeight;
+            }
+            set { SetProperty(ref _totalWeight, value); }
+        }
+
 
         private bool selected;
         private double _biaya;
+        private double _totalWeight;
 
         public virtual bool Selected
         {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
+
 
         public object Clone()
         {

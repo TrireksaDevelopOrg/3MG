@@ -38,12 +38,12 @@
                         <ColumnDefinition Width="90*"/>
                         <ColumnDefinition Width="10*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Margin="3,3,0,3"  SelectedItem="{ Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
+                    <ComboBox Grid.Column="0" Margin="3,3,0,3"  SelectedItem="{Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
                           SelectedValuePath="Id" DisplayMemberPath="Name"                          
                           ItemsSource="{Binding PlanesView}"  />
                     <Button Command="{Binding AddNewPlaneCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                 </Grid>
-                <Label BorderThickness="1" BorderBrush="AliceBlue" Margin="3" Content="{Binding PlaneSelected.Kode}"/>
+                <TextBox BorderThickness="1" BorderBrush="AliceBlue" Margin="3" Text="{Binding FlightNumber}"/>
 
 
                 <Grid Margin="0,0,3,0">

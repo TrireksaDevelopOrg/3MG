@@ -129,7 +129,7 @@ namespace MainApp.Views
         {
             var scheduleBussines = new ScheduleBussines();
             var result =await scheduleBussines.GetCities();
-            var fromid = Helpers.GetIntValue("CityId");
+            var fromid = SettingConfiguration.GetIntValue("CityId");
             if (result!=null)
             {
                 foreach(var item in result.Where(O=>O.Id!=fromid).ToList())
@@ -138,7 +138,7 @@ namespace MainApp.Views
                 }
             }
 
-            if(Cities.Count==1)
+            if(Cities.Where(O=>O.Id!=fromid).Count()==1)
             {
                 var city = Cities.FirstOrDefault();
                 this.ToId = city.Id;
@@ -171,10 +171,8 @@ namespace MainApp.Views
 
         }
 
-        private async void SetNew()
+        private void SetNew()
         {
-            PTINumber = await CodeGenerate.GetNewPTINumber();
-            Code = CodeGenerate.PTI(PTINumber);
             Shiper = new customer();
             Reciever = new customer();
             this.ActiveStatus = ActivedStatus.OK;
@@ -184,7 +182,7 @@ namespace MainApp.Views
             this.PayType = PayType.Chash;
             this.RecieverId = 0;
             this.ShiperID = 0;
-            this.FromId = Helpers.GetIntValue("CityId");
+            this.FromId = SettingConfiguration.GetIntValue("CityId");
         }
 
 
@@ -228,7 +226,7 @@ namespace MainApp.Views
                 return true;
         }
 
-        private void SaveAction(object obj)
+        private  void SaveAction(object obj)
         {
             try
             {
@@ -236,13 +234,13 @@ namespace MainApp.Views
                     return;
                 IsBusy = true;
                 pti model = (pti)this;
-                model.FromId = Helpers.GetIntValue("CityId");
+                model.FromId = SettingConfiguration.GetIntValue("CityId");
                 if (IsListValid(model.Collies))
                 {
                     context.SaveChange(model);
                     Saved = true;
 
-                    var resultDialog = MessageBox.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var resultDialog = MyMessage.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo);
                     if (resultDialog == MessageBoxResult.Yes)
                     {
                         using (var print = new HelperPrint())
@@ -250,7 +248,7 @@ namespace MainApp.Views
                             ReportParameter[] parameters =
                             {
                         new ReportParameter("Petugas",context.GetUser()),
-                        new ReportParameter("Nomor",model.Code),
+                        new ReportParameter("Nomor",string.Format("{0:d6}",model.Id)),
                         new ReportParameter("Pengirim",Shiper.Name),
                         new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",Shiper.Address,Shiper.Handphone)),
                         new ReportParameter("Penerima",Reciever.Name),
@@ -272,7 +270,7 @@ namespace MainApp.Views
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+               MyMessage.Show(ex.Message, "Error", MessageBoxButton.OK);
             }finally
             {
                 IsBusy = false;

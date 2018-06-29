@@ -37,8 +37,9 @@ using Ocph.DAL;
                get{return _pcs;} 
                set{ 
 
-                    SetProperty(ref _pcs, value);
+                SetProperty(ref _pcs, value);
                 Biaya = (Pcs *Weight) * Price;
+                TotalWeight = Pcs * Weight;
             }
           } 
 
@@ -48,10 +49,11 @@ using Ocph.DAL;
                get{
 
                 return _weight;} 
-               set{ 
+               set{
 
-                    SetProperty(ref _weight, value);
+                SetProperty(ref _weight, value);
                 Biaya = (Pcs * Weight) * Price;
+                TotalWeight = Pcs * Weight;
             }
           } 
 
@@ -106,6 +108,14 @@ using Ocph.DAL;
             set {SetProperty(ref _biaya , value); }
         }
 
+        public double TotalWeight
+        {
+            get {
+                if (_totalWeight <= 0)
+                    _totalWeight = Pcs * Weight;
+                return _totalWeight; }
+            set { SetProperty(ref _totalWeight, value); }
+        }
 
 
         private int  _id;
@@ -116,6 +126,7 @@ using Ocph.DAL;
            private string  _content;
            private double  _price;
         private string _kemasan;
+        private double _totalWeight;
     }
 }
 

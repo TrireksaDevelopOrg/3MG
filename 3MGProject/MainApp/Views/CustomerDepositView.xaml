@@ -86,6 +86,7 @@
                                         <DataGridTextColumn Width="*" Binding="{Binding TanggalBayar}" Header="Tanggal"/>
                                         <DataGridTextColumn Width="*" Binding="{Binding PaymentType}" Header="Jenis Pembayaran"/>
                                         <DataGridTextColumn Width="*" ElementStyle="{StaticResource RightCell}" Binding="{Binding Jumlah,StringFormat={}{0:N2}}" Header="Jumlah"/>
+                                        <DataGridTextColumn MinWidth="200" Width="auto" Header="Keterangan" Binding="{Binding Keterangan}"/>
                                         <DataGridTextColumn  Binding="{Binding User}" MinWidth="100" Width="auto" Header="User"/>
                                     </DataGrid.Columns>
                                     <DataGrid.ContextMenu>
@@ -138,9 +139,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="auto" Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy}" Header="Tanggal"/>
                                      
-                                        <DataGridTextColumn  Binding="{Binding PTINumber,StringFormat='{}{0:D6}'}" Header="PTI"/>
-                                        <DataGridTextColumn Width="auto" Binding="{Binding SMUNumber,StringFormat='T{0:D9}'}" Header="SMU"/>
-                                        <DataGridTextColumn Width="auto" Binding="{Binding ManifestCode,StringFormat=MT{0:D8}}" Header="Manifest"/>
+                                        <DataGridTextColumn  Binding="{Binding PTIId,StringFormat='{}{0:D6}'}" Header="PTI"/>
+                                        <DataGridTextColumn Width="auto" Binding="{Binding SMUId,StringFormat='T{0:D9}'}" Header="SMU"/>
+                                        <DataGridTextColumn Width="auto" Binding="{Binding ManifestId,StringFormat=MT{0:D8}}" Header="Manifest"/>
                                         <DataGridTextColumn Width="*" Binding="{Binding ReciverName}" Header="Penerima"/>
                                         <DataGridTextColumn MinWidth="50" ElementStyle="{StaticResource RightCell }" Width="auto" Binding="{Binding Pcs}" Header="Pcs"/>
                                         <DataGridTextColumn MinWidth="75" Width="auto" ElementStyle="{StaticResource RightCell}" Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Berat"/>

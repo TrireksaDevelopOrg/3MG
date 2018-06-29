@@ -32,6 +32,16 @@ namespace MainApp.Views
             vm = new AddNewManifestViewModel() { WindowClose = this.Close};
             this.DataContext = vm;
         }
+
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dataSMU = ((DataGrid)sender).SelectedItem as SMU;
+            if(dataSMU!=null)
+            {
+                dataSMU.IsSended = !dataSMU.IsSended;
+            }
+
+        }
     }
 
 
@@ -68,9 +78,8 @@ namespace MainApp.Views
                 Source.Remove(SMUSelected);
                 Source.Add(viewmodel.SplitResult.Item1);
                 Source.Add(viewmodel.SplitResult.Item2);
-                string message = string.Format("Telah Di Split Ke :\r SMU : {0} \r SMU : {1}", viewmodel.SplitResult.Item1.Code, viewmodel.SplitResult.Item2.Code);
-                Helpers.ShowMessage(message);
-                MessageBox.Show(message, "SMU "+ viewmodel.SplitResult.Item1.Code, MessageBoxButton.OK, MessageBoxImage.Warning);
+                string message = string.Format("Telah Di Split Ke :\r SMU : T{0:d9} \r SMU : T{1:D9}", viewmodel.SplitResult.Item1.Id, viewmodel.SplitResult.Item2.Id);
+               Helpers.ShowMessage(message, string.Format("SMU T{0:D8}"+ viewmodel.SplitResult.Item1.Id));
             }
 
         }
@@ -100,7 +109,6 @@ namespace MainApp.Views
 
                 var man = new Manifest
                 {
-                    Code = result.Code,
                     Complete = false,
                     CreatedDate = result.CreatedDate,
                     OriginPortName = ScheduleSelected.OriginPortName,
@@ -118,7 +126,6 @@ namespace MainApp.Views
                     PlaneId = ScheduleSelected.PlaneId,
                     PortFrom = ScheduleSelected.PortFrom,
                     PortTo = ScheduleSelected.PortTo,
-                    ManifestCode = result.ManifestCode,
                     SchedulesId = SchedulesId
                 };
 
@@ -137,7 +144,6 @@ namespace MainApp.Views
             try
             {
                 this.CreatedDate = DateTime.Now;
-                this.Code = await CodeGenerate.GetNewManifestNumber();
                 var scedules = await scheduleBussines.GetSchedules(DateTime.Now);
                 foreach (var item in scedules.Where(O => !O.Complete))
                 {
@@ -163,19 +169,58 @@ namespace MainApp.Views
 
         private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var item = (SMU)sender;
-            if (this.SchedulesId <= 0 && item.IsSended)
+            var id = 0;
+            try
             {
-                item.IsSended = false;
-                Helpers.ShowErrorMessage("Anda Belum Memilih Jadwal");
-            }
 
-            if(ScheduleSelected!=null)
-            {
-                TotalColly = Source.Where(O => O.IsSended).Sum(O => O.Pcs);
-                TotalBerat = Source.Where(O => O.IsSended).Sum(O => O.Weight);
-                Sisa = ScheduleSelected.Capasities - TotalBerat;
+           
+                var item = (SMU)sender;
+                if(item!=null && item.IsSended)
+                {
+                    if (this.ScheduleSelected==null)
+                    {
+                        id++;
+                        item.SetSilentIsSended(false);
+                        //item.IsSended = false;
+                        throw new SystemException("Anda Belum Memilih Jadwal");
+                    }
+                    else
+                    {
+                        if (item.PayType == PayType.Deposit)
+                        {
+                            var result = context.CustomerDepositCukup(item.ShiperId, item.Total);
+                            if (!result.Item1)
+                            {
+                                item.IsSended = false;
+                                MyMessage.Show(string.Format("Sisa Saldo {0} Sebesar : Rp{1:N2}", item.ShiperName, result.Item2), "Saldo Deposit Kurang", MessageBoxButton.OK);
+                            }else
+                            {
+                                if(result.Item2-Source.Where(O=>O.ShiperId==item.ShiperId && O.IsSended).Sum(O=>O.Total)<0)
+                                    MyMessage.Show(string.Format("Sisa Saldo {0} Sebesar : Rp{1:N2}", item.ShiperName, result.Item2), "Saldo Deposit Kurang", MessageBoxButton.OK);
+                            }
+                        }
+                    }
+                }
+
+                HitungSisa();
+
+                
             }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+           
+        }
+
+
+        private async void HitungSisa()
+        {
+            await Task.Delay(200);
+            TotalColly = Source.Where(O => O.IsSended).Sum(O => O.Pcs);
+            TotalBerat = Source.Where(O => O.IsSended).Sum(O => O.Weight);
+            Sisa = ScheduleSelected.Capasities - TotalBerat;
+           // SourceView.Refresh();
         }
 
         private int totalColly;

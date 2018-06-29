@@ -13,7 +13,7 @@ namespace DataAccessLayer
     
     public enum PaymentType
     {
-        Transfer, Cash
+        Transfer, Cash, Cek
     }
 
     public enum PayType

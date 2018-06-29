@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.DataModels;
+﻿using DataAccessLayer;
+using DataAccessLayer.DataModels;
 using Ocph.DAL;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace MainApp.Views
         {
             get {
                 if(company==string.Empty)
-                    company = Helpers.GetStringValue("Company");
+                    company = SettingConfiguration.GetStringValue("Company");
                 return company; }
             set {SetProperty(ref company ,value); }
         }
@@ -51,7 +52,7 @@ namespace MainApp.Views
         {
             get {
                 if(cityId<=0)
-                    cityId = Helpers.GetIntValue("CityId");
+                    cityId = SettingConfiguration.GetIntValue("CityId");
                 return cityId; }
             set { SetProperty(ref cityId, value);
              
@@ -64,7 +65,7 @@ namespace MainApp.Views
         {
             get {
                 if(portid<=0)
-                    portid = Helpers.GetIntValue("PortId");
+                    portid = SettingConfiguration.GetIntValue("PortId");
                 return portid; }
             set { SetProperty(ref portid, value);
                
@@ -133,15 +134,15 @@ namespace MainApp.Views
         {
             try
             {
-               Helpers.UpdateKey("Company", Company);
-                Helpers.UpdateKey("PortId", PortId.ToString());
-                Helpers.UpdateKey("CityId", CityId.ToString());
+                SettingConfiguration.UpdateKey("Company", Company);
+                SettingConfiguration.UpdateKey("PortId", PortId.ToString());
+                SettingConfiguration.UpdateKey("CityId", CityId.ToString());
                 WindowClose();
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message);
+               Helpers.ShowMessage(ex.Message);
             }
         }
 

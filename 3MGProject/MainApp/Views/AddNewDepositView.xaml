@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" ShowInTaskbar="False"
-        Title="Tambah Deposite" Width="450" Height="320">
+        Title="Tambah Deposite" Width="450" Height="400">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>
@@ -17,10 +17,10 @@
                 <StackPanel>
                     <WrapPanel>
                         <Label Content="ID :" />
-                        <Label Content="{Binding Customer.Id,StringFormat='{}{0:D5}'}"/>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding Customer.Id,StringFormat='{}{0:D6}'}"/>
                     </WrapPanel>
                     <WrapPanel>
-                        <Label Content="Nama" />
+                        <Label Content="Nama :" />
                         <Label Content="{Binding Customer.Name}"/>
                     </WrapPanel>
                 </StackPanel>
@@ -35,12 +35,14 @@
                         <Label Content="Tanggal Bayar"/>
                         <Label Margin="5" Content="Type Pembayaran"/>
                         <Label Content="Jumlah"/>
+                        <Label Content="Keterangan"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
                         <DatePicker Height="30" Margin="3" SelectedDate="{Binding TanggalBayar,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"/>
                         <ComboBox Name="typeCombo" Margin="3" Height="30" SelectedItem="{Binding PaymentType}"/>
                         <TextBox Text="{Binding Jumlah,StringFormat={}{0:N2},UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"/>
+                        <TextBox Height="50" VerticalContentAlignment="Top" Text="{Binding Keterangan}"/>
                     </StackPanel>
 
 

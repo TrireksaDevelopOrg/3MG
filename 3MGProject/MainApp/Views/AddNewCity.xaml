@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource WindowKey }"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" 
-        Title="AddNewCity" Height="191" Width="327">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"  ShowInTaskbar="False"
+        Title="AddNewCity" Height="220" Width="400">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid Margin="5">
             <Grid.ColumnDefinitions>

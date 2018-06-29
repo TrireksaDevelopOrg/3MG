@@ -1,21 +1,16 @@
 ﻿using DataAccessLayer.Bussines;
+using DataAccessLayer.DataModels;
 using DataAccessLayer.Models;
 using Microsoft.Reporting.WinForms;
-using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.Views
 {
@@ -24,17 +19,73 @@ namespace MainApp.Views
     /// </summary>
     public partial class SMUView : Window
     {
+        private SMUViewModel vm;
+
         public SMUView()
         {
             InitializeComponent();
+            dg.PreviewKeyDown += Dg_PreviewKeyDown;
+          
+        }
+        private void Dg_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                vm = (SMUViewModel)this.DataContext;
+                DataGrid dg = (DataGrid)sender;
+                var item = (SMU)dg.SelectedItem;
+                if (item != null)
+                    vm.ShowDetails(item);
+            }
+        }
+
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            detailsDg.IsReadOnly = true;
+            SMUDetail selectedRow = e.Row.DataContext as SMUDetail;
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+               
+            }
+
+          
+            // vm.SelectedPTI.DetailView.Refresh();
+
+            //  detailsDg.Items.Refresh();
+
+        }
+
+        private void detailsDg_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Command == DataGrid.DeleteCommand)
+            {
+                if (vm.UserCanaccess())
+                {
+                    DataGrid grid = (DataGrid)sender;
+                    if (MyMessage.Show("Yakin Menghapus Data ?", "Confirm Delete", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+                        e.Handled = false;
+                    else
+                    {
+                        vm.RemoveItemCollies(grid.SelectedItem as SMUDetail);
+                    }
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke(new Action(() => Helpers.ShowErrorMessage("Anda Tidak Memiliki Akses")),
+                        System.Windows.Threading.DispatcherPriority.Normal);
+                }
+              
+            }
         }
     }
 
-    public class SMUViewModel : BaseNotify
+    public class SMUViewModel : Authorization
     {
         public Action WindowClose { get; internal set; }
         public CommandHandler CancelCommand { get; }
         public CommandHandler PrintSMUCommand { get; set; }
+        public CommandHandler OutManifestCommand { get; }
         public CommandHandler PrintPreviewSMUCommand { get; }
         public CommandHandler CancelSMU { get; }
         public ObservableCollection<SMU> Source { get; }
@@ -90,6 +141,7 @@ namespace MainApp.Views
         private SMU selected;
         private bool _showCancel;
         private bool _showAktif;
+        private GridLength myHorizontalInputRegionSize = new GridLength(0, GridUnitType.Pixel);
 
         public DateTime EndDate
         {
@@ -103,7 +155,7 @@ namespace MainApp.Views
         }
 
 
-        public SMUViewModel()
+        public SMUViewModel():base(typeof(SMUViewModel))
         {
             MyTitle = "SURAT MUATAN UDARA";
             var date = DateTime.Now;
@@ -111,6 +163,8 @@ namespace MainApp.Views
             endDate = startDate.AddMonths(1).AddDays(-1);
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshAction };
             PrintSMUCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = PrintCommandAction };
+            OutManifestCommand = new CommandHandler { CanExecuteAction =x=>true, ExecuteAction = OutManifestAction };
+
             PrintPreviewSMUCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = PrintPreviewActionAsync };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
             CancelSMU = new CommandHandler { CanExecuteAction = CancelSMUValidate, ExecuteAction = CancelSMUAction };
@@ -120,6 +174,33 @@ namespace MainApp.Views
             SourceView.Refresh();
             LoadData(StartDate, EndDate);
             this.Aktif = true; this.Batal = false;
+          
+        }
+
+
+
+      
+        private void OutManifestAction(object obj)
+        {
+            var form = new Views.BrowseColliesView();
+            var vm = new Views.BrowseColliesViewModel(SelectedItem);
+            form.DataContext = vm;
+            form.ShowDialog();
+
+            if(vm.Success)
+            {
+                foreach (var item in vm.Source.Where(O => O.IsSended).ToList())
+                    SelectedItem.Details.Add(new SMUDetail
+                    {
+                        ColliesId = item.Id,
+                        Content = item.Content,
+                        Kemasan = item.Kemasan,
+                        Pcs = item.Pcs,
+                        Weight = item.Weight,
+                        Price = item.Price,
+                        PTIId = item.PtiId
+                    });
+            }
         }
 
         private void PrintCommandAction(object obj)
@@ -169,7 +250,7 @@ namespace MainApp.Views
                 if (obj == null || string.IsNullOrEmpty(obj.ToString()))
                     Helpers.ShowErrorMessage("Tambahkan Alasan Pembatalan");
                 context.SetCancelSMU(SelectedItem, obj.ToString());
-                MessageBox.Show(string.Format("{0} Dibatalkan", SelectedItem.Code));
+                Helpers.ShowMessage(string.Format("T{0:D9} Dibatalkan", SelectedItem.Id));
             }
             catch (Exception ex)
             {
@@ -177,10 +258,56 @@ namespace MainApp.Views
             }
         }
 
+        internal async void ShowDetails(SMU selectedSMU)
+        {
+            var res = await context.GetSMUDetail(selectedSMU.Id);
+            selected.Details.Clear();
+
+            foreach (var item in res)
+            {
+                selected.Details.Add(item);
+            }
+            GridWidth = new GridLength(30, GridUnitType.Star);
+        }
+
+        [Authorize("Manager")]
+        internal bool UserCanaccess()
+        {
+            return User.CanAccess(MethodBase.GetCurrentMethod());
+        }
+
+        internal void RemoveItemCollies(SMUDetail sMUDetail)
+        {
+            try
+            {
+
+                if(SelectedItem!=null && SelectedItem.IsSended)
+                {
+                    Helpers.ShowMessage("SMU Telah Terdaftar di Manifes, Hapus SMU dari Manifest Sebelum di Edit");
+                }else
+                {
+                    if (context.RemoveSMUItem(sMUDetail))
+                    {
+                        SelectedItem.Details.Remove(sMUDetail);
+                        Helpers.ShowMessage("Item SMU Terhapus");
+                    }
+                }
+
+          
+                    
+            }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+        }
 
         public SMU SelectedItem {
             get { return selected;}
-            set { SetProperty(ref selected, value); }
+            set { SetProperty(ref selected, value);
+                GridWidth = new GridLength(0, GridUnitType.Pixel);
+            }
         }
 
         public bool Aktif {
@@ -198,6 +325,20 @@ namespace MainApp.Views
             }
         }
 
-        
+      
+
+        public GridLength GridWidth
+        {
+            get
+            {
+                // If not yet set, get the starting value from the DataModel
+                return myHorizontalInputRegionSize;
+            }
+            set
+            {
+                SetProperty(ref myHorizontalInputRegionSize, value);
+            }
+        }
+
     }
 }

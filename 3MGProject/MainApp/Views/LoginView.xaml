@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
-        Title="" Height="322" Width="292">
+        Title="" Height="356" Width="300">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto" MinHeight="48"/>
+                <RowDefinition/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel Margin="10" Grid.Row="1">
@@ -22,7 +22,7 @@
             <Border Grid.Row="2">
                 <WrapPanel Margin="5" HorizontalAlignment="Right">
                     <Button Command="{Binding LoginCommand}" Content="Login"/>
-                    <Button Command="{Binding CancelCommand}" Content="Batal"/>
+                    <Button Command="{Binding CancelCommand}" Content="Keluar"/>
                 </WrapPanel>
             </Border>
         </Grid>

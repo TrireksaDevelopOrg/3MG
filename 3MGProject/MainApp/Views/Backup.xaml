@@ -1,0 +1,39 @@
+﻿<Window x:Class="MainApp.Views.Backup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}"
+        Title="Backup" Height="200" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="14*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar Padding="5" Name="progress" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <StackPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBox Margin="5" />
+                </StackPanel>
+                <Button Grid.Column="1" Width="30" Click="Button_Click" Height="28" HorizontalAlignment="Right">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/MainApp;component/Images/FlatFoldericon.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </StackPanel>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Width="172">
+            <Button Content="SIMPAN"/>
+            <Button Content="BATAL"/>
+        </WrapPanel>
+
+    </Grid>
+</Window>

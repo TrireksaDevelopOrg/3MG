@@ -93,7 +93,22 @@
     <Compile Include="HelperPrint.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IBusyBase.cs" />
+    <Compile Include="MyMessageBox.xaml.cs">
+      <DependentUpon>MyMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NegativeConverter.cs" />
+    <Compile Include="Reports\Forms\BorderelCargo.xaml.cs">
+      <DependentUpon>BorderelCargo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\BufferStock.xaml.cs">
+      <DependentUpon>BufferStock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\CargoTerangkut.xaml.cs">
+      <DependentUpon>CargoTerangkut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Forms\Laporan.xaml.cs">
+      <DependentUpon>Laporan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reports\Forms\PenjualanForm.xaml.cs">
       <DependentUpon>PenjualanForm.xaml</DependentUpon>
     </Compile>
@@ -130,6 +145,12 @@
     </Compile>
     <Compile Include="Views\AddNewSMU.xaml.cs">
       <DependentUpon>AddNewSMU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Backup.xaml.cs">
+      <DependentUpon>Backup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BrowseColliesView.xaml.cs">
+      <DependentUpon>BrowseColliesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BrowserCustomerDeposit.xaml.cs">
       <DependentUpon>BrowserCustomerDeposit.xaml</DependentUpon>
@@ -186,6 +207,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MyMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\Forms\BorderelCargo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\Forms\BufferStock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\Forms\CargoTerangkut.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reports\Forms\Laporan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Reports\Forms\PenjualanForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +272,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNewSMU.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Backup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BrowseColliesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,18 +357,25 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Layouts\BorderelCargoLayout.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\BufferStock.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\CargoManifest.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\CargoTerangkut.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Penjualan.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\PTI.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Rekening1.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\SMU.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\SuratMuatanUdara.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\PreFlightManifest.rdlc" />
+    <None Include=".editorconfig" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DataAccessLayer.DataModels.collies.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.BorderelCargoModel.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.DebetDeposit.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Deposit.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Manifest.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Penjualan.datasource" />
+    <None Include="Properties\DataSources\DataAccessLayer.Models.PreFligtManifest.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.PTI.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.Saldo.datasource" />
     <None Include="Properties\DataSources\DataAccessLayer.Models.SMU.datasource" />
@@ -334,43 +390,85 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
-      <Project>{024C106A-4EAE-4E3F-ACB3-D01DB04B6B90}</Project>
-      <Name>DataAccessLayer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="BussinessLayer\Models\" />
     <Folder Include="DataAccessLayer\Bussines\" />
     <Folder Include="Reports\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pexels1.jpeg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pexels2.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\backAll.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\left.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\right.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BussinessLayer\FoxLearn.License.dll" />
     <Resource Include="Images\TMG.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logotrimg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\USERpng.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\bill.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\credit-card %281%29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\credit-card.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\list.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\login.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logout %281%29.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logout.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\package.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\route.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\invoice.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\receipt.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\background.png" />
+    <Resource Include="Images\unlocked-padlock.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logotrimgCopy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\FlatFoldericon.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -385,6 +483,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <SplashScreen Include="SplashScreenView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{024c106a-4eae-4e3f-acb3-d01db04b6b90}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

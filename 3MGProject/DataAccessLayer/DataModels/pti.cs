@@ -11,15 +11,6 @@ using Ocph.DAL;
      [TableName("pti")]
     public class pti :BaseNotify  
    {
-          [DbColumn("PTINumber")] 
-          public int PTINumber 
-          { 
-               get{return _ptinumber;} 
-               set{ 
-
-                    SetProperty(ref _ptinumber, value);
-                     }
-          } 
 
           [PrimaryKey("Id")] 
           [DbColumn("Id")] 
@@ -161,26 +152,7 @@ using Ocph.DAL;
                 SetProperty(ref reciever, value);
             }
         }
-
-
-        private string _code;
-
-        public string Code
-        {
-            get {
-                if(string.IsNullOrEmpty(_code))
-                {
-                    _code= CodeGenerate.PTI(PTINumber);
-                }
-                return _code;
-            }
-            set {SetProperty(ref _code ,value); }
-        }
-
-
-
-
-        private int  _ptinumber;
+        
            private int  _id;
            private int  _shiperid;
            private PayType _paytype;

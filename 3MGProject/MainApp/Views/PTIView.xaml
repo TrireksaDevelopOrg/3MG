@@ -37,21 +37,22 @@
                     </Grid>
 
                 </Border>
-
+               
                 <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition  Width="70*"/>
+                            <ColumnDefinition  Width="65*"/>
+                            <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="{Binding GridWidth}"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="dg" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid HorizontalAlignment="Center" x:Name="dg" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Code}" Header="Number" MinWidth="100" Width="auto"/>
+                                <DataGridTextColumn Binding="{Binding Id,StringFormat={}{0:D6}}" Header="Number" MinWidth="100" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*" />
                                 <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" MinWidth="50" Width="auto" ElementStyle="{StaticResource RightCell}"/>
                                 <DataGridTextColumn Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Weight" MinWidth="75" ElementStyle="{StaticResource RightCell}"/>
-                                <DataGridTextColumn Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}" Header="Tanggal" MinWidth="110" />
+                                 <DataGridTextColumn Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}" Header="Tanggal" MinWidth="110" />
                                 <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding OnSMU}" Header="On SMU" MinWidth="60" Width="auto"/>
                                 <DataGridTextColumn  MinWidth="100" Width="AUTO" Binding="{Binding User}" Header="User" />
                             </DataGrid.Columns>
@@ -114,15 +115,35 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                        <DataGrid Grid.Column="1" ItemsSource="{Binding SelectedPTI.Details}"  Margin="10,0,0,10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" >
+                        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" Width="5" />
+                        <DataGrid CommandManager.PreviewCanExecute="detailsDg_PreviewCanExecute" IsReadOnly="True"  MouseDoubleClick="detailsDg_MouseDoubleClick" Name="detailsDg" CellEditEnding="detailsDg_CellEditEnding" Grid.Column="2" RowEditEnding="DataGrid_RowEditEnding" HorizontalAlignment="Center" ItemsSource="{Binding SelectedPTI.Details}"  Margin="10,0,0,10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Content}"/>
-                                <DataGridTextColumn Width="*" Header="Kemasan" Binding="{Binding Kemasan}"/>
-                                <DataGridTextColumn Width="auto" Header="Pcs" Binding="{Binding Pcs}" ElementStyle="{StaticResource RightCell}"/>
-                                <DataGridTextColumn Width="auto" Header="Berat" Binding="{Binding Weight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
-                                <DataGridTextColumn Width="auto" Header="Harga" Binding="{Binding Price,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>
-                                <DataGridTextColumn Width="auto" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
+                                <DataGridTextColumn MinWidth="70" Width="auto" Header="Kemasan" Binding="{Binding Kemasan}"/>
+                                <DataGridTextColumn MinWidth="40" Width="auto" Header="Pcs" Binding="{Binding Pcs}" ElementStyle="{StaticResource RightCell}"/>
+                                <DataGridTextColumn MinWidth="50" Width="auto" Header="Berat" Binding="{Binding Weight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
+                                <DataGridTextColumn MinWidth="70" Width="auto" Header="Harga" Binding="{Binding Price,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"/>
+                                <DataGridTextColumn IsReadOnly="True" Width="auto" Header="Total Berat" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
+                                <DataGridTextColumn MinWidth="80" IsReadOnly="True" Width="auto" Header="Biaya" Binding="{Binding Biaya,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}"/>
                             </DataGrid.Columns>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+                                    <Style.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsReadOnly" Value="False"/>
+                                                <Condition Property="IsKeyboardFocusWithin" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <MultiTrigger.Setters>
+                                                <Setter Property="Background" Value="{StaticResource clrSecound}"/>
+                                                <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
+                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
+                                                <Setter Property="BorderThickness" Value="2"/>
+                                            </MultiTrigger.Setters>
+                                        </MultiTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
                         </DataGrid>
                     </Grid>
                     

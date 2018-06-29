@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowState="Maximized" WindowStartupLocation="CenterScreen"
         Title="SplitSMUView" Height="373" Width="800" >
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -38,8 +38,8 @@
             </Grid.ColumnDefinitions>
             <Border Style="{StaticResource BorderLayoutStyle}">
                 <WrapPanel>
-                    <TextBlock Text="Nomor SMU" Width="100"/>
-                    <TextBlock Text="{Binding SmuCode}" Width="100"/>
+                    <TextBlock FontSize="18" Text="Nomor SMU :" Width="120"/>
+                    <TextBlock FontSize="18" Text="{Binding SmuSelected.Id,StringFormat=T{0:d9}}" />
                 </WrapPanel>
             </Border>
             <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
@@ -52,9 +52,11 @@
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Selected}"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Content}" MinWidth="75" Width="*" Header="Isi" />
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding Kemasan}" MinWidth="75" Width="*" Header="Kemasan" />
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Pcs}" MinWidth="50" Width="auto" Header="Pcs"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Weight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}" MinWidth="50" Width="auto" Header="Berat"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Price,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}" MinWidth="50" Width="auto" Header="Tarif"/>
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}" MinWidth="50" Width="auto" Header="Total Berat"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Biaya,StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightCell}"  Width="auto" Header="Biaya"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -68,7 +70,7 @@
                 <Button  Command="{Binding PindahkanCommand}" Width="auto" Height="25" >
 
                     <Button.Background>
-                        <ImageBrush ImageSource="/MainApp;component/Images/right.png" Stretch="Uniform"/>
+                        <ImageBrush ImageSource="/MainApp;component/Images/login.png" Stretch="Uniform"/>
                     </Button.Background>
                     <Button.Foreground>
                         <ImageBrush ImageSource="/MainApp;component/Images/right.png" Stretch="Uniform"/>
@@ -76,12 +78,7 @@
                 </Button>
                 <Button Command="{Binding KembaliCommand}" Width="auto" Height="25">
                     <Button.Background>
-                        <ImageBrush Stretch="Uniform" ImageSource="/MainApp;component/Images/left.png"/>
-                    </Button.Background>
-                </Button>
-                <Button Command="{Binding BackAllCommand}" Width="auto" Height="25">
-                    <Button.Background>
-                        <ImageBrush  Stretch="Uniform" ImageSource="/MainApp;component/Images/BackALL.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/MainApp;component/Images/logout.png"/>
                     </Button.Background>
                 </Button>
             </StackPanel>
@@ -96,9 +93,11 @@
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Selected}"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Content}" Width="*" Header="Isi" />
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding Kemasan}" MinWidth="75" Width="*" Header="Kemasan" />
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Pcs}" MinWidth="50" Width="auto" Header="Pcs"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Weight}" MinWidth="50" Width="auto" Header="Berat"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Price}" MinWidth="50" Width="auto" Header="Tarif"/>
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}"  ElementStyle="{StaticResource RightCell}" MinWidth="50" Width="auto" Header="Total Berat"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Biaya}" MinWidth="50" Width="auto" Header="Biaya"/>
                         </DataGrid.Columns>
                     </DataGrid>

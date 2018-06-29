@@ -100,7 +100,7 @@ namespace MainApp.Views
         public CustomerDepositViewModel()
         {
             MyTitle = "CUSTOMER DEPOSIT";
-            PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<=DateTime.Now, ExecuteAction = PrintRekeningKoran };
+            PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<DateTime.Now.AddDays(1), ExecuteAction = PrintRekeningKoran };
             AddNewDepositCommand = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null, ExecuteAction = AddNewDepositCommandAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshCommandaction };
             AddNewCustomerCommand = new CommandHandler { CanExecuteAction = AddNewCustomerCommandValidate, ExecuteAction = AddNewCustomerCommandAction };

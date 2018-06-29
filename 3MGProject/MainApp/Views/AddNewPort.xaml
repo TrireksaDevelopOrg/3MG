@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:local="clr-namespace:MainApp.Views" ShowInTaskbar="False"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowStartupLocation="CenterScreen"
-        Title="AddNewPort" Height="237.615" Width="326.846">
+        Title="AddNewPort" Height="220" Width="400">
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid Margin="5">
             <Grid.ColumnDefinitions>

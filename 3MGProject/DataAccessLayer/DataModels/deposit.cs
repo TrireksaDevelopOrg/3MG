@@ -73,6 +73,15 @@ using Ocph.DAL;
             }
         }
 
+        private string keterangan;
+
+        public string Keterangan
+        {
+            get { return keterangan; }
+            set { SetProperty(ref keterangan ,value); }
+        }
+
+
         private int  _id;
            private double  _jumlah;
            private PaymentType  _paymenttype;

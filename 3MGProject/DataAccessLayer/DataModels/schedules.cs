@@ -102,6 +102,15 @@ using Ocph.DAL;
             set { SetProperty(ref _capacities , value); }
         }
 
+      
+
+        [DbColumn("FlightNumber")]
+        public string FlightNumber
+        {
+            get {
+                return flightNumber; }
+            set { SetProperty(ref flightNumber ,value); }
+        }
 
         [DbColumn("CreatedDate")] 
           public DateTime CreatedDate 
@@ -115,6 +124,7 @@ using Ocph.DAL;
 
         public virtual string User { get; set; }
 
+        
         private int  _id;
            private DateTime  _tanggal;
            private TimeSpan  _start;
@@ -124,6 +134,7 @@ using Ocph.DAL;
            private int  _portid;
            private DateTime  _createddate;
         private int _portTo;
+        private string flightNumber;
     }
 }
 

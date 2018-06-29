@@ -30,6 +30,7 @@ namespace DataAccessLayer.Bussines
             }
             catch (Exception ex)
             {
+
                 throw new SystemException(ex.Message);
             }
         }
@@ -96,12 +97,12 @@ namespace DataAccessLayer.Bussines
         {
             try
             {
-               // userName = "Ocph23";
+              //  userName = "Ocph23";
                 //password = "Sony@77";
                 using (var db = new OcphDbContext())
                 {
                     var result = db.Users.Where(O => O.UserName == userName && O.Password == password).FirstOrDefault();
-                    Authorization.User = result;
+              
                     return Task.FromResult(result);
 
                 }
@@ -112,6 +113,19 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public bool ChangePassword(user user, string newPassword)
+        {
+            using (var db = new OcphDbContext())
+            {
+                if (!db.Users.Update(O => new { O.Password }, new user { Password = newPassword }, O => O.Id == User.Id))
+                {
+                    throw new SystemException("Password Anda Tidak Berhasil Diubah");
+                }
+
+                return true;
+            }
+
+        }
 
         public Task<bool> AddUserInRole(int userId, string roleName)
         {
@@ -159,6 +173,8 @@ namespace DataAccessLayer.Bussines
                 throw new SystemException(ex.Message);
             }
         }
+
+      
     }
 
 

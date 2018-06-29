@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using DataAccessLayer.DataModels;
+using System.Windows.Data;
 
 namespace DataAccessLayer.Models
 {
@@ -10,8 +11,8 @@ namespace DataAccessLayer.Models
         public PTI()
         {
             Details = new ObservableCollection<collies>();
+            DetailView = (CollectionView)CollectionViewSource.GetDefaultView(Details);
         }
-
         public string ShiperName{ get; set; }
         public string ShiperHandphone { get; set; }
         public string ShiperAddress { get; set; }
@@ -31,6 +32,7 @@ namespace DataAccessLayer.Models
 
         public virtual ObservableCollection<collies> Details { get; set; }
 
+        public virtual CollectionView DetailView { get; set; }
 
     }
 }

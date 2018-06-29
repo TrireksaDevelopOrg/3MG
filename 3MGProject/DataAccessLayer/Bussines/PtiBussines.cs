@@ -36,7 +36,7 @@ namespace DataAccessLayer.Bussines
                                 item.Shiper.Id = item.ShiperID;
                                 if (item.ShiperID <= 0)
                                     throw new SystemException("Data Tidak Tersimpan");
-                                var his = User.GenerateHistory(item.ShiperID, BussinesType.Customer, ChangeType.Create, "");
+                                var his = User.GenerateHistory(item.ShiperID, BussinesType.Customer, ChangeType.Create, "Menambah Shiper");
                                 db.Histories.Insert(his);
                             }
                             else
@@ -220,6 +220,116 @@ namespace DataAccessLayer.Bussines
             {
 
                 throw new SystemException(ex.Message);
+            }
+        }
+
+        [Authorize("Manager")]
+        public collies UpdateCollies(collies colly)
+        {
+            collies item=null;
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    item = db.Collies.Where(O => O.Id == colly.Id).FirstOrDefault();
+                    if (item != null)
+                    {
+        
+                        if (UpdateCollieValidate(item,colly) && db.Collies.Update(O => new { O.Content, O.Pcs, O.Kemasan, O.Price, O.Weight }, colly, O => O.Id == colly.Id))
+                        {
+                            var note = string.Format(@"Mengubah Item :  \n\r {0}-{1}-{2}-{3} \r\n Ke {4}-{5}-{6}-{7}", 
+                                item.Content,item.Pcs,item.Weight,item.Price,
+                                colly.Content,colly.Pcs,colly.Weight,colly.Price);
+                            var his = User.GenerateHistory(colly.PtiId, BussinesType.PTI, ChangeType.Update, note);
+                            if (db.Histories.Insert(his))
+                            {
+                                trans.Commit();
+                                return null;
+                            }
+                        }
+                    }
+                        throw new SystemException();
+
+                }
+                catch (Exception)
+                {
+                    trans.Rollback();
+                    return item;
+                }
+            }
+
+        }
+
+        private bool UpdateCollieValidate(collies item, collies colly)
+        {
+            if (item.Content!=colly.Content || item.Pcs!=colly.Pcs || item.Weight!=colly.Weight || item.Price!=colly.Price)
+                return true;
+            return false;
+                
+        }
+
+        public void AddNewCollyItem(collies selectedRow)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    selectedRow.Id = db.Collies.InsertAndGetLastID(selectedRow);
+                    if (selectedRow.Id > 0)
+                    {
+                        var item = selectedRow;
+                        var note = string.Format(@"Menambah Item Baru: \n\r {0}-{1}-{2}-{3}",
+                                   item.Content, item.Pcs, item.Weight, item.Price);
+                        var his = User.GenerateHistory(selectedRow.PtiId, BussinesType.PTI, ChangeType.Update, note);
+                        if (db.Histories.Insert(his))
+                            trans.Commit();
+                        else
+                            throw new SystemException("Data Tidak Tersimpan");
+                    }
+                    else
+                        throw new SystemException("Data Tidak Tersimpan");
+
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
+        public bool RemoveItemCollies(collies collies)
+        {
+
+            using (var db = new OcphDbContext())
+            {
+
+                var trans = db.BeginTransaction();
+                try
+                {
+                    if(db.Collies.Delete(O=>O.Id==collies.Id))
+                    {
+                        var item = collies;
+                        var note = string.Format(@"Menghapus Item : \n\r {0}-{1}-{2}-{3}",
+                                   item.Content, item.Pcs, item.Weight, item.Price);
+                        var his = User.GenerateHistory(collies.PtiId, BussinesType.PTI, ChangeType.Delete, note);
+                        if (db.Histories.Insert(his))
+                        {
+                            trans.Commit();
+                            return true;
+                        }
+                    }
+                    throw new SystemException("Data Tidak Terhapus");
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    if (ex.Message == "Ada Relasi Dengan Table Lain")
+                        throw new SystemException("Item Telah Terdaftar Di SMU, Hapus Terlebih Dahulu Di SMU");
+                    throw new SystemException(ex.Message);
+                }
             }
         }
     }

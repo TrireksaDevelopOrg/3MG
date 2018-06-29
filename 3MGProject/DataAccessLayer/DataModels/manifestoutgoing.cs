@@ -31,15 +31,6 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("Code")] 
-          public int Code 
-          { 
-               get{return _code;} 
-               set{ 
-
-                    SetProperty(ref _code, value);
-                     }
-          } 
 
 
           [DbColumn("CreatedDate")] 
@@ -76,22 +67,11 @@ using Ocph.DAL;
         }
 
 
-        private string codeManifest;
-
-        public string ManifestCode
-        {
-            get {
-                if (string.IsNullOrEmpty(codeManifest))
-                    codeManifest = CodeGenerate.Manifest(Code);
-                return codeManifest; }
-            set { SetProperty(ref codeManifest ,value); }
-        }
-
+       
         public string User { get;  set; }
 
         private int  _id;
            private int  _schedulesid;
-           private int  _code;
            private DateTime  _createddate;
         private ActivedStatus _activestatus;
     }

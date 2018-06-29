@@ -37,7 +37,7 @@
 
                     <DataGrid Name="dg" Grid.Column="0" ItemsSource="{Binding SourceView}" SelectedItem="{Binding ManifestSelected}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding ManifestCode}" Header="Nomor Manifest" />
+                            <DataGridTextColumn Binding="{Binding Id,StringFormat=MT{0:D8}}" Header="Nomor Manifest" />
                             <DataGridTextColumn Binding="{Binding Tanggal,StringFormat=dd MMMM yyyy}" Header="Tanggal" />
                             <DataGridTextColumn Binding="{Binding PlaneName}" Header="Nama Pesawat" />
                             <DataGridTextColumn Binding="{Binding PlaneCode}" Header="Kode Penerbangan" />
@@ -48,14 +48,15 @@
                             <DataGridTextColumn Binding="{Binding Start}" Header="Berangkat" />
                             <DataGridTextColumn Binding="{Binding End}" Header="Berangkat"/>
                             <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding IsTakeOff}" Header="TakeOff" Width="auto"/>
-                            <DataGridCheckBoxColumn IsReadOnly="False" Binding="{Binding Complete}" Header="Departed" Width="auto"/>
                             <DataGridTextColumn   Binding="{Binding User}" Header="Dibuat Oleh" Width="auto"/>
                         </DataGrid.Columns>
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
-                                <MenuItem Header="Print Preview" Command="{Binding PrintPreviewCommand}"/>
+                                <MenuItem Header="Manifest Print Preview" Command="{Binding PrintPreviewCommand}"/>
+                                <MenuItem Header="Pre Flight Manifest Print Preview" Command="{Binding PreFlightPrintPreviewCommand}"/>
                                 <MenuItem Header="Print" Command="{Binding PrintCommand}"/>
+                                <MenuItem Header="Set Pesawat Berangkat" Command="{Binding SetTakeOFF}"/>
                                 <MenuItem Height="auto" Header="Sort">
                                     <MenuItem Height="auto" Header="Sort">
                                         <MenuItem.Template>
@@ -82,10 +83,10 @@
                                     </MenuItem>
                                 </MenuItem>
                                 <MenuItem Header="Batalkan Manifes" Command="{Binding CreateManifest}">
-                                    <MenuItem Height="auto" Header="Alasan">
+                                    <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Alasan">
                                         <MenuItem.Template>
                                             <ControlTemplate>
-                                                <Grid Margin="25,3">
+                                                <Grid Margin="25,3" Background="{StaticResource clrSecound}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="auto"/>
                                                         <RowDefinition Height="auto"/>
@@ -110,10 +111,12 @@
 
                     </DataGrid>
                     <DataGrid ItemsSource="{Binding ManifestSelected.Details}" 
+                              CommandManager.PreviewCanExecute="detailsDg_PreviewCanExecute" IsReadOnly="True" 
+                              Name="detailsDg" RowEditEnding="DataGrid_RowEditEnding" HorizontalAlignment="Center"
                               AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False"
                               Grid.Column="1">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Nomor SMU" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Header="Nomor SMU" Binding="{Binding Id,StringFormat=T{0:d9}}"/>
                             <DataGridTextColumn Width="*" Header="Pengirim" Binding="{Binding ShiperName}"/>
                             <DataGridTextColumn Width="*" Header="Penerima" Binding="{Binding RecieverName}"/>
                             <DataGridTextColumn Header="pcs" Binding="{Binding Pcs, StringFormat={}{0:N2}}"/>

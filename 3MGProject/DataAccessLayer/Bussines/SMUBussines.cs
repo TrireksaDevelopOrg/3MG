@@ -27,7 +27,7 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     
-                    var smudata = new smu {  PTIId=pTISelected.Id, CreatedDate = DateTime.Now, Kode= CodeGenerate.GetNewSMUNumber().Result };
+                    var smudata = new smu {  PTIId=pTISelected.Id, CreatedDate = DateTime.Now};
                     smudata.Id = db.SMU.InsertAndGetLastID(smudata);
                     if (smudata.Id <= 0)
                         throw new SystemException("Data Tidak Tersimpan");
@@ -46,32 +46,13 @@ namespace DataAccessLayer.Bussines
                         if(!db.PTI.Update(O => new { O.OnSMU }, new pti { Id = pTISelected.Id, OnSMU = true }, O => O.Id == pTISelected.Id))
                             throw new SystemException("Data Tidak Tersimpan");
 
-                        var h = User.GenerateHistory(pTISelected.Id, BussinesType.PTI, ChangeType.Update, string.Format("Dibuatkan SMU dengan Nomor T{0:D9}",smudata.Kode));
+                        var h = User.GenerateHistory(pTISelected.Id, BussinesType.PTI, ChangeType.Update, string.Format("Dibuatkan SMU dengan Nomor T{0:D9}",smudata.Id));
                         if (!db.Histories.Insert(h))
                             throw new SystemException("Gagal Simpan Data");
                     }
 
 
-                    if (pTISelected.PayType == PayType.Deposit)
-                    {
-                        Tuple<bool,double> cukup = CustomerDepositCukup(pTISelected.ShiperID, source.Where(O => O.IsSended).Sum(O=>O.Biaya));
-                        var debet = new debetdeposit { CreatedDate = date, SMUId = smudata.Id };
-                        if (cukup.Item1)
-                        {
-                            var depId = db.DebetDeposit.InsertAndGetLastID(debet);
-                            if (depId<=0)
-                                throw new SystemException("Gagal Debet Deposit");
-
-                            var his = User.GenerateHistory(depId, BussinesType.DebetDeposit, ChangeType.Create, "");
-                            if (!db.Histories.Insert(his))
-                                throw new SystemException("Gagal Simpan Data");
-                        }
-                        else
-                        {
-                            throw new SystemException(string.Format(" Saldo Tidak Cukup !\r Sisa Saldo Rp {0:N2}",cukup.Item2));
-                        }
-                
-                    }
+                    
 
                     var history = User.GenerateHistory(smudata.Id, BussinesType.SMU, ChangeType.Create, "");
                     if (!db.Histories.Insert(history))
@@ -82,7 +63,6 @@ namespace DataAccessLayer.Bussines
                         CreatedDate = date, 
                         Id = smudata.Id,
                         IsSended = false,
-                        Kode = smudata.Kode,
                         Pcs = source.Sum(O => O.Pcs),
                         RecieverId = pTISelected.RecieverId,
                         RecieverName = pTISelected.RecieverName,
@@ -102,6 +82,43 @@ namespace DataAccessLayer.Bussines
                     throw new SystemException(ex.Message);
                 }
               
+            }
+        }
+
+        public Task InsertPTIItemToSMU(SMU smuSelected,ObservableCollection<collies> source)
+        {
+
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    foreach (var item in source.Where(O => O.IsSended ==true).ToList())
+                    {
+                        if (!db.SMUDetails.Insert(new smudetails { colliesId = item.Id, SMUId = smuSelected.Id }))
+                            throw new SystemException("Data Tidak Tersimpan");
+
+                        var note = string.Format("Menambah Item Ke SMU No T{0:D9}-{1}-{2}-{3}-{4}-{5}",smuSelected.Id, item.Content, item.Kemasan, item.Pcs, item.Weight, item.TotalWeight);
+                        var histDetail = User.GenerateHistory(smuSelected.Id, BussinesType.SMU, ChangeType.Update, note);
+                        if (!db.Histories.Insert(histDetail))
+                            throw new SystemException("Data Tidak Tersimpan");
+                    }
+
+
+
+                    if(source.Where(O=>!O.IsSended).Count()<=0)
+                    {
+                        if (!db.PTI.Update(O => new { O.OnSMU }, new pti { OnSMU = true, Id = smuSelected.PTIId }, O => O.Id == smuSelected.PTIId))
+                            throw new SystemException("Data Tidak Tersimpan");
+                    }
+                    trans.Commit();
+                    return Task.FromResult(0);
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
             }
         }
 
@@ -148,10 +165,10 @@ namespace DataAccessLayer.Bussines
 
 
                         if (result != null && result.IsTakeOff)
-                            throw new SystemException(string.Format("{0} Tidak Dapat Dibatalkan \r\n Telah Berangkat Dengan Manifest Nomor {1}", selectedItem.Code, result.Code));
+                            throw new SystemException(string.Format("T{0:D9} Tidak Dapat Dibatalkan \r\n Telah Berangkat Dengan Manifest Nomor MT{1:D9}", selectedItem.Id, result.Id));
 
                         if (result != null && !result.IsTakeOff)
-                            throw new SystemException(string.Format("Batalkan {0} Dari Manifest Nomor {1}", selectedItem.Code, result.Code));
+                            throw new SystemException(string.Format("Batalkan T{0:D9} Dari Manifest Nomor MT{1:D8}", selectedItem.Id, result.Id));
 
 
                         ActivedStatus active = ActivedStatus.Cancel;
@@ -182,6 +199,27 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public Task<List<collies>> GetSMUOutOfManifest(int id)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "PTIColliesOutSMU";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("ptiId", id));
+                    var reader = cmd.ExecuteReader();
+                    var result = MappingProperties<collies>.MappingTable(reader);
+                    return Task.FromResult(result);
+                }
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(new List<collies>());
+            }
+        }
+
         public Task<Tuple<SMU,SMU>> SplitSMU(SMU smuSelected, ObservableCollection<SMUDetail> originSource, ObservableCollection<SMUDetail> destinationSource)
         {
             using (var db = new OcphDbContext())
@@ -192,7 +230,7 @@ namespace DataAccessLayer.Bussines
                     //remove selected Move
                     foreach(var item in destinationSource)
                     {
-                        if (!db.SMUDetails.Delete(O => O.SMUId == item.Id && O.colliesId == item.CollyId))
+                        if (!db.SMUDetails.Delete(O => O.SMUId == item.Id && O.colliesId == item.ColliesId))
                             throw new SystemException("Smu Gagal di Split");
                     }
                     var firstColly = originSource.FirstOrDefault();
@@ -201,7 +239,7 @@ namespace DataAccessLayer.Bussines
                     var source = new ObservableCollection<collies>();
                     foreach(var item in destinationSource)
                     {
-                        source.Add(new collies { Id = item.CollyId, Content = item.Content, IsSended = true, Pcs = item.Pcs, Price = item.Price, PtiId = item.PTIId, Weight = item.Weight });
+                        source.Add(new collies { Id = item.ColliesId, Content = item.Content, IsSended = true, Pcs = item.Pcs, Price = item.Price, PtiId = item.PTIId, Weight = item.Weight });
                     }
 
                     smuSelected.Pcs = originSource.Sum(O => O.Pcs);
@@ -209,7 +247,7 @@ namespace DataAccessLayer.Bussines
                     smuSelected.Biaya = originSource.Sum(O => O.Biaya);
 
                     //SUMU
-                    var smudata = new smu { PTIId=smuSelected.PTIId, CreatedDate = DateTime.Now, Kode = CodeGenerate.GetNewSMUNumber().Result };
+                    var smudata = new smu { PTIId=smuSelected.PTIId, CreatedDate = DateTime.Now};
                     smudata.Id = db.SMU.InsertAndGetLastID(smudata);
                     if (smudata.Id <= 0)
                         throw new SystemException("Data Tidak Tersimpan");
@@ -222,20 +260,7 @@ namespace DataAccessLayer.Bussines
 
                     }
 
-                    if (ptiModel.PayType == PayType.Deposit)
-                    {
-                        Tuple<bool, double> cukup = CustomerDepositCukup(ptiModel.ShiperID, source.Where(O => O.IsSended).Sum(O => O.Biaya));
-                        var debet = new debetdeposit { CreatedDate = smuSelected.CreatedDate, SMUId = smudata.Id };
-                        var depId = db.DebetDeposit.InsertAndGetLastID(debet);
-                        if (depId <= 0)
-                            throw new SystemException("Gagal Debet Deposit");
-
-                        var his = User.GenerateHistory(depId, BussinesType.DebetDeposit, ChangeType.Create, "");
-                        if (!db.Histories.Insert(his))
-                            throw new SystemException("Gagal Simpan Data");
-                        
-                    }
-
+                   
                     var history = User.GenerateHistory(smudata.Id, BussinesType.SMU, ChangeType.Create, "");
                     if (!db.Histories.Insert(history))
                         throw new SystemException("Gagal Simpan Data");
@@ -245,7 +270,6 @@ namespace DataAccessLayer.Bussines
                         CreatedDate = smuSelected.CreatedDate,
                         Id = smudata.Id,
                         IsSended = false,
-                        Kode = smudata.Kode,
                         Pcs = source.Sum(O => O.Pcs),
                         RecieverId = smuSelected.RecieverId,
                         RecieverName = ptiModel.RecieverName,
@@ -267,6 +291,36 @@ namespace DataAccessLayer.Bussines
                     throw new SystemException(ex.Message);
                 }
             }
+        }
+
+        public bool RemoveSMUItem(SMUDetail sMUDetail)
+        {
+
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    if(db.SMUDetails.Delete(O=>O.colliesId==sMUDetail.ColliesId))
+                    {
+                        var item = sMUDetail;
+                        var note = string.Format(@"Menghapus Item : \n\r {0}-{1}-{2}-{3}",
+                                   item.Content, item.Pcs, item.Weight, item.Price);
+                        var his = User.GenerateHistory(item.Id, BussinesType.SMU, ChangeType.Delete, note);
+                        if (db.Histories.Insert(his))
+                        {
+                            trans.Commit();
+                            return true;
+                        }
+                    }
+                    throw new SystemException("Data Tidak Terhapus");
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+            }   
         }
 
         public Task<List<SMUDetail>> GetSMUDetail(int id)
@@ -298,30 +352,7 @@ namespace DataAccessLayer.Bussines
 
       
 
-        private Tuple<bool,double> CustomerDepositCukup(int shiperID, double biaya)
-        {
-            try
-            {
-                using (var db = new OcphDbContext())
-                {
-                    var cmd = db.CreateCommand();
-                    cmd.CommandText = "CustomerSaldo";
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new MySqlParameter("cusId", shiperID));
-                    var data = cmd.ExecuteScalar();
-                    double saldo = double.Parse(data.ToString());
-                    if (saldo >= biaya)
-                        return new Tuple<bool, double>(true,saldo);
-                    else
-                        return new Tuple<bool, double>(false, saldo);
-                }
-            }
-            catch (Exception)
-            {
-
-                 return new Tuple<bool, double>(false, 0);
-            }
-        }
+      
 
       
 

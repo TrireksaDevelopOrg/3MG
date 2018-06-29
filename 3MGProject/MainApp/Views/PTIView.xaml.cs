@@ -1,22 +1,18 @@
 ﻿using DataAccessLayer.Models;
-using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using DataAccessLayer;
 using DataAccessLayer.Bussines;
 using Microsoft.Reporting.WinForms;
+using DataAccessLayer.DataModels;
+using System.Reflection;
 
 namespace MainApp.Views
 {
@@ -25,6 +21,8 @@ namespace MainApp.Views
     /// </summary>
     public partial class PTIView : Window
     {
+        private PTIViewModel vm;
+
         public PTIView()
         {
             InitializeComponent();
@@ -35,7 +33,7 @@ namespace MainApp.Views
         {
            if(e.Key== Key.Enter || e.Key== Key.Return)
             {
-                PTIViewModel vm = (PTIViewModel)DataContext;
+               vm = (PTIViewModel)DataContext;
                 DataGrid dg = (DataGrid)sender;
                 var item = (PTI)dg.SelectedItem;
                 if (item != null)
@@ -43,10 +41,112 @@ namespace MainApp.Views
             }
         }
 
-      
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            detailsDg.IsReadOnly = true;
+            collies selectedRow = e.Row.DataContext as collies;
+            if (e.EditAction== DataGridEditAction.Commit)
+            {
+               // detailsDg.CommitEdit( DataGridEditingUnit.Row, false);
+               if(selectedRow!=null)
+                vm.UpdateItemCollies(selectedRow);
+            }
+
+            if(e.Row.IsNewItem)
+            {
+                vm.AddNewCollies(selectedRow);
+            }
+   
+           // vm.SelectedPTI.DetailView.Refresh();
+     
+            //  detailsDg.Items.Refresh();
+           
+        }
+
+        private void detailsDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var colly = e.Row.DataContext as collies;
+            if(colly!=null)
+            {
+                var a = e.Column.Header.ToString();
+                if (a == "Pcs")
+                {
+                    var control = (TextBox)e.EditingElement;
+                    var item = Convert.ToInt32(control.Text);
+                    colly.Pcs = item;
+                }
+
+                if (a == "Kemasan")
+                {
+                    var control = (TextBox)e.EditingElement;
+                    colly.Kemasan = control.Text;
+                }
+                if (a == "Content")
+                {
+                    var control = (TextBox)e.EditingElement;
+                    colly.Content = control.Text;
+                }
+
+                if (a == "Berat")
+                {
+                    var control = (TextBox)e.EditingElement;
+                    var item = Convert.ToDouble(control.Text);
+
+                    colly.Weight = item;
+                }
+
+                if (a == "Harga")
+                {
+                    var control = (TextBox)e.EditingElement;
+                    var item = Convert.ToDouble(control.Text);
+                    colly.Price = item;
+                }
+            }
+           
+        }
+
+        private  void detailsDg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (vm != null)
+                if (vm.UserCanaccess())
+                {
+                    if (detailsDg.IsReadOnly)
+                    {
+                        detailsDg.IsReadOnly = false;
+                        detailsDg.CanUserDeleteRows = true;
+                        detailsDg.CanUserAddRows = true;
+                    }
+                }else
+                {
+                    Helpers.ShowErrorMessage("Anda Tidak Memiliki Akses");
+                }
+        }
+
+        private  void detailsDg_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            DataGrid grid = (DataGrid)sender;
+            if (e.Command == DataGrid.DeleteCommand)
+            {
+                if (vm.UserCanaccess())
+                {
+                    if (MyMessage.Show("Yakin Menghapus Data ?", "Confirm Delete", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+                        e.Handled = false;
+                    else
+                    {
+                        vm.RemoveItemCollies(grid.SelectedItem as collies);
+                    }
+                }else
+                {
+                    
+                    Dispatcher.BeginInvoke(new Action(() => Helpers.ShowErrorMessage("Anda Tidak Memiliki Akses")),
+                        System.Windows.Threading.DispatcherPriority.Normal);
+
+                }
+            }
+         }
     }
 
-    public class PTIViewModel : BaseNotify,IBusyBase
+    public class PTIViewModel : Authorization,IBusyBase
     {
         private DateTime startDate;
 
@@ -95,7 +195,7 @@ namespace MainApp.Views
 
         DataAccessLayer.Bussines.PtiBussines ptiContext = new DataAccessLayer.Bussines.PtiBussines();
 
-        public PTIViewModel()
+        public PTIViewModel():base(typeof(PTIViewModel))
         {
             MyTitle = "PEMBERITAHUAN TENTANG ISI ( P T I )";
             CancelPTI = new CommandHandler { CanExecuteAction = CancelPTIValidate, ExecuteAction = CancelPTIAction };
@@ -143,11 +243,11 @@ namespace MainApp.Views
                 if (obj == null || string.IsNullOrEmpty(obj.ToString()))
                     Helpers.ShowErrorMessage("Tambahkan Alasan Pembatalan");
                 else if(SelectedPTI.ActiveStatus== ActivedStatus.Cancel)
-                    Helpers.ShowErrorMessage(string.Format("PTI NO {0} Telah Berstatus Batal", SelectedPTI.Code));
+                    Helpers.ShowErrorMessage(string.Format("PTI NO {0:D6} Telah Berstatus Batal", SelectedPTI.Id));
                 else
                 {
                     ptiContext.SetCancelPTI(SelectedPTI, obj.ToString());
-                    Helpers.ShowMessage(string.Format("PTI NO {0} Berhasil Dibatalkan", SelectedPTI.Code));
+                    Helpers.ShowMessage(string.Format("PTI NO {0:d6} Berhasil Dibatalkan", SelectedPTI.Id));
                 }
   
             }
@@ -192,7 +292,7 @@ namespace MainApp.Views
                     ReportParameter[] parameters =
                     {
                         new ReportParameter("Petugas",SelectedPTI.User),
-                        new ReportParameter("Nomor",SelectedPTI.Code),
+                        new ReportParameter("Nomor",SelectedPTI.Id.ToString()),
                         new ReportParameter("Pengirim",SelectedPTI.ShiperName),
                         new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",SelectedPTI.RecieverAddress,SelectedPTI.RecieverHandphone)),
                         new ReportParameter("Penerima",SelectedPTI.RecieverName),
@@ -208,10 +308,15 @@ namespace MainApp.Views
         {
             var res = await ptiContext.GetDetailOfPTI(selected);
             selected.Details.Clear();
+           
             foreach (var item in res)
             {
                 selected.Details.Add(item);
             }
+
+            if (selected.DetailView == null)
+                selected.DetailView = (CollectionView)CollectionViewSource.GetDefaultView(selected.Details);
+
             GridWidth = new GridLength( 30, GridUnitType.Star);
         }
 
@@ -258,7 +363,6 @@ namespace MainApp.Views
                         PayType = vm.PayType,
                         Pcs = vm.Collies.Sum(O => O.Pcs),
                         Weight = vm.Collies.Sum(O => O.Weight),
-                        PTINumber = vm.PTINumber,
                         RecieverName = vm.Reciever.Name,
                         ShiperName = vm.Shiper.Name,
                         Biaya = vm.Collies.Sum(O => O.Biaya),
@@ -304,6 +408,74 @@ namespace MainApp.Views
             }finally
             {
                 IsBusy = false;
+            }
+        }
+        
+      
+        internal collies UpdateItemCollies(collies colly)
+        {
+            try
+            {
+                return ptiContext.UpdateCollies(colly);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        [Authorize("Manager")]
+        internal bool UserCanaccess()
+        {
+            if(User.CanAccess(MethodBase.GetCurrentMethod()))
+            {
+                if (MyMessage.Show("Yakin Mengubah Data ?", "Confirm Edit", MessageBoxButton.OKCancel)== MessageBoxResult.OK)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal void AddNewCollies(collies selectedRow)
+        {
+            try
+            {
+                if (selectedRow.Pcs > 0 && !string.IsNullOrEmpty(selectedRow.Content) &&
+                selectedRow.Weight > 0 && !string.IsNullOrEmpty(selectedRow.Kemasan) &&
+                selectedRow.Price > 0)
+                {
+                    selectedRow.PtiId = SelectedPTI.Id;
+                    ptiContext.AddNewCollyItem(selectedRow);
+                    SelectedPTI.Details.Add(selectedRow);
+                }
+                else
+                    throw new SystemException("Lengkapi Data dengan Benar");
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+               
+
+        }
+
+        internal void RemoveItemCollies(collies collies)
+        {
+            if(collies!=null)
+            {
+                try
+                {
+                    if(ptiContext.RemoveItemCollies(collies))
+                    {
+                        SelectedPTI.Details.Remove(collies);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Helpers.ShowErrorMessage(ex.Message);
+                }
             }
         }
 

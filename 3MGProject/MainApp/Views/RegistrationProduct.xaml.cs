@@ -54,7 +54,7 @@ namespace MainApp.Views
                         lic.ProductKey = productKey;
                        if( key.SaveSuretyFile("Key.lic", lic))
                         {
-                            MessageBox.Show("Sukes Registrasi");
+                           Helpers.ShowMessage("Sukes Registrasi");
                             this.Success = true;
                             this.Close();
                         }else
@@ -72,7 +72,7 @@ namespace MainApp.Views
             catch (Exception ex)
             {
 
-                MessageBox.Show(ex.Message);
+               Helpers.ShowMessage(ex.Message);
             }
 
         }

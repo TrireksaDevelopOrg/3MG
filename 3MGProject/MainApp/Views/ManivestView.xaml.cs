@@ -17,6 +17,7 @@ using DataAccessLayer.Models;
 
 using DataAccessLayer.Bussines;
 using Microsoft.Reporting.WinForms;
+using System.Reflection;
 
 namespace MainApp.Views
 {
@@ -25,12 +26,12 @@ namespace MainApp.Views
     /// </summary>
     public partial class ManivestView : Window
     {
-        private ManifestViewModel viewmodel;
+        private ManifestViewModel vm;
         public ManivestView()
         {
             InitializeComponent();
-            viewmodel = new ManifestViewModel() { WindowClose=Close};
-            this.DataContext = viewmodel;
+            vm = new ManifestViewModel() { WindowClose=Close};
+            this.DataContext = vm;
            dg.PreviewKeyDown += Dg_PreviewKeyDown;
         }
 
@@ -41,13 +42,49 @@ namespace MainApp.Views
                 DataGrid dg = (DataGrid)sender;
                 var item = (Manifest)dg.SelectedItem;
                 if (item != null)
-                    viewmodel.ShowDetails(item);
+                    vm.ShowDetails(item);
+            }
+        }
+
+
+        private void DataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            detailsDg.IsReadOnly = true;
+            SMU selectedRow = e.Row.DataContext as SMU;
+            if (e.EditAction == DataGridEditAction.Commit)
+            {
+
+            }
+            
+
+        }
+
+        private void detailsDg_PreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Command == DataGrid.DeleteCommand)
+            {
+                if (vm.UserCanaccess())
+                {
+                    DataGrid grid = (DataGrid)sender;
+                    if (MyMessage.Show("Yakin Menghapus Data ?", "Confirm Delete", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+                        e.Handled = false;
+                    else
+                    {
+                        vm.RemoveItemCollies(grid.SelectedItem as SMU);
+                    }
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke(new Action(() => Helpers.ShowErrorMessage("Anda Tidak Memiliki Akses")),
+                        System.Windows.Threading.DispatcherPriority.Normal);
+                }
+
             }
         }
     }
 
 
-    public class ManifestViewModel:BaseNotify
+    public class ManifestViewModel:Authorization
     {
         ManifestBussiness context = new ManifestBussiness();
         private DateTime startDate;
@@ -87,7 +124,7 @@ namespace MainApp.Views
         }
 
 
-        public ManifestViewModel()
+        public ManifestViewModel():base(typeof(ManifestViewModel))
         {
             MyTitle = "MANIFEST";
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
@@ -96,6 +133,9 @@ namespace MainApp.Views
             CancelManifest = new CommandHandler { CanExecuteAction = Cancelmanifest, ExecuteAction = CancelManifestAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshAction };
             AddNewManifestCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewManifestAction };
+            PreFlightPrintPreviewCommand = new CommandHandler { CanExecuteAction = x => ManifestSelected != null, ExecuteAction = PreFlightPrintPreviewAction };
+            SetTakeOFF = new CommandHandler { CanExecuteAction = SetTakeOFFValidate, ExecuteAction = SetTakOFFAction };
+
             Source = new ObservableCollection<Manifest>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             SourceView.Filter = DataFilter;
@@ -105,6 +145,77 @@ namespace MainApp.Views
             Aktif = true;
             Batal = false;
             LoadData(startDate,endDate);
+        }
+
+        private async void PreFlightPrintPreviewAction(object obj)
+        {
+            try
+            {
+                var header = new List<Manifest>();
+                header.Add(ManifestSelected);
+                var details = await context.ManifestPreFlightDetails(ManifestSelected);
+
+                Helpers.PrintWithFormActionTwoSource("Print Preview", new ReportDataSource { Name = "Header", Value = header },
+                    new ReportDataSource { Name = "DataSet1", Value = details },
+                    "MainApp.Reports.Layouts.PreFlightManifest.rdlc", null);
+
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+
+            }
+        }
+
+        private bool SetTakeOFFValidate(object obj)
+        {
+
+            if(ManifestSelected!=null)
+            {
+                var date = DateTime.Now;
+                var sce = new DateTime(ManifestSelected.Tanggal.Year, ManifestSelected.Tanggal.Month, ManifestSelected.Tanggal.Day, ManifestSelected.Start.Hours, ManifestSelected.Start.Minutes, ManifestSelected.Start.Seconds);
+
+                if (!ManifestSelected.IsTakeOff && sce < date)
+                    return true;
+            }
+         
+            return false;
+        }
+
+        private void SetTakOFFAction(object obj)
+        {
+            try
+            {
+                context.SetTakeOff(ManifestSelected);
+                ManifestSelected.IsTakeOff = true;
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+        }
+
+        internal void RemoveItemCollies(SMU item)
+        {
+            try
+            {
+                if (!ManifestSelected.IsTakeOff)
+                {
+                    if (context.RemoveSMU(ManifestSelected, item))
+                    {
+                        ManifestSelected.Details.Remove(item);
+                        Helpers.ShowMessage("SMU Telah Di Hapus");
+                    }
+                       
+                }
+                    else
+                        throw new SystemException("Pesawat Telah Berangkat, Data Tidak Dapat Dihapus");
+            }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowErrorMessage(ex.Message);
+            }
         }
 
         private async void PrintPreviewCommandAction(object obj)
@@ -174,14 +285,22 @@ namespace MainApp.Views
 
         public async void ShowDetails(Manifest selected)
         {
-            if(selected.Details.Count<=0)
+            try
             {
-                var result = await context.ManifestDetails(selected);
-                foreach (var item in result)
+                if (selected.Details.Count <= 0)
                 {
-                    selected.Details.Add(item);
+                    var result = await context.ManifestDetails(selected);
+                    foreach (var item in result)
+                    {
+                        selected.Details.Add(item);
+                    }
+                    GridWidth = new GridLength(30, GridUnitType.Star);
                 }
-                GridWidth = new GridLength(30, GridUnitType.Star);
+            }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowMessage(ex.Message);
             }
         }
 
@@ -222,7 +341,8 @@ namespace MainApp.Views
         public CommandHandler CancelManifest { get; }
         public CommandHandler RefreshCommand { get; }
         public CommandHandler AddNewManifestCommand { get; }
-
+        public CommandHandler PreFlightPrintPreviewCommand { get; }
+        public CommandHandler SetTakeOFF { get; }
         public ObservableCollection<Manifest>Source {get;set ;}
         public CollectionView SourceView { get; }
 
@@ -288,5 +408,13 @@ namespace MainApp.Views
 
             return false;
         }
+
+        [Authorize("Manager")]
+        internal bool UserCanaccess()
+        {
+            return User.CanAccess(MethodBase.GetCurrentMethod());
+        }
+
+       
     }
 }

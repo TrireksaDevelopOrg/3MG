@@ -42,7 +42,7 @@
                     <StackPanel>
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Nomor PTI"/>
-                            <Label FontSize="14" Content="{Binding Code}" Width="200"/>
+                            <TextBlock FontSize="14" Text="{Binding Id,StringFormat={}{0:D6}}" Width="200"/>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Tanggal"/>
@@ -126,6 +126,7 @@
                     <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
                     <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
                     <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}" Width="*" Header="Total Berat"/>
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding Biaya,StringFormat={}{0:N2}}" Width="*" Header="Biaya"/>
                 </DataGrid.Columns>
             </DataGrid>

@@ -21,15 +21,7 @@ using Ocph.DAL;
                      }
           } 
 
-          [DbColumn("Kode")] 
-          public int Kode 
-          { 
-               get{return _kode;} 
-               set{ 
-
-                    SetProperty(ref _kode, value);
-                     }
-          } 
+         
 
           [DbColumn("CreatedDate")] 
           public DateTime CreatedDate 
@@ -75,7 +67,6 @@ using Ocph.DAL;
 
 
         private int  _id;
-           private int _kode;
            private DateTime  _createddate;
         private ActivedStatus _activestatus;
     }

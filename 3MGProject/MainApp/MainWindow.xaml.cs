@@ -59,8 +59,7 @@ namespace MainApp
 
         private void laporan_Click(object sender, RoutedEventArgs e)
         {
-            var form = new Reports.Forms.PenjualanForm();
-            form.ShowDialog();
+            viewmodel.LoadLaporan();
         }
 
         private void manifest_Click(object sender, RoutedEventArgs e)
@@ -78,6 +77,18 @@ namespace MainApp
             var login = new Views.LoginView();
             login.Show();
             this.Close();
+        }
+
+        private void password_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new Views.ChangePassword();
+            form.ShowDialog();
+
+        }
+
+        private void backup_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 
@@ -100,8 +111,21 @@ namespace MainApp
                 Helpers.ShowErrorMessage(NotHaveAccess);
         }
 
+        [Authorize("Administrator,Accounting,Manager")]
+        internal void LoadLaporan()
+        {
+            try
+            {
+                var form = new Reports.Forms.Laporan();
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+        }
 
-        [Authorize("Administrator,Operational")]
+        [Authorize("Administrator,Operational,Manager")]
         internal void LoadManifest()
         {
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
@@ -113,7 +137,7 @@ namespace MainApp
                 Helpers.ShowErrorMessage(NotHaveAccess);
         }
 
-        [Authorize("Administrator,Operational,Admin")]
+        [Authorize("Administrator,Admin")]
         internal void LoadPTI()
         {
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
@@ -129,14 +153,14 @@ namespace MainApp
 
         }
 
-        [Authorize("Administrator,Admin,Manager")]
+        [Authorize("Administrator,Operational,Manager")]
         internal void LoadShcedule()
         {
             var form = new Views.FlightView();
             Helpers.ShowChild(WindowParent, form);
         }
 
-        [Authorize("Administrator,Admin,Manager")]
+        [Authorize("Administrator,Accounting,Manager")]
         internal void LoadSMU()
         {
             if (User.CanAccess(MethodBase.GetCurrentMethod()))
