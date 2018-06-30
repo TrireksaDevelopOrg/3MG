@@ -25,11 +25,13 @@ namespace MainApp.Reports.Forms
     public partial class BufferStock : Page
     {
         private BufferViewModel vm;
+        private ReportViewer reportViewer;
 
-        public BufferStock()
+        public BufferStock(ReportViewer report)
         {
             InitializeComponent();
             vm = new BufferViewModel();
+            reportViewer = report;
             this.DataContext = vm;
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.BufferStock.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);

@@ -15,7 +15,6 @@ namespace DataAccessLayer.Bussines
         public Authorization(Type member)
         {
             var me = member.GetMethods();
-
         }
         public string NotHaveAccess { get { return "Anda Tidak Memiliki Akses"; } }
         public static user User { get; set; }
@@ -37,11 +36,22 @@ namespace DataAccessLayer.Bussines
         public List<string> Roles = new List<string>();
         public AuthorizeAttribute(string v)
         {
-            var result = v.Split(',');
-            foreach (var item in result)
+            if (v.Contains(','))
             {
-                Roles.Add(item);
+                var result = v.Split(',');
+                foreach (var item in result)
+                {
+                    Roles.Add(item);
+                }
+            }else
+            {
+                Roles.Add(v);
             }
+        }
+
+        public AuthorizeAttribute(string[] roles)
+        {
+            this.Roles = roles.ToList();
         }
     }
 

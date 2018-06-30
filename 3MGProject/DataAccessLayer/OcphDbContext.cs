@@ -16,6 +16,7 @@ namespace DataAccessLayer
         public OcphDbContext()
         {
             this.ConnectionString = SettingConfiguration.GetStringValue("ConnectionString");
+            
         }
 
         internal IRepository<customer> Customers => new Repository<customer>(this);

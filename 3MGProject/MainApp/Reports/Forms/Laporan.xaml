@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Reports.Forms"
+        xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowState="Maximized" AllowsTransparency="False"
         Title="Laporan" Height="450" Width="800">
     <Window.Resources>
@@ -46,7 +47,16 @@
         </Menu>
         <Slider Grid.Column="1" HorizontalAlignment="Stretch"/>
         <Border Grid.Column="2">
-            <Frame NavigationUIVisibility="Hidden" Name="Main" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Frame NavigationUIVisibility="Hidden" Name="Main" />
+                <WindowsFormsHost Grid.Row="1">
+                    <rv:ReportViewer x:Name="reportViewer"/>
+                </WindowsFormsHost>
+            </Grid>
         </Border>
 
     </Grid>

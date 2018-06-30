@@ -1,20 +1,10 @@
 ﻿using DataAccessLayer.Models;
 using Microsoft.Reporting.WinForms;
-using Microsoft.ReportingServices.ReportProcessing.ReportObjectModel;
 using Ocph.DAL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MainApp.Reports.Forms
 {
@@ -24,11 +14,14 @@ namespace MainApp.Reports.Forms
     public partial class PenjualanForm : Page
     {
         PenjualanViewModel viewmodel = new PenjualanViewModel();
-        public PenjualanForm()
+        private ReportViewer reportViewer;
+
+        public PenjualanForm(ReportViewer report)
         {
             InitializeComponent();
 
             this.DataContext = new PenjualanViewModel();
+            reportViewer = report;
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.Penjualan.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer.ZoomMode = ZoomMode.PageWidth;

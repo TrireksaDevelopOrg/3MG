@@ -586,10 +586,10 @@
 
     <Color x:Key="FilledColor" A="255" B="155" R="155" G="155"/>
     <Color x:Key="UnfilledColor" A="0" B="155" R="155" G="155"/>
-
+    <local:BusyConverter x:Key="busyConverter"></local:BusyConverter>
     <Style  x:Key="BusyAnimationStyle" TargetType="Control">
         <Setter Property="Background" Value="#7F000000"/>
-
+        <Setter Property="Visibility" Value="{Binding IsBusy, Converter={StaticResource busyConverter}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Control">
@@ -1329,8 +1329,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
+   
 
 
 </ResourceDictionary>

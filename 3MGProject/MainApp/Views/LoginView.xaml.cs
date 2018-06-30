@@ -191,19 +191,32 @@ namespace MainApp.Views
 
         private async void LoginAction(object obj)
         {
-            var userLogin = await userManager.Login(UserName, Password);
-            if (userLogin != null && userLogin.UserName==UserName &&userLogin.Password==Password)
+            try
             {
-                this.Success = true;
-                this.UserLogin = userLogin;
-                Authorization.User = userLogin;
-                var main = new MainWindow();
-                main.Show();
-                WindowClose();
-            }else
-            {
-                Helpers.ShowErrorMessage("User atau Password Anda Salah");
+                if (IsBusy)
+                    return;
+                IsBusy = true;
+                var userLogin = await userManager.Login(UserName, Password);
+                if (userLogin != null && userLogin.UserName == UserName && userLogin.Password == Password)
+                {
+                    this.Success = true;
+                    this.UserLogin = userLogin;
+                    Authorization.User = userLogin;
+                    var main = new MainWindow();
+                    main.Show();
+                    WindowClose();
+                }
+                else
+                {
+                    Helpers.ShowErrorMessage("User atau Password Anda Salah");
+                }
             }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+            finally { IsBusy = false; }
         }
     }
 }

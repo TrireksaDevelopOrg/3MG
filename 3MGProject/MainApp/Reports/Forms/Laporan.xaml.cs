@@ -1,4 +1,5 @@
-﻿using Ocph.DAL;
+﻿using Microsoft.Reporting.WinForms;
+using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,16 @@ namespace MainApp.Reports.Forms
             InitializeComponent();
             viewmodel = new LaporanViewModel();
             this.DataContext = viewmodel;
+            reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+            reportViewer.ZoomMode = ZoomMode.PageWidth;
         }
+
+
 
         private void penjualan_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = new Reports.Forms.PenjualanForm();
+            reportViewer.Clear();
+            Main.Content = new Reports.Forms.PenjualanForm(reportViewer);
             viewmodel.MyTitle = "LAPORAN PENJUALAN";
         }
 
@@ -41,19 +47,22 @@ namespace MainApp.Reports.Forms
 
         private void terangkut_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = new Reports.Forms.CargoTerangkut();
+            reportViewer.Clear();
+            Main.Content = new Reports.Forms.CargoTerangkut(reportViewer);
             viewmodel.MyTitle = "CARGO TERANGKUT";
         }
 
         private void borderel_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = new Reports.Forms.BorderelCargo();
+            reportViewer.Clear();
+            Main.Content = new Reports.Forms.BorderelCargo(reportViewer);
             viewmodel.MyTitle = "BORDEREL CARGO";
         }
 
         private void buffer_Click(object sender, RoutedEventArgs e)
         {
-            Main.Content = new Reports.Forms.BufferStock();
+            reportViewer.Clear();
+            Main.Content = new Reports.Forms.BufferStock(reportViewer);
             viewmodel.MyTitle = "BUFFER STOCK";
         }
     }

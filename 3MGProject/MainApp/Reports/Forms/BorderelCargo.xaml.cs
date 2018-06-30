@@ -25,11 +25,13 @@ namespace MainApp.Reports.Forms
     public partial class BorderelCargo : Page
     {
         private BorderelViewModel vm;
+        private ReportViewer reportViewer;
 
-        public BorderelCargo()
+        public BorderelCargo(ReportViewer report)
         {
             InitializeComponent();
             vm = new BorderelViewModel();
+            reportViewer = report;
             this.DataContext = vm;
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.BorderelCargoLayout.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);

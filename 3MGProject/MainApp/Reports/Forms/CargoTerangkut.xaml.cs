@@ -18,12 +18,15 @@ namespace MainApp.Reports.Forms
     public partial class CargoTerangkut : Page
     {
         private CargoTerangkutViewModel vm;
+        private ReportViewer reportViewer;
 
-        public CargoTerangkut()
+        public CargoTerangkut(ReportViewer report)
         {
             InitializeComponent();
             vm= new CargoTerangkutViewModel();
             this.DataContext = vm;
+
+            reportViewer = report;
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.CargoTerangkut.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer.ZoomMode = ZoomMode.PageWidth;

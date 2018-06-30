@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupMySql.cs" />
     <Compile Include="Bussines\Authorization.cs" />
     <Compile Include="Bussines\CustomerBussiness.cs" />
     <Compile Include="Bussines\DepositBussines.cs" />

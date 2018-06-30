@@ -7,35 +7,24 @@
         xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         mc:Ignorable="d" 
         Title="PenjualanForm" >
-    <Border Style="{StaticResource BorderLayoutStyle}">
+    <Border Grid.Row="0" Style="{StaticResource BorderLayoutStyle}">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0" Style="{StaticResource BorderLayoutStyle}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel VerticalAlignment="Bottom">
-                        <WrapPanel>
-                            <Label Width="80" Content="Dari "/>
-                            <DatePicker  Name="dariTanggal" Width="120" Height="28"/>
-                        </WrapPanel>
-                        <WrapPanel>
-                            <Label Width="80" Content="Sampai"/>
-                            <DatePicker Name="sampaiTanggal" Width="120" Height="28" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
-                        </WrapPanel>
-                    
-                    </StackPanel>
-                </Grid>
-           
-            </Border>
-            <WindowsFormsHost Grid.Row="1" Background="{x:Null}">
-                <rv:ReportViewer x:Name="reportViewer"/>
-            </WindowsFormsHost>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel VerticalAlignment="Bottom">
+                <WrapPanel>
+                    <Label Width="80" Content="Dari "/>
+                    <DatePicker  Name="dariTanggal" Width="120" Height="28"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Width="80" Content="Sampai"/>
+                    <DatePicker Name="sampaiTanggal" Width="120" Height="28" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+                </WrapPanel>
+
+            </StackPanel>
         </Grid>
+
     </Border>
 </Page>

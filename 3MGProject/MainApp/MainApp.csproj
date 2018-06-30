@@ -90,6 +90,7 @@
       <DependentUpon>AboutBoxView.cs</DependentUpon>
     </Compile>
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="DataAccessLayer\Bussines\DashboardBussines.cs" />
     <Compile Include="HelperPrint.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IBusyBase.cs" />
@@ -160,6 +161,9 @@
     </Compile>
     <Compile Include="Views\CustomerDepositView.xaml.cs">
       <DependentUpon>CustomerDepositView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DashboarTile.xaml.cs">
+      <DependentUpon>DashboarTile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FlightView.xaml.cs">
       <DependentUpon>FlightView.xaml</DependentUpon>
@@ -295,6 +299,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DashboarTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FlightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -391,7 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BussinessLayer\Models\" />
-    <Folder Include="DataAccessLayer\Bussines\" />
     <Folder Include="Reports\Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Ocph.DAL;
+﻿using DataAccessLayer;
+using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,25 +23,82 @@ namespace MainApp.Views
     /// </summary>
     public partial class Backup : Window
     {
+        private BackUpViewModel vm;
+
         public Backup()
         {
             InitializeComponent();
-            this.DataContext = new BackUpViewModel();
+            vm = new BackUpViewModel() { WindowClose = Close };
+            this.DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var f = new FolderBrowserDialog();
+            f.SelectedPath = SettingConfiguration.GetStringValue("BackupPath");
             f.ShowDialog();
+            if(f!=null && !string.IsNullOrEmpty(f.SelectedPath))
+            {
+                SettingConfiguration.UpdateKey("BackupPath", f.SelectedPath);
+                vm.DataPath= f.SelectedPath+vm.GetFileName();
+            }
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            vm.BackupAction();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
-    public class BackUpViewModel:BaseNotify
+
+
+
+    public class BackUpViewModel:BackupMySqlBase
     {
         public BackUpViewModel()
         {
             MyTitle = "Backup Data";
+            this.OnError += BackUpViewModel_OnError;
+            this.OnComplete += BackUpViewModel_OnComplete;
+            TotalData = 100;
+            ProgressValue = 0;
+            var path = SettingConfiguration.GetStringValue("BackupPath");
+            if(!string.IsNullOrEmpty(path))
+            {
+                DataPath = path + GetFileName();
+            }
         }
+
+        public string GetFileName()
+        {
+            var date = DateTime.Now;
+
+            return string.Format(@"\Data{0}{1:D2}{2:D2}{3}{4}.sql", date.Year, date.Month, date.Day, date.Hour, date.Minute);
+        }
+
+        private void BackUpViewModel_OnComplete(string message)
+        {
+            Helpers.ShowMessage(message);
+        }
+
+        private void BackUpViewModel_OnError(string message)
+        {
+            Helpers.ShowErrorMessage(message);
+        }
+
+        internal void BackupAction()
+        {
+            ProgressValue = 0;
+            Task.Delay(1000);
+            BackupAction(DataPath);
+            TableName = "";
+
+        }
+
         private string path;
 
         public string DataPath
@@ -48,6 +106,8 @@ namespace MainApp.Views
             get { return path; }
             set { SetProperty(ref path ,value); }
         }
+
+        public Action WindowClose { get; internal set; }
 
     }
 }

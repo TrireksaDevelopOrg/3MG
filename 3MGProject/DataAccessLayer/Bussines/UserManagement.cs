@@ -215,20 +215,25 @@ namespace DataAccessLayer.Bussines
 
         public static bool CanAccess(this user user, MethodBase method)
         {
-            AuthorizeAttribute attr = (AuthorizeAttribute)method.GetCustomAttributes(typeof(AuthorizeAttribute), true)[0];
-            var values = attr.Roles;
-            var roles = User.Roles();
             var haveAccess = false;
-            foreach (var item in values)
+            var attrs = method.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+            var aaa = method.GetCustomAttributes(typeof(AuthorizeAttribute));
+            AuthorizeAttribute attr = (AuthorizeAttribute)attrs.FirstOrDefault();
+            if(attr!=null)
             {
-                var result = User.InRole(item).Result;
-                if (result)
+                var values = attr.Roles;
+                var roles = User.Roles();
+                
+                foreach (var item in values)
                 {
-                    haveAccess = true;
-                    break;
+                    var result = User.InRole(item).Result;
+                    if (result)
+                    {
+                        haveAccess = true;
+                        break;
+                    }
                 }
             }
-
             return haveAccess;
         }
 

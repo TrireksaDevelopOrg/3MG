@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp"
+        xmlns:lr="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowState="Maximized" Style="{StaticResource WindowKey}"
-        Title="Aplikasi Cargo TRIMG" Height="564" Width="1007">
+        Title="Aplikasi Cargo TRIMG" Height="768" Width="1360">
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Width" Value="150"></Setter>
@@ -32,237 +33,238 @@
 
             </Style.Triggers>
         </Style>
-        <Style x:Key="imageStyle" TargetType="Image">
-            <Setter Property="Height" Value="60" ></Setter>
-            <Setter Property="Stretch" Value="Fill" ></Setter>
-            <Setter Property="Margin" Value="10" ></Setter>
+        <Style  TargetType="Image">
+
+            <Setter Property="Stretch" Value="None" ></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="itemMenuStyle" TargetType="{x:Type MenuItem}">
+
+            <Setter Property="Foreground" Value="{StaticResource clrPrimary}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush Opacity="0.5">
+                        <GradientStop Color="#FF0A485D" Offset="0.531"/>
+                        <GradientStop Color="Transparent" Offset="0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
 
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="10*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="70*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1">
-            <Label VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="60" FontWeight="Bold" Height="auto" Content="PT.Tri M.G Airlines" Background="{x:Null}">
+        <Border Grid.Column="0">
+            <Menu Padding="3" Height="auto" VerticalAlignment="Top" Background="{x:Null}" Grid.Column="0">
+                <MenuItem Padding="0" x:Name="pti" Click="pti_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="PTI" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="Red" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
 
-            </Label>
-        </StackPanel>
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Button Background="#0E402D" Grid.Row="0" Grid.Column="0"  Name="pti" Click="pti_Click" Content="PTI">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}" Source="Images/package.png" />
-                                <StackPanel Margin="10" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="PENGAKUAN"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="TENTANG"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="ISI"/>
-                                </StackPanel>
+                <MenuItem Padding="0" x:Name="smu" Click="smu_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image Margin="5"  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="SMU" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="Yellow" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
 
-                            </Grid>
-                        </Border>
+                <MenuItem Padding="0" x:Name="manifest" Click="manifest_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="MANIFEST" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="Blue" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
 
+
+                <MenuItem Padding="0" x:Name="customer" Click="customer_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="CUSTOMER" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="Orange" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Padding="0" x:Name="schedule" Click="schedule_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="SCHEDULE" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="Green" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Padding="0" x:Name="LAPORAN" Click="laporan_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="LAPORAN" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="#FFE800FF" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem Padding="0" x:Name="backup" Click="backup_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="BACKUP" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="#FFDA5111" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem Padding="0" x:Name="UBAH" Click="password_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="UBAH PASSWORD" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="#FFCB33C4" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem Padding="0" x:Name="USER" Click="userManage_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="USER MANAGEMENT" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.3">
+                                    <GradientStop Color="#FF630606" Offset="0.467"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+                <MenuItem Padding="0" x:Name="LOG" Click="logout_Click" Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.Header>
+                        <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                            <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                            <ContentPresenter Margin="5" Content="LOGOUT" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <Grid.Background>
+                                <LinearGradientBrush Opacity="0.4">
+                                    <GradientStop Color="Red" Offset="0.457"/>
+                                    <GradientStop Color="Transparent" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                    </MenuItem.Header>
+                </MenuItem>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <Menu.Template>
+                    <ControlTemplate TargetType="{x:Type Menu}">
+                        <StackPanel  ClipToBounds="True" Orientation="Vertical" IsItemsHost="True" />
                     </ControlTemplate>
+                </Menu.Template>
+            </Menu>
 
-                </Button.Template>
-            </Button>
-            <Button Background="#FF113263"  Grid.Row="0" Grid.Column="1" Name="smu" Click="smu_Click" Content="SMU">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/receipt.png" />
-                                <StackPanel Margin="10" Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="SURAT "/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="MUATAN"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="UDARA"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#FF572323"  Grid.Row="0" Grid.Column="2" Name="manifest" Click="manifest_Click"  Content="MANIFEST">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/LIST.png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="MANIFEST"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#FFFF6C18"  Grid.Row="1" Grid.Column="0" Name="customer" Click="customer_Click" Content="CUSTOMER">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/credit-card.png" />
-                                <StackPanel Margin="10" Grid.Column="1" VerticalAlignment="Center" >
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="CUSTOMER"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="DEPOSIT"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-
-            <Button Background="#30323D"  Grid.Row="1" Grid.Column="1" Name="schedule" Click="schedule_Click" Content="SCHEDULE">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}" Source="Images/route.png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="SCHEDULE"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#FF66812B"  Grid.Row="1" Grid.Column="2" Name="laporan" Click="laporan_Click" Content="LAPORAN">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/bill.png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="LAPORAN"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#A31621"  Grid.Row="3" Grid.Column="0" Name="userManage" Click="userManage_Click" Content="USER MANAGEMENT">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}" Source="Images/credit-card (1).png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="USERS"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#BA9434"  Grid.Row="2" Grid.Column="2"  Name="backup" Click="backup_Click" Content="BACKUP">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/logout (1).png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="BACKUP"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#BA9434"  Grid.Row="3" Grid.Column="2"  Name="logout" Click="logout_Click" Content="LOGOUT">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/logout (1).png" />
-                                <TextBlock Margin="10" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="LOGOUT"/>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-            <Button Background="#FF4D88C3"  Grid.Row="3" Grid.Column="1"  Name="password" Click="password_Click" Content="LOGOUT">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20*"/>
-                                    <ColumnDefinition Width="60*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Style="{StaticResource imageStyle}"  Source="Images/unlocked-padlock.png" />
-                                <StackPanel Margin="10" Grid.Column="1" VerticalAlignment="Center" >
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="UBAH"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="PASSWORD"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-
-                </Button.Template>
-            </Button>
-
-        </Grid>
-        <Border Grid.Row="2" Grid.ColumnSpan="3" Width="auto" >
-            <WrapPanel Width="auto" HorizontalAlignment="Right">
-                <WrapPanel.Background>
-                    <SolidColorBrush/>
-                </WrapPanel.Background>
-                <Image Margin="10"  Source="Images/logotrimgCopy.png"/>
-            </WrapPanel>
         </Border>
+
+        <WrapPanel Name="mainFrame" Grid.Column="2" Margin="10">
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0" Background="{x:Null}" ItemsSource="{Binding Dashboards}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+
+
+            <WrapPanel.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                </ContextMenu>
+            </WrapPanel.ContextMenu>
+
+
+        </WrapPanel>
+
     </Grid>
+
+
+
 </Window>
