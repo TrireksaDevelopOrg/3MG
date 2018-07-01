@@ -369,6 +369,7 @@
     <EmbeddedResource Include="Reports\Layouts\BufferStock.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\CargoManifest.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\CargoTerangkut.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\Kwitansi.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Penjualan.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\PTI.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Rekening1.rdlc" />

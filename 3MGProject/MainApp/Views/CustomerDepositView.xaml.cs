@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Data;
 using DataAccessLayer.Models;
 using Microsoft.Reporting.WinForms;
+using System.Linq;
+using DataAccessLayer;
 
 namespace MainApp.Views
 {
@@ -38,6 +40,7 @@ namespace MainApp.Views
         public CommandHandler PrintRekening { get; }
         public CommandHandler AddNewCustomerCommand { get; }
         public CommandHandler CancelCommand { get; }
+        public CommandHandler EditCustomerCommand { get; }
         public CommandHandler AddNewDepositCommand { get; }
         public CommandHandler RefreshCommand { get; }
 
@@ -89,23 +92,40 @@ namespace MainApp.Views
             DebetDepositViewSource.Refresh();
         }
 
-       
-
-
         public ObservableCollection<Deposit> DepositSource { get; }
         public CollectionView DepositViewSource { get; }
         public ObservableCollection<DebetDeposit> DebetDepositSource { get; }
         public CollectionView DebetDepositViewSource { get; }
+        public CommandHandler SendEmail { get; }
+        public Deposit SelectedDeposite {
+            get { return _deposite; }
+            set
+            {
+                SetProperty(ref _deposite, value);
+            }
+        }
 
         public CustomerDepositViewModel()
         {
             MyTitle = "CUSTOMER DEPOSIT";
-            PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<DateTime.Now.AddDays(1), ExecuteAction = PrintRekeningKoran };
+            PrintRekening = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null && SelectedDate<=DateTime.Now, ExecuteAction = PrintRekeningKoran };
             AddNewDepositCommand = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null, ExecuteAction = AddNewDepositCommandAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshCommandaction };
             AddNewCustomerCommand = new CommandHandler { CanExecuteAction = AddNewCustomerCommandValidate, ExecuteAction = AddNewCustomerCommandAction };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = CancelCommandaction };
+            EditCustomerCommand = new CommandHandler { CanExecuteAction = x => SelectedCustomer != null, ExecuteAction = x => {
+                var form = new Views.AddNewCustomerDeposit();
+                form.DataContext = new AddNewCustomerDepositViewModel(SelectedCustomer) {WindowClose=form.Close };
+                form.ShowDialog();
 
+            } };
+
+
+
+            PrintKwitansiCommand = new CommandHandler { CanExecuteAction = x => SelectedDeposite!=null, ExecuteAction =  PrintKwitansiAction };
+
+
+            SendEmail = new CommandHandler { CanExecuteAction = SendemailValidate, ExecuteAction = SendEmailAction };
             Source = new ObservableCollection<customer>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             SourceView.Refresh();
@@ -124,7 +144,95 @@ namespace MainApp.Views
             SelectedDate = DateTime.Now;
         }
 
-       
+        private void PrintKwitansiAction(object obj)
+        {
+            ReportParameter[] parameters =
+                 {
+                    new ReportParameter("Shiper",SelectedCustomer.Name.ToString()),
+                    new ReportParameter("Terbilang",SelectedDeposite.Jumlah.Terbilang())
+                };
+
+
+            var a = SelectedDeposite.Jumlah.Terbilang();
+            var source = DepositSource.Where(O => O.Id == SelectedDeposite.Id).ToList();
+            var sourceDatas = new ReportDataSource { Value = source};
+            Helpers.PrintPreviewWithFormAction("Print Preview", sourceDatas, "MainApp.Reports.Layouts.Kwitansi.rdlc", parameters);
+
+        }
+
+        private async void SendEmailAction(object obj)
+        {
+            try
+            {
+                if (IsBusy)
+                    return;
+
+                IsBusy = true;
+                if (Helpers.CheckForInternetConnection())
+                {
+
+           
+                    
+
+                    var result = await context.GetRekeningKorang(SelectedDate, SelectedCustomer.Id);
+                    var reportViewer = new ReportViewer();
+                    ReportParameter[] parameters =
+                         {
+                       new ReportParameter("User",context.GetUser()),
+                    new ReportParameter("Nomor",string.Format("{0:D6}",SelectedCustomer.Id)),
+                    new ReportParameter("Shiper",SelectedCustomer.Name.ToString()),
+                    new ReportParameter("Address",string.Format("{0}\r\n Hanphone :{1}",SelectedCustomer.Address,SelectedCustomer.Handphone)),
+                    new ReportParameter("Tanggal",DateTime.Now.ToShortDateString())
+
+
+                     };
+                    double saldo = 0;
+
+                    foreach (var item in result)
+                    {
+                        saldo = saldo + item.Kredit - item.Total + item.SaldoAkhir;
+                        item.SaldoAkhir = saldo;
+
+                    }
+
+                    result.Add(new Saldo { Tanggal = DateTime.Now, SaldoAkhir = saldo, Description = "Saldo Akhir" });
+                    var source = new ReportDataSource { Value = result };
+
+
+                    reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.Rekening1.rdlc";
+                    reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
+                    reportViewer.ZoomMode = ZoomMode.PageWidth;
+                    reportViewer.LocalReport.DataSources.Add(source);
+                    source.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+                    if (parameters != null)
+                        reportViewer.LocalReport.SetParameters(parameters);
+
+
+
+                    var file = await Helpers.ExportReportToPDF(reportViewer, "Rekening");
+                    await Helpers.SendeEmail(SelectedCustomer.Email, file, "Rekening");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private bool SendemailValidate(object obj)
+        {
+            if (SelectedCustomer != null  && SelectedDate <= DateTime.Now && !string.IsNullOrEmpty(SelectedCustomer.Email) && Helpers.IsValidEmail(SelectedCustomer.Email))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         private async void AddNewDepositCommandAction(object obj)
         {
@@ -215,6 +323,7 @@ namespace MainApp.Views
             Helpers.PrintPreviewWithFormAction("Print Preview",source, "MainApp.Reports.Layouts.Rekening1.rdlc", parameters);
         }
         private DateTime selectedDate;
+        private Deposit _deposite;
 
         public DateTime SelectedDate
         {
@@ -222,5 +331,6 @@ namespace MainApp.Views
             set { SetProperty(ref selectedDate ,value); }
         }
 
+        public object PrintKwitansiCommand { get; }
     }
 }

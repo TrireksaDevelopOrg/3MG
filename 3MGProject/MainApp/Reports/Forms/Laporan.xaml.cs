@@ -48,6 +48,7 @@ namespace MainApp.Reports.Forms
         private void terangkut_Click(object sender, RoutedEventArgs e)
         {
             reportViewer.Clear();
+            reportViewer.LocalReport.DataSources.Clear();
             Main.Content = new Reports.Forms.CargoTerangkut(reportViewer);
             viewmodel.MyTitle = "CARGO TERANGKUT";
         }
@@ -55,6 +56,7 @@ namespace MainApp.Reports.Forms
         private void borderel_Click(object sender, RoutedEventArgs e)
         {
             reportViewer.Clear();
+            reportViewer.LocalReport.DataSources.Clear();
             Main.Content = new Reports.Forms.BorderelCargo(reportViewer);
             viewmodel.MyTitle = "BORDEREL CARGO";
         }
@@ -62,6 +64,7 @@ namespace MainApp.Reports.Forms
         private void buffer_Click(object sender, RoutedEventArgs e)
         {
             reportViewer.Clear();
+            reportViewer.LocalReport.DataSources.Clear();
             Main.Content = new Reports.Forms.BufferStock(reportViewer);
             viewmodel.MyTitle = "BUFFER STOCK";
         }

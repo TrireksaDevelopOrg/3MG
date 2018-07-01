@@ -27,61 +27,51 @@ namespace DataAccessLayer.Bussines
                 {
                     if (User.CanAccess(MethodBase.GetCurrentMethod()))
                     {
-                        if (item.Id <= 0)
+                        if (item.Shiper.Id <= 0)
                         {
-                            if (item.Shiper.Id <= 0)
-                            {
-                                item.Shiper.CreatedDate = da;
-                                item.ShiperID = db.Customers.InsertAndGetLastID(item.Shiper);
-                                item.Shiper.Id = item.ShiperID;
-                                if (item.ShiperID <= 0)
-                                    throw new SystemException("Data Tidak Tersimpan");
-                                var his = User.GenerateHistory(item.ShiperID, BussinesType.Customer, ChangeType.Create, "Menambah Shiper");
-                                db.Histories.Insert(his);
-                            }
-                            else
-                                item.ShiperID = item.Shiper.Id;
-
-                            if (item.Reciever.Id <= 0)
-                            {
-                                item.Reciever.CreatedDate = da;
-                                item.RecieverId = db.Customers.InsertAndGetLastID(item.Reciever);
-                                item.Reciever.Id = item.RecieverId;
-                                if (item.RecieverId <= 0)
-                                    throw new SystemException("Data Tidak Tersimpan");
-                                var his = User.GenerateHistory(item.RecieverId, BussinesType.Customer, ChangeType.Create, "");
-                                db.Histories.Insert(his);
-                            }
-                            else
-                                item.RecieverId = item.Reciever.Id;
-
-
-                            
-                            item.Id = db.PTI.InsertAndGetLastID(item);
-                            if (item.Id <= 0)
+                            item.Shiper.CreatedDate = da;
+                            item.ShiperID = db.Customers.InsertAndGetLastID(item.Shiper);
+                            item.Shiper.Id = item.ShiperID;
+                            if (item.ShiperID <= 0)
                                 throw new SystemException("Data Tidak Tersimpan");
-
-
-                            foreach (var data in item.Collies)
-                            {
-                                data.PtiId = item.Id;
-                                data.Id = db.Collies.InsertAndGetLastID(data);
-                                if (data.Id <= 0)
-                                    throw new SystemException("Data Tidak Tersimpan");
-                            }
-
-                            var history = User.GenerateHistory(item.Id, BussinesType.PTI, ChangeType.Create, "");
-                            db.Histories.Insert(history);
-                            trans.Commit();
-
+                            var his = User.GenerateHistory(item.ShiperID, BussinesType.Customer, ChangeType.Create, "Menambah Shiper");
+                            db.Histories.Insert(his);
                         }
                         else
+                            item.ShiperID = item.Shiper.Id;
+
+                        if (item.Reciever.Id <= 0)
                         {
-                            item.Id = db.PTI.InsertAndGetLastID(item);
-                            if (item.Id < 0)
+                            item.Reciever.CreatedDate = da;
+                            item.RecieverId = db.Customers.InsertAndGetLastID(item.Reciever);
+                            item.Reciever.Id = item.RecieverId;
+                            if (item.RecieverId <= 0)
+                                throw new SystemException("Data Tidak Tersimpan");
+                            var his = User.GenerateHistory(item.RecieverId, BussinesType.Customer, ChangeType.Create, "");
+                            db.Histories.Insert(his);
+                        }
+                        else
+                            item.RecieverId = item.Reciever.Id;
+
+
+
+                        if (!db.PTI.Insert(item))
+                            throw new SystemException("Data Tidak Tersimpan");
+
+
+                        foreach (var data in item.Collies)
+                        {
+                            data.PtiId = item.Id;
+                            data.Id = db.Collies.InsertAndGetLastID(data);
+                            if (data.Id <= 0)
                                 throw new SystemException("Data Tidak Tersimpan");
                         }
-                    }else
+
+                        var history = User.GenerateHistory(item.Id, BussinesType.PTI, ChangeType.Create, "");
+                        db.Histories.Insert(history);
+                        trans.Commit();
+                    }
+                    else
                     throw new SystemException(NotHaveAccess);
                 }
                 catch (Exception ex)
@@ -196,6 +186,7 @@ namespace DataAccessLayer.Bussines
 
         public Task<List<PTI>> GetPTIFromTo(DateTime startDate, DateTime endDate)
         {
+ 
             var list = new List<PTI>();
             try
             {

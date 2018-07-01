@@ -206,7 +206,7 @@ namespace MainApp.Views
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction =x=>WindowClose()};
             CreateSMU = new CommandHandler { CanExecuteAction = CreateSMUValidate, ExecuteAction = CreateSMUAction };
             var date = DateTime.Now;
-            startDate = new DateTime(date.Year, date.Month, 1);
+            startDate = new DateTime(date.Year, date.Month, 1,date.Hour,date.Minute,date.Second);
             endDate = startDate.AddMonths(1).AddDays(-1);
             Source = new ObservableCollection<PTI>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);

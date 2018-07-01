@@ -125,13 +125,15 @@ namespace MainApp.Views
         private bool SaveValidate(object obj)
         {
             var result = true;
-            if (this.End == new TimeSpan() || Start == new TimeSpan())
-                result = false;
-
+          
             if (Capacities<=0|| PlaneId <= 0 || PortTo <= 0 || PortFrom <= 0)
                 result = false;
+            if (PlaneSelected == null)
+                return false;
+            if (PlaneSelected != null && this.FlightNumber == PlaneSelected.Kode + "-")
+                return false;
 
-            if (Start > End || Start == End)
+            if (Start > End)
                 result =false;
 
             return result;

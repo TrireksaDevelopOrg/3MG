@@ -16,7 +16,6 @@ namespace DataAccessLayer.Bussines
 
         public Task<List<Penjualan>> GetDataLaporan(DateTime start, DateTime end)
         {
-            end = end.AddDays(1);
             using (var db = new OcphDbContext())
             {
                 try

@@ -17,6 +17,7 @@
             <ColumnDefinition Width="30*"/>
             <ColumnDefinition Width="70*"/>
         </Grid.ColumnDefinitions>
+        <Control Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Visibility="{Binding IsBusy, Converter={StaticResource busyConverter}}" Style="{StaticResource BusyAnimationStyle}"/>
         <Border Grid.ColumnSpan="2" Style="{StaticResource BorderLayoutStyle}">
             <StackPanel>
                 <Button Command="{Binding AddNewCustomerCommand}" Width="150" HorizontalAlignment="Left" Margin="5" Height="35" Content="Tambah Customer Baru"/>
@@ -24,13 +25,18 @@
         </Border>
 
         <Border Grid.Column="0" Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
-            <DataGrid Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedCustomer}">
+            <DataGrid Margin="5" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedCustomer}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id,StringFormat={}{0:D6}}" Width="*" MinWidth="50" Header="ID"/>
                     <DataGridTextColumn Binding="{Binding Name}" Width="*" MinWidth="100" Header="Nama"/>
                     <DataGridTextColumn Binding="{Binding Handphone}" MinWidth="100" Width="auto" Header="Handphone"/>
                     <DataGridTextColumn Binding="{Binding Phone1}" MinWidth="100" Width="auto" Header="Telepon"/>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit Profile" Command="{Binding EditCustomerCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </Border>
         <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
@@ -81,7 +87,7 @@
                                 </Grid>
 
 
-                                <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding DepositViewSource}" Grid.Row="1">
+                                <DataGrid IsReadOnly="True" SelectedItem="{Binding SelectedDeposite}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding DepositViewSource}" Grid.Row="1">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="*" Binding="{Binding TanggalBayar}" Header="Tanggal"/>
                                         <DataGridTextColumn Width="*" Binding="{Binding PaymentType}" Header="Jenis Pembayaran"/>
@@ -91,29 +97,35 @@
                                     </DataGrid.Columns>
                                     <DataGrid.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Height="auto" Header="Cetak Rekening">
-                                                <MenuItem.Template>
-                                                    <ControlTemplate>
-                                                        <Grid Margin="25,5">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition/>
-                                                                <RowDefinition/>
-                                                            </Grid.RowDefinitions>
-                                                            <Label Grid.Row="0" Content="Cetak Rekening"/>
-                                                            <Border Background="{StaticResource clrSecound}" Padding="5" Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
-                                                                <StackPanel Margin="3">
-                                                                    <WrapPanel >
-                                                                        <Label Content="Dari Tanggal"></Label>
-                                                                        <DatePicker VerticalContentAlignment="Center" Height="30" SelectedDate="{Binding SelectedDate}" ></DatePicker>
-                                                                    </WrapPanel>
-                                                                    <Button HorizontalAlignment="Right" Content="Print" Command="{Binding PrintRekening }"/>
-
-                                                                </StackPanel>
-                                                            </Border>
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </MenuItem.Template>
+                                            <MenuItem Header="Print Kwitansi" Command="{Binding PrintKwitansiCommand}"/>
+                                            <MenuItem Header="Cetak Rekening" Style="{StaticResource subMenuStyle}">
+                                                <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Cetak Rekening">
+                                                    <MenuItem.Template>
+                                                        <ControlTemplate>
+                                                            <Grid Margin="25,5">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition/>
+                                                                    <RowDefinition/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label Grid.Row="0" Content="Cetak Rekening"/>
+                                                                <Border Background="{StaticResource clrSecound}" Padding="5" Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
+                                                                    <StackPanel Margin="3">
+                                                                        <WrapPanel MinWidth="250" >
+                                                                            <Label Content="Dari Tanggal"></Label>
+                                                                            <DatePicker Width="200" VerticalContentAlignment="Center" Height="30" SelectedDate="{Binding SelectedDate}" ></DatePicker>
+                                                                        </WrapPanel>
+                                                                        <WrapPanel HorizontalAlignment="Right">
+                                                                            <Button HorizontalAlignment="Right" Content="Print" Command="{Binding PrintRekening }"/>
+                                                                            <Button HorizontalAlignment="Right" Width="100" Content="Kirim Via Email" Command="{Binding SendEmail}"/>
+                                                                        </WrapPanel>
+                                                                    </StackPanel>
+                                                                </Border>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </MenuItem.Template>
+                                                </MenuItem>
                                             </MenuItem>
+                                          
                                         </ContextMenu>
                                     </DataGrid.ContextMenu>
                                 </DataGrid>
@@ -135,7 +147,7 @@
                                 </Grid>
 
 
-                                <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding DebetDepositViewSource}" Grid.Row="1">
+                                <DataGrid IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding DebetDepositViewSource}" Grid.Row="1">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="auto" Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy}" Header="Tanggal"/>
                                      
@@ -152,6 +164,7 @@
                                     </DataGrid.Columns>
                                     <DataGrid.ContextMenu>
                                         <ContextMenu>
+                                          
                                             <MenuItem Height="auto" Header="Cetak Rekening">
                                                 <MenuItem.Template>
                                                     <ControlTemplate>
@@ -165,13 +178,15 @@
                                                                 <StackPanel Margin="3">
                                                                     <WrapPanel >
                                                                         <Label Content="Dari Tanggal"></Label>
-                                                                        <DatePicker VerticalContentAlignment="Center" Height="30" SelectedDate="{Binding SelectedDate}" ></DatePicker>
+                                                                        <DatePicker VerticalContentAlignment="Center" Width="200" Height="30" SelectedDate="{Binding SelectedDate}" ></DatePicker>
                                                                     </WrapPanel>
-                                                                    <Button HorizontalAlignment="Right" Content="Print" Command="{Binding PrintRekening }"/>
-
+                                                                    <WrapPanel HorizontalAlignment="Right">
+                                                                        <Button HorizontalAlignment="Right" Content="Print" Command="{Binding PrintRekening }"/>
+                                                                        <Button HorizontalAlignment="Right" Width="100" Content="Kirim Via Email" Command="{Binding SendEmail}"/>
+                                                                    </WrapPanel>
                                                                 </StackPanel>
                                                             </Border>
-                                                            </Grid>
+                                                        </Grid>
                                                     </ControlTemplate>
                                                 </MenuItem.Template>
                                             </MenuItem>

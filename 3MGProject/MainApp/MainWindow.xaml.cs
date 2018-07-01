@@ -114,7 +114,7 @@ namespace MainApp
         public ObservableCollection<DashboarTile> Dashboards { get; }
         public CommandHandler RefreshCommand { get; }
 
-        [Authorize("Administrator,Manager,Accounting")]
+        [Authorize("Accounting")]
         internal void LoadCustomerDeposit()
         {
             if (User.CanAccess(MethodBase.GetCurrentMethod()))

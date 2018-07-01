@@ -98,6 +98,25 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public void EditCustomerDeposit(customer cust)
+        {
+
+            using (var db = new OcphDbContext())
+            {
+                try
+                {
+                    if(!db.Customers.Update(O=>new {O.Address,O.ContactName,O.CustomerType,O.Email,O.Handphone,O.Name,O.NoIdentitas,O.Phone1 },cust,O=>O.Id==cust.Id))
+                    {
+                        throw new SystemException("Data Tidak Tersimpan");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
         public Task<List<DebetDeposit>> GetDebetDeposit(int id)
         {
             try

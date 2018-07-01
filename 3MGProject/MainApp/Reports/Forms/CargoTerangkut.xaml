@@ -13,7 +13,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.ColumnSpan="2">
+            <StackPanel Grid.Column="0">
                 <WrapPanel>
                     <Label Width="70" Content="Customer"/>
                     <ComboBox ItemsSource="{Binding Customers}" DisplayMemberPath="Name" SelectedItem="{Binding Customer}" MinWidth="120" Height="28" Width="330"/>
@@ -30,6 +30,7 @@
                 </WrapPanel>
 
             </StackPanel>
+            <Button Width="150" Height="50" Grid.Column="1" HorizontalAlignment="Right" Content="Send To Email" Command="{Binding SendEmail}"/>
         </Grid>
 
     </Border>

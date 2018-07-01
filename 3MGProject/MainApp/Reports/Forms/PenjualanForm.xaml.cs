@@ -22,9 +22,11 @@ namespace MainApp.Reports.Forms
 
             this.DataContext = new PenjualanViewModel();
             reportViewer = report;
+            report.Clear();
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.Penjualan.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);
             reportViewer.ZoomMode = ZoomMode.PageWidth;
+          
         }
 
 

@@ -32,6 +32,8 @@ namespace MainApp.Reports.Forms
             InitializeComponent();
             vm = new BorderelViewModel();
             reportViewer = report;
+            reportViewer.Clear();
+            reportViewer.RefreshReport();
             this.DataContext = vm;
             reportViewer.LocalReport.ReportEmbeddedResource = "MainApp.Reports.Layouts.BorderelCargoLayout.rdlc";
             reportViewer.SetDisplayMode(DisplayMode.PrintLayout);

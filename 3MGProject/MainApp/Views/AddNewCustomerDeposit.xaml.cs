@@ -52,6 +52,7 @@ namespace MainApp.Views
 
             this.Id = cust.Id;
             this.Name = cust.Name;
+            this.CustomerType = cust.CustomerType;
             this.Address = cust.Address;
             this.ContactName = cust.ContactName;
             this.Email = cust.Email;
@@ -70,8 +71,15 @@ namespace MainApp.Views
             try
             {
                 var cust = (customer)this;
-                context.AddNewCustomerDeposit(cust);
-               Helpers.ShowMessage("Data Tersimpan");
+                 if(cust.Id<=0)
+                {
+                    context.AddNewCustomerDeposit(cust);
+                   
+                }else
+                {
+                    context.EditCustomerDeposit(cust);
+                }
+                Helpers.ShowMessage("Data Tersimpan");
                 this.Saved = true;
                 WindowClose();
             }

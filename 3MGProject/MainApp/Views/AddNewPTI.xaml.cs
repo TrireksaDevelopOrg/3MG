@@ -90,6 +90,18 @@ namespace MainApp.Views
         {
           
         }
+
+        private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            textBox.IsReadOnly = !textBox.IsReadOnly;
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            textBox.IsReadOnly = !textBox.IsReadOnly;
+        }
     }
 
     public class Kemasan:List<string>
@@ -171,10 +183,11 @@ namespace MainApp.Views
 
         }
 
-        private void SetNew()
+        private async void SetNew()
         {
             Shiper = new customer();
             Reciever = new customer();
+            this.Id = await CodeGenerate.GetNewPTINumber();
             this.ActiveStatus = ActivedStatus.OK;
             this.CreatedDate = DateTime.Now;
             this.Etc = 0;
@@ -202,11 +215,6 @@ namespace MainApp.Views
                     SetProperty(ref payTypeSelected, value);
                     PayType = value;
                 }
-      
-
-
-
-
             }
         }
         public async void SetBackToCash()
@@ -240,26 +248,7 @@ namespace MainApp.Views
                     context.SaveChange(model);
                     Saved = true;
 
-                    var resultDialog = MyMessage.Show("Akan Mencetak ?", "Print", MessageBoxButton.YesNo);
-                    if (resultDialog == MessageBoxResult.Yes)
-                    {
-                        using (var print = new HelperPrint())
-                        {
-                            ReportParameter[] parameters =
-                            {
-                        new ReportParameter("Petugas",context.GetUser()),
-                        new ReportParameter("Nomor",string.Format("{0:d6}",model.Id)),
-                        new ReportParameter("Pengirim",Shiper.Name),
-                        new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",Shiper.Address,Shiper.Handphone)),
-                        new ReportParameter("Penerima",Reciever.Name),
-                        new ReportParameter("AlamatPenerima",string.Format("{0}\r Hanphone :{1}",Reciever.Address,Reciever.Handphone)),
-                        new ReportParameter("Tanggal",model.CreatedDate.ToShortDateString())
-                        };
-
-                            print.PrintDocument(model.Collies.ToList(), "MainApp.Reports.Layouts.PTI.rdlc", parameters);
-                        }
-                    }
-
+                    Helpers.ShowMessage("PTI Berhasil Disimpan");
 
                     WindowClose();
                 }

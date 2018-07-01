@@ -23,7 +23,7 @@ namespace MainApp.Reports.Forms
         public CargoTerangkut(ReportViewer report)
         {
             InitializeComponent();
-            vm= new CargoTerangkutViewModel();
+            vm= new CargoTerangkutViewModel(reportViewer);
             this.DataContext = vm;
 
             reportViewer = report;
@@ -34,14 +34,19 @@ namespace MainApp.Reports.Forms
 
         private async void sampaiTanggal_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            vm.ReportViewer = reportViewer;
             if(dariTanggal.SelectedDate!=null && dariTanggal.SelectedDate<=sampaiTanggal.SelectedDate)
             {
               var datas =await vm.LoadData(dariTanggal.SelectedDate.Value, sampaiTanggal.SelectedDate.Value);
+                if(datas!=null)
+                {
+                    reportViewer.LocalReport.DataSources.Clear();
+                    var datasource = new ReportDataSource { Name = "DataSet1", Value = datas };
+                    reportViewer.LocalReport.DataSources.Add(datasource);
 
-                reportViewer.LocalReport.DataSources.Clear();
-                var datasource = new ReportDataSource { Name = "DataSet1", Value = datas };
-                reportViewer.LocalReport.DataSources.Add(datasource);
-                reportViewer.RefreshReport();
+                    reportViewer.RefreshReport();
+                }
+            
             }
         }
 
@@ -55,13 +60,46 @@ namespace MainApp.Reports.Forms
         CustomerBussiness custContext = new CustomerBussiness();
 
 
-        public CargoTerangkutViewModel()
+        public CargoTerangkutViewModel(ReportViewer reportViewer)
         {
            var dataCustomer= custContext.GetCustomersDeposites();
             Customers = new  ObservableCollection<customer>(dataCustomer);
+            SendEmail = new CommandHandler { CanExecuteAction = SendemailValidate, ExecuteAction= SendEmailAction };
+            this.ReportViewer = reportViewer;
+        }
+
+
+
+        private async void SendEmailAction(object obj)
+        {
+            try
+            {
+                if(Helpers.CheckForInternetConnection())
+                {
+                    var file = await Helpers.ExportReportToPDF(this.ReportViewer, "Cargo Terangkut");
+                  await  Helpers.SendeEmail(Customer.Email, file, "Cargo Terangkut");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+        }
+
+        private bool SendemailValidate(object obj)
+        {
+           if(Customer!=null && !string.IsNullOrEmpty(Customer.Email) && Helpers.IsValidEmail(Customer.Email))
+            {
+                return true;
+            }
+            return false;
         }
 
         public ObservableCollection<customer> Customers { get; }
+
+        public CommandHandler SendEmail { get; }
+        public ReportViewer ReportViewer { get; set; }
 
         public async Task<List<PreFligtManifest>> LoadData(DateTime From ,DateTime To)
         {

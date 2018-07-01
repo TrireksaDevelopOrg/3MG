@@ -42,11 +42,13 @@
                     <StackPanel>
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Nomor PTI"/>
-                            <TextBlock FontSize="14" Text="{Binding Id,StringFormat={}{0:D6}}" Width="200"/>
+                            <TextBox LostFocus="TextBox_LostFocus" FontSize="25" MouseDoubleClick="TextBox_MouseDoubleClick" IsReadOnly="True" Height="35" Text="{Binding Id,StringFormat={}{0:D6}}" HorizontalContentAlignment="Right" Width="150"/>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Tanggal"/>
-                            <Label FontSize="14" Content="{Binding CreatedDate}" Width="200"/>
+                            <Border Height="28" Margin="3">
+                                <TextBlock FontSize="14" Text="{Binding CreatedDate,StringFormat=dd MMM yyyy}" Width="200" VerticalAlignment="Center"/>
+                            </Border>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Mode Pembayaran"/>

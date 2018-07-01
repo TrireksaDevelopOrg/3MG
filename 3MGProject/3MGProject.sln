@@ -7,14 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "MainApp\MainApp.csproj", "{133A249B-6AA8-4DC4-B644-15AC7ABA3943}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ocph.DAL.Source", "D:\Project Tools\OcphDAL\OcphDAL\Ocph.DAL\Ocph.DAL.Source.shproj", "{FE4BE3BE-C5CF-4E3F-B710-E5FFF9D4D172}"
-EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{A2430995-8285-49B3-9D72-8F946B7AA383}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Ocph.DAL.Source", "Ocph.DAL\Ocph.DAL.Source.shproj", "{FE4BE3BE-C5CF-4E3F-B710-E5FFF9D4D172}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		D:\Project Tools\OcphDAL\OcphDAL\Ocph.DAL\Ocph.DAL.projitems*{024c106a-4eae-4e3f-acb3-d01db04b6b90}*SharedItemsImports = 4
-		D:\Project Tools\OcphDAL\OcphDAL\Ocph.DAL\Ocph.DAL.projitems*{fe4be3be-c5cf-4e3f-b710-e5fff9d4d172}*SharedItemsImports = 13
+		Ocph.DAL\Ocph.DAL.projitems*{024c106a-4eae-4e3f-acb3-d01db04b6b90}*SharedItemsImports = 4
+		Ocph.DAL\Ocph.DAL.projitems*{fe4be3be-c5cf-4e3f-b710-e5fff9d4d172}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

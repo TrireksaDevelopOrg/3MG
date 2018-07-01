@@ -1471,6 +1471,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#333333</Color>
                               </Style>
                             </TextRun>
@@ -1530,6 +1531,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#333333</Color>
                               </Style>
                             </TextRun>
@@ -1589,6 +1591,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#333333</Color>
                               </Style>
                             </TextRun>
