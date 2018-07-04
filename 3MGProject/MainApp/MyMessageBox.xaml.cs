@@ -34,25 +34,27 @@ namespace MainApp
             switch (type)
             {
                 case MessageBoxButton.OK:
-                    vm.Buttons.Add(new Button { Content = "OK" });
+                   buttonPanel.Children.Add(new Button { Content = "OK" });
                     break;
                 case MessageBoxButton.YesNo:
-                    vm.Buttons.Add(new Button { Content = "Ya" });
-                    vm.Buttons.Add(new Button { Content = "Tidak" });
+                    buttonPanel.Children.Add(new Button { Content = "Ya" });
+                    buttonPanel.Children.Add(new Button { Content = "Tidak" });
                     break;
                 case MessageBoxButton.YesNoCancel:
-                    vm.Buttons.Add(new Button { Content = "Ya" });
-                    vm.Buttons.Add(new Button { Content = "Tidak" });
-                    vm.Buttons.Add(new Button { Content = "Batal" });
+                    buttonPanel.Children.Add(new Button { Content = "Ya" });
+                    buttonPanel.Children.Add(new Button { Content = "Tidak" });
+                    buttonPanel.Children.Add(new Button { Content = "Batal" });
                     break;
                 case MessageBoxButton.OKCancel:
-                    vm.Buttons.Add(new Button { Content = "OK" });
-                    vm.Buttons.Add(new Button { Content = "Batal" });
+                    buttonPanel.Children.Add(new Button { Content = "OK" });
+                    buttonPanel.Children.Add(new Button { Content = "Batal" });
                     break;
                 default:
                     break;
             }
-            foreach(var item in vm.Buttons)
+
+
+            foreach(Button item in buttonPanel.Children)
             {
                 item.Click += Item_Click;
             }

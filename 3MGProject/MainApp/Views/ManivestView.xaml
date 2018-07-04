@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="{Binding GridWidth}"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid Name="dg" Grid.Column="0" ItemsSource="{Binding SourceView}" SelectedItem="{Binding ManifestSelected}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid  MouseDoubleClick="dg_MouseDoubleClick" ToolTip="Double Click/Ctrl+Enter=Lihat Detail SMU, Click Kanan=Menampilakn Menu "  Name="dg" Grid.Column="0" ItemsSource="{Binding SourceView}" SelectedItem="{Binding ManifestSelected}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Id,StringFormat=MT{0:D8}}" Header="Nomor Manifest" />
                             <DataGridTextColumn Binding="{Binding Tanggal,StringFormat=dd MMMM yyyy}" Header="Tanggal" />
@@ -125,6 +125,11 @@
                             <DataGridTextColumn Header="Tanggal" Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy}"/>
 
                         </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Tambah SMU" Command="{Binding InsertNewSMUCommand}"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                     </DataGrid>
                 </Grid>   
             </Border>

@@ -13,7 +13,7 @@ namespace MainApp
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            int data = Int32.Parse(value.ToString());
+            double data = (double)value;
             if (data>=0)
             {
                 return true;

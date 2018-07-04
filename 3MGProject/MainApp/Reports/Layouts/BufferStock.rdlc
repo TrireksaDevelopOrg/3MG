@@ -6,31 +6,31 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.40369in</Width>
+              <Width>0.32869in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65418in</Width>
+              <Width>0.61668in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.71854in</Width>
+              <Width>0.68104in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.37775in</Width>
+              <Width>1.23924in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.32335in</Width>
+              <Width>1.28585in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.974in</Width>
+              <Width>0.9365in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79175in</Width>
+              <Width>0.75425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9004in</Width>
+              <Width>0.8629in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.02522in</Width>
+              <Width>0.98772in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -48,7 +48,8 @@
                             <TextRun>
                               <Value>NO</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -105,7 +106,8 @@
                             <TextRun>
                               <Value>TGL</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -162,7 +164,8 @@
                             <TextRun>
                               <Value>PTI</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -219,7 +222,8 @@
                             <TextRun>
                               <Value>PENGIRIM</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -276,7 +280,8 @@
                             <TextRun>
                               <Value>PENERIMA</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -333,7 +338,8 @@
                             <TextRun>
                               <Value>JENIS BARANG</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -390,7 +396,8 @@
                             <TextRun>
                               <Value>COLI</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -447,7 +454,8 @@
                             <TextRun>
                               <Value>BERAT</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -504,7 +512,8 @@
                             <TextRun>
                               <Value>TOTAL BERAT</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#666666</Color>
                               </Style>
@@ -566,6 +575,7 @@
                             <TextRun>
                               <Value>=iif(Fields!PayType.Value=0,"Cash",IIF(Fields!PayType.Value=1,"Deposit","KREDIT"))</Value>
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
@@ -611,6 +621,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -653,6 +664,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -695,6 +707,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -737,6 +750,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -779,6 +793,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -821,6 +836,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>calibri</FontFamily>
                                 <FontSize>7pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
@@ -868,7 +884,8 @@
                             <TextRun>
                               <Value>=RowNumber(Nothing)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -905,7 +922,8 @@
                             <TextRun>
                               <Value>=Fields!CreatedDate.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>d/M/yy</Format>
                                 <Color>#333333</Color>
@@ -943,7 +961,8 @@
                             <TextRun>
                               <Value>=Fields!PTIId.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>D6</Format>
                                 <Color>#333333</Color>
@@ -981,7 +1000,8 @@
                             <TextRun>
                               <Value>=Fields!ShiperName.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1018,7 +1038,8 @@
                             <TextRun>
                               <Value>=Fields!RecieverName.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1055,7 +1076,8 @@
                             <TextRun>
                               <Value>=Fields!Content.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1092,7 +1114,8 @@
                             <TextRun>
                               <Value>=Fields!Pcs.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1130,7 +1153,8 @@
                             <TextRun>
                               <Value>=Fields!Weight.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1168,7 +1192,8 @@
                             <TextRun>
                               <Value>=Fields!TotalWeight.Value</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1211,7 +1236,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1248,7 +1274,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1285,7 +1312,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1322,7 +1350,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1359,7 +1388,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1396,7 +1426,8 @@
                             <TextRun>
                               <Value>TOTAL</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1438,7 +1469,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!Pcs.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1481,7 +1513,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!Weight.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1524,7 +1557,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!TotalWeight.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1572,7 +1606,8 @@
                             <TextRun>
                               <Value>TOTAL</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1621,7 +1656,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1668,7 +1704,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1715,7 +1752,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1762,7 +1800,8 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#333333</Color>
                               </Style>
@@ -1809,7 +1848,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!Pcs.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1857,7 +1897,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!Weight.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1905,7 +1946,8 @@
                             <TextRun>
                               <Value>=Sum(Fields!TotalWeight.Value)</Value>
                               <Style>
-                                <FontSize>7pt</FontSize>
+                                <FontFamily>calibri</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>#,0.00;(#,0.00)</Format>
                                 <Color>#333333</Color>
@@ -1974,6 +2016,7 @@
                           <TextRun>
                             <Value />
                             <Style>
+                              <FontFamily>Courier New</FontFamily>
                               <FontSize>7pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>#666666</Color>
@@ -2028,6 +2071,7 @@
                           <TextRun>
                             <Value />
                             <Style>
+                              <FontFamily>Courier New</FontFamily>
                               <FontSize>7pt</FontSize>
                               <FontWeight>Normal</FontWeight>
                               <Color>#333333</Color>
@@ -2079,6 +2123,7 @@
                           <TextRun>
                             <Value />
                             <Style>
+                              <FontFamily>Courier New</FontFamily>
                               <FontSize>7pt</FontSize>
                               <FontWeight>Bold</FontWeight>
                               <Color>#333333</Color>
@@ -2114,7 +2159,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Height>0.98149in</Height>
-        <Width>8.20012in</Width>
+        <Width>7.72412in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2122,13 +2167,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.20255in</Height>
+    <Height>2.63756cm</Height>
     <Style />
   </Body>
-  <Width>8.20012in</Width>
+  <Width>19.61926cm</Width>
   <Page>
     <PageHeader>
-      <Height>0.60069in</Height>
+      <Height>1.52575cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2137,7 +2182,7 @@
           <Value>logotrimg</Value>
           <Sizing>Fit</Sizing>
           <Top>0.03455in</Top>
-          <Left>6.42673in</Left>
+          <Left>5.92673in</Left>
           <Height>0.3545in</Height>
           <Width>1.77339in</Width>
           <Style>
@@ -2155,6 +2200,7 @@
                 <TextRun>
                   <Value>BUFFER STOCK</Value>
                   <Style>
+                    <FontFamily>calibri</FontFamily>
                     <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                     <TextDecoration>None</TextDecoration>
@@ -2189,6 +2235,7 @@
                 <TextRun>
                   <Value>Hingga Tanggal : </Value>
                   <Style>
+                    <FontFamily>calibri</FontFamily>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Normal</FontWeight>
                   </Style>
@@ -2197,6 +2244,7 @@
                   <Value>=Now()</Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
+                    <FontFamily>calibri</FontFamily>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Normal</FontWeight>
                     <Format>dd-MMM-yy h:mm tt</Format>
@@ -2230,12 +2278,13 @@
         </Border>
       </Style>
     </PageHeader>
-    <PageHeight>11.69in</PageHeight>
-    <PageWidth>8.27in</PageWidth>
-    <LeftMargin>0.25in</LeftMargin>
-    <RightMargin>0.25in</RightMargin>
-    <TopMargin>0.25in</TopMargin>
-    <BottomMargin>0.25in</BottomMargin>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.635cm</LeftMargin>
+    <RightMargin>0.635cm</RightMargin>
+    <TopMargin>0.635cm</TopMargin>
+    <BottomMargin>0.635cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -2364,6 +2413,6 @@ RdlBauldjMTarXPN3OFwOBwOx0gTgbVUKnH/GLESzkRKlrwcsaaN3kPO8xjdXkCyYq8ALkfKqDgcDofD
 bcar6BqPJKhMqBJi41QoZnTL6s+gavPosTpmkDqKA8GyfWxgRI9Vr6z/D5GSNLV/x/rekoq9LhV4nfr7NhV6m+ixLG5RIVhQkZhnGAxyngdNOfn9ufWWS28qcfT8HO3NhsiJQIfD4XDsZIx1JgmHw+FwOByOEYfnLoHD4XA4HA6HE4EOh8PhcDgcDicCHQ6Hw+FwOBxOBDocDofD4XA49gj+/wAat5xJoDdXrgAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>d06db053-1008-4370-a393-3c2eb7fc72fd</rd:ReportID>
 </Report>

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource WindowKey}"
+        Style="{StaticResource WindowKey}"
         xmlns:bConvert="clr-namespace:MainApp" ShowInTaskbar="False"
-        xmlns:kemas ="clr-namespace:MainApp.Views"
+        xmlns:kemas="clr-namespace:MainApp.Views"
+        xmlns:UI="clr-namespace:MainApp"
         mc:Ignorable="d"  WindowState="Maximized" Title="Tambah PTI" Height="650" Width="800">
     <Window.Resources>
         <bConvert:BusyConverter x:Key="busyConverter"/>
@@ -23,6 +24,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+       
     </Window.Resources>
     <Grid>
         <Control Visibility="{Binding IsBusy, Converter={StaticResource busyConverter}}" Style="{StaticResource BusyAnimationStyle}"/>
@@ -36,7 +38,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-         
+
             <Border Margin="5"  BorderThickness="0.5" BorderBrush="#FF176BB2" Grid.ColumnSpan="2">
                 <Grid>
                     <StackPanel>
@@ -71,7 +73,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <StackPanel>
-                        <Label FontSize="14" MouseDown="reciver_MouseDoubleClick" FontWeight="Bold" Content="Pengirim" Height="28"></Label>
+                        <Label ToolTip="Click Untuk Ubah Pengirim" FontSize="14" MouseDown="reciver_MouseDoubleClick" FontWeight="Bold" Content="Pengirim" Height="28"></Label>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <Label HorizontalAlignment="Right" Content="Nama"/>
@@ -82,8 +84,10 @@
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox  Text="{Binding Shiper.Name}" Name="shiper" KeyDown="shiper_KeyDown" ></TextBox>
-                        <TextBox VerticalContentAlignment="Top" Text="{Binding Shiper.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="40" ></TextBox>
-                        <TextBox Text="{Binding Shiper.Handphone}" ></TextBox>
+                        <TextBox VerticalContentAlignment="Top" Text="{Binding Shiper.Address}" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" ></TextBox>
+                        <TextBox Text="{Binding Shiper.Handphone}" UI:FocusAdvancement.AdvancesByEnterKey="True">
+
+                        </TextBox>
                         <TextBox Text="{Binding Shiper.Phone}" ></TextBox>
                         <TextBox Text="{Binding Shiper.NoIdentitas}" ></TextBox>
                     </StackPanel>
@@ -101,7 +105,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBox MouseDoubleClick="reciver_MouseDoubleClick" Name="reciver" Text="{Binding Reciever.Name}"></TextBox>
-                        <TextBox  VerticalContentAlignment="Top"  Text="{Binding Reciever.Address}" AcceptsReturn="True" VerticalAlignment="Top" Height="40" ></TextBox>
+                        <TextBox  VerticalContentAlignment="Top"  Text="{Binding Reciever.Address}" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" ></TextBox>
                         <TextBox Text="{Binding Reciever.Handphone}" ></TextBox>
                         <TextBox Text="{Binding Reciever.Phone}" ></TextBox>
                         <Grid Margin="0,0,3,0">
@@ -109,29 +113,46 @@
                                 <ColumnDefinition Width="90*"/>
                                 <ColumnDefinition Width="10*"/>
                             </Grid.ColumnDefinitions>
-                            <ComboBox SelectedItem="{Binding SelectedPort}" Grid.Column="0" Margin="3,3,0,3"   SelectedValue="{Binding ToId}" 
+                            <ComboBox UI:FocusAdvancement.AdvancesByEnterKey="True" SelectedItem="{Binding SelectedPort}" Grid.Column="0" Margin="3,3,0,3"   SelectedValue="{Binding ToId}" 
                           SelectedValuePath="Id" DisplayMemberPath="CityName"                          
                           ItemsSource="{Binding CitiesSourceView}"  />
-                            <Button Command="{Binding AddNewCityCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                            <Button UI:FocusAdvancement.AdvancesByEnterKey="True" Command="{Binding AddNewCityCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                         </Grid>
                     </StackPanel>
 
 
                 </Grid>
             </Border>
-            <DataGrid Name="dg" Margin="5" CellStyle="{StaticResource dgCell}" ItemsSource="{Binding SourceView,ValidatesOnDataErrors=True,NotifyOnValidationError=True}" AddingNewItem="DataGrid_AddingNewItem" RowEditEnding="DataGrid_RowEditEnding" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Isi"/>
-                    <DataGridComboBoxColumn Width="100" x:Name="kemasan" Header="Kemasan"
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="41*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid  Name="dg" Margin="5,3,5,0" PreviewKeyDown="dg_PreviewKeyDown"  CellStyle="{StaticResource dgCell}" ItemsSource="{Binding SourceView,ValidatesOnDataErrors=True,NotifyOnValidationError=True}" AddingNewItem="DataGrid_AddingNewItem" RowEditEnding="DataGrid_RowEditEnding" AutoGenerateColumns="False" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Isi"/>
+                        <DataGridComboBoxColumn Width="100" x:Name="kemasan" Header="Kemasan"
                     SelectedValueBinding="{Binding Kemasan, Mode=TwoWay}"  
                     DisplayMemberPath="{Binding Kemasan}" ItemsSource="{Binding Source={StaticResource Kemasans}}" />
-                    <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
-                    <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
-                    <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}" Width="*" Header="Total Berat"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Biaya,StringFormat={}{0:N2}}" Width="*" Header="Biaya"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                        <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
+                        <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
+                        <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding TotalWeight,StringFormat={}{0:N2}}" Width="*" Header="Total Berat"/>
+                        <DataGridTextColumn IsReadOnly="True"  Binding="{Binding Biaya,StringFormat={}{0:N2}}" Width="*" Header="Biaya"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Border Margin="5,0" Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
+                    <WrapPanel    HorizontalAlignment="Right">
+                        <Label Padding="0"  FontSize="18" Content="Total Colli :" Width="100" HorizontalContentAlignment="Right"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="18" Text="{Binding SumColly}" />
+                        <Label Padding="0" FontSize="18" Content="Total Berat :" Width="100" HorizontalContentAlignment="Right"/>
+                        <TextBlock FontSize="18" VerticalAlignment="Center" Text="{Binding SumBerat,StringFormat={}{0:N2}}" />
+                        <Label Padding="0" FontSize="18" Content="Total Biaya:" Width="100" HorizontalContentAlignment="Right"/>
+                        <TextBlock FontSize="18" VerticalAlignment="Center" Text="{Binding SumBiaya,StringFormat={}{0:N2}}" />
+                    </WrapPanel>
+                </Border>
+            </Grid>
+
             <Border Margin="5"  BorderThickness="0.5" BorderBrush="#FF176BB2" Grid.Row="2" Grid.ColumnSpan="2">
                 <WrapPanel HorizontalAlignment="Right">
                     <Button Command="{Binding SaveCommand}" Content="Simpan"></Button>

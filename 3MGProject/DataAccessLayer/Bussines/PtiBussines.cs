@@ -82,6 +82,41 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public collies SplitItemPTI(PreFligtManifest selectedItemPTI, int jumlah)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+                    var sisa = selectedItemPTI.Pcs - jumlah;
+                    if (!db.Collies.Update(O => new { O.Pcs }, new collies { Pcs = sisa }, O => O.Id == selectedItemPTI.ColliesId))
+                        throw new SystemException("Item PTI Tidak Berhasil Di Split");
+
+                    var newItem = new collies { Content = selectedItemPTI.Content, IsSended = false, Kemasan = selectedItemPTI.Kemasan, Pcs = jumlah,
+                        Price = selectedItemPTI.Price, PtiId = selectedItemPTI.PTIId, Weight = selectedItemPTI.Weight };
+                    newItem.Id = db.Collies.InsertAndGetLastID(newItem);
+                    if(newItem.Id<=0)
+                        throw new SystemException("Item PTI Tidak Berhasil Di Split");
+
+                    var note = string.Format("Split PTI {0:D6} item {1:D7} Menjadi {2} Colly dan {3}Colly", selectedItemPTI.PTIId,
+                         selectedItemPTI.ColliesId, sisa, jumlah);
+                    var hist = User.GenerateHistory(selectedItemPTI.Id, BussinesType.PTI, ChangeType.Update, note);
+
+                    if(!db.Histories.Insert(hist))
+                        throw new SystemException("Item PTI Tidak Berhasil Di Split");
+
+                    trans.Commit();
+                    return newItem;
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
         public Task<List<collies>> GetDetailOfPTI(PTI selected)
         {
             using (var db = new OcphDbContext())
@@ -260,7 +295,7 @@ namespace DataAccessLayer.Bussines
                 
         }
 
-        public void AddNewCollyItem(collies selectedRow)
+        public void AddNewCollyItem(PTI selectedPTI, collies selectedRow)
         {
             using (var db = new OcphDbContext())
             {
@@ -273,6 +308,9 @@ namespace DataAccessLayer.Bussines
                         var item = selectedRow;
                         var note = string.Format(@"Menambah Item Baru: \n\r {0}-{1}-{2}-{3}",
                                    item.Content, item.Pcs, item.Weight, item.Price);
+                        if (!db.PTI.Update(O => new { O.OnSMU }, new pti { OnSMU = false }, O => O.Id == selectedPTI.Id))
+                            throw new SystemException("Data Tidak Tersimpan");
+
                         var his = User.GenerateHistory(selectedRow.PtiId, BussinesType.PTI, ChangeType.Update, note);
                         if (db.Histories.Insert(his))
                             trans.Commit();
@@ -321,6 +359,25 @@ namespace DataAccessLayer.Bussines
                         throw new SystemException("Item Telah Terdaftar Di SMU, Hapus Terlebih Dahulu Di SMU");
                     throw new SystemException(ex.Message);
                 }
+            }
+        }
+
+        public bool ItemColliIsSended(collies colly)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var smuDetail = db.SMUDetails.Where(O => O.colliesId == colly.Id).FirstOrDefault();
+                if(smuDetail!=null)
+                {
+                    var manifestDetail = db.ManifestDetail.Where(O => O.SMUId == smuDetail.SMUId).FirstOrDefault();
+                    if (manifestDetail != null)
+                    {
+                        var manifest = db.Manifest.Where(O => O.Id == manifestDetail.manifestoutgoingId).FirstOrDefault();
+                        if (manifest != null && manifest.IsTakeOff)
+                            return true;
+                    }
+                }
+                return false;
             }
         }
     }

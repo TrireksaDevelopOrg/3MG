@@ -98,6 +98,12 @@ namespace MainApp
         {
 
         }
+
+        private void preSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new Views.PreScheduleManifest();
+            form.ShowDialog();
+        }
     }
 
 
@@ -106,6 +112,7 @@ namespace MainApp
         public MainWindowViewModel() : base(typeof(MainWindowViewModel)) {
             Dashboards = new ObservableCollection<DashboarTile>();
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => LoadDashboard() };
+            RefreshCommand.Execute(null);
 
         }
 
@@ -133,10 +140,11 @@ namespace MainApp
         {
             Dashboards.Clear();
             var data2 = await laporan.GetDataBufferStock();
+            var dataBuffer = data2.Sum(O => O.TotalWeight);
             Dashboards.Add(new DashboarTile
             {
                 TitleTile = "BUFFER STOK",
-                Nilai = string.Format("{0:N2} Ton", data2.Sum(O => O.TotalWeight) / 1000),
+                Nilai = string.Format("{0:N2} Ton", (dataBuffer *0.001)),
                 BackgroundColor = GenerateColorGradient("#EA38D8")
             });
 

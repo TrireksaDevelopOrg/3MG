@@ -96,6 +96,7 @@
                           <TextRun>
                             <Value>=First(Fields!User.Value, "DataSet1")</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -107,7 +108,7 @@
                     </Paragraphs>
                     <rd:DefaultName>Textbox41</rd:DefaultName>
                     <Top>0.88408in</Top>
-                    <Left>3.79048in</Left>
+                    <Left>4.66548in</Left>
                     <Height>0.2261in</Height>
                     <Width>2.48861in</Width>
                     <Style>
@@ -131,6 +132,7 @@
                           <TextRun>
                             <Value>Jayapura, </Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>d MMM yyyy</Format>
                             </Style>
@@ -138,6 +140,7 @@
                           <TextRun>
                             <Value>=First(Fields!TanggalBayar.Value, "DataSet1")</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>d MMM yyyy</Format>
                             </Style>
@@ -150,7 +153,7 @@
                     </Paragraphs>
                     <rd:DefaultName>Textbox41</rd:DefaultName>
                     <Top>0.0449in</Top>
-                    <Left>3.76837in</Left>
+                    <Left>4.64337in</Left>
                     <Height>0.25865in</Height>
                     <Width>2.4886in</Width>
                     <ZIndex>1</ZIndex>
@@ -173,6 +176,7 @@
                           <TextRun>
                             <Value>Accounting</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -184,7 +188,7 @@
                     </Paragraphs>
                     <rd:DefaultName>Textbox41</rd:DefaultName>
                     <Top>1.13152in</Top>
-                    <Left>3.79048in</Left>
+                    <Left>4.66548in</Left>
                     <Height>0.2261in</Height>
                     <Width>2.48861in</Width>
                     <ZIndex>2</ZIndex>
@@ -197,10 +201,10 @@
                   </Textbox>
                 </ReportItems>
                 <KeepTogether>true</KeepTogether>
-                <Top>3.35165in</Top>
+                <Top>3.72665in</Top>
                 <Left>0.25in</Left>
                 <Height>1.43139in</Height>
-                <Width>6.58916in</Width>
+                <Width>7.21416in</Width>
                 <ZIndex>1</ZIndex>
                 <Style>
                   <Border>
@@ -240,6 +244,7 @@
                           <TextRun>
                             <Value>Keterangan</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -267,6 +272,7 @@
                           <TextRun>
                             <Value>Terbilang</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -295,6 +301,7 @@
                           <TextRun>
                             <Value>Jumlah</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -323,6 +330,7 @@
                           <TextRun>
                             <Value>Telah Terima Dari </Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -351,6 +359,7 @@
                           <TextRun>
                             <Value>No Kwitansi</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -377,14 +386,16 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>: </Value>
+                            <Value>:</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
                           <TextRun>
                             <Value>=First(Fields!Keterangan.Value, "DataSet1")</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>n2</Format>
                             </Style>
@@ -397,7 +408,7 @@
                     <Top>1.60624in</Top>
                     <Left>1.80292in</Left>
                     <Height>0.58308in</Height>
-                    <Width>4.49304in</Width>
+                    <Width>5.32905in</Width>
                     <ZIndex>5</ZIndex>
                     <Style>
                       <Border>
@@ -412,14 +423,16 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>: </Value>
+                            <Value>:</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
                           <TextRun>
                             <Value>=Parameters!Terbilang.Value</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>n2</Format>
                             </Style>
@@ -427,6 +440,7 @@
                           <TextRun>
                             <Value> Rupiah</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>n2</Format>
                             </Style>
@@ -439,7 +453,7 @@
                     <Top>0.96483in</Top>
                     <Left>1.79613in</Left>
                     <Height>0.58308in</Height>
-                    <Width>4.49304in</Width>
+                    <Width>5.32905in</Width>
                     <ZIndex>6</ZIndex>
                     <Style>
                       <Border>
@@ -455,14 +469,16 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>: Rp. </Value>
+                            <Value>:Rp. </Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
                           <TextRun>
                             <Value>=First(Fields!Jumlah.Value, "DataSet1")</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>n2</Format>
                             </Style>
@@ -470,6 +486,7 @@
                           <TextRun>
                             <Value>,-</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>n2</Format>
                             </Style>
@@ -482,7 +499,7 @@
                     <Top>0.67688in</Top>
                     <Left>1.79613in</Left>
                     <Height>0.25in</Height>
-                    <Width>4.49304in</Width>
+                    <Width>5.32905in</Width>
                     <ZIndex>7</ZIndex>
                     <Style>
                       <Border>
@@ -502,14 +519,16 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>:  </Value>
+                            <Value>:</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
                           <TextRun>
                             <Value>=Parameters!Shiper.Value</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
@@ -521,7 +540,7 @@
                     <Top>0.39633in</Top>
                     <Left>1.79613in</Left>
                     <Height>0.25in</Height>
-                    <Width>4.49304in</Width>
+                    <Width>5.32905in</Width>
                     <ZIndex>8</ZIndex>
                     <Style>
                       <Border>
@@ -541,14 +560,16 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>: TRM</Value>
+                            <Value>:TRM</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                             </Style>
                           </TextRun>
                           <TextRun>
                             <Value>=First(Fields!Id.Value, "DataSet1")</Value>
                             <Style>
+                              <FontFamily>calibri</FontFamily>
                               <FontSize>12pt</FontSize>
                               <Format>D5</Format>
                             </Style>
@@ -561,7 +582,7 @@
                     <Top>0.125in</Top>
                     <Left>1.7989in</Left>
                     <Height>0.25in</Height>
-                    <Width>4.49304in</Width>
+                    <Width>5.32905in</Width>
                     <ZIndex>9</ZIndex>
                     <Style>
                       <Border>
@@ -576,10 +597,10 @@
                   </Textbox>
                 </ReportItems>
                 <KeepTogether>true</KeepTogether>
-                <Top>0.99223in</Top>
+                <Top>1.36723in</Top>
                 <Left>0.25in</Left>
                 <Height>2.37158in</Height>
-                <Width>6.58391in</Width>
+                <Width>7.20891in</Width>
                 <ZIndex>2</ZIndex>
                 <Style>
                   <Border>
@@ -617,7 +638,8 @@
                       <TextRun>
                         <Value>K W I T A N S I</Value>
                         <Style>
-                          <FontSize>16pt</FontSize>
+                          <FontFamily>calibri</FontFamily>
+                          <FontSize>18pt</FontSize>
                           <FontWeight>Bold</FontWeight>
                           <TextDecoration>Underline</TextDecoration>
                         </Style>
@@ -632,6 +654,8 @@
                       <TextRun>
                         <Value>PEMBAYARAN DEPOSIT</Value>
                         <Style>
+                          <FontFamily>calibri</FontFamily>
+                          <FontSize>14pt</FontSize>
                           <FontWeight>Bold</FontWeight>
                         </Style>
                       </TextRun>
@@ -642,10 +666,10 @@
                   </Paragraph>
                 </Paragraphs>
                 <rd:DefaultName>Textbox15</rd:DefaultName>
-                <Top>0.46453in</Top>
+                <Top>0.71453in</Top>
                 <Left>0.25in</Left>
                 <Height>0.54968in</Height>
-                <Width>6.58391in</Width>
+                <Width>7.20891in</Width>
                 <ZIndex>3</ZIndex>
                 <Style>
                   <Border>
@@ -660,7 +684,7 @@
             </ReportItems>
             <KeepTogether>true</KeepTogether>
             <Height>5.42524in</Height>
-            <Width>7.08021in</Width>
+            <Width>7.68438in</Width>
             <Style>
               <Border>
                 <Style>Double</Style>
@@ -689,17 +713,18 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>5.44351in</Height>
+        <Height>13.82652cm</Height>
         <Style />
       </Body>
-      <Width>7.08021in</Width>
+      <Width>19.94165cm</Width>
       <Page>
-        <PageHeight>11.69in</PageHeight>
-        <PageWidth>8.27in</PageWidth>
-        <LeftMargin>0.5in</LeftMargin>
-        <RightMargin>0.5in</RightMargin>
-        <TopMargin>0.5in</TopMargin>
-        <BottomMargin>0.5in</BottomMargin>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <LeftMargin>1.27cm</LeftMargin>
+        <RightMargin>1.27cm</RightMargin>
+        <TopMargin>1.27cm</TopMargin>
+        <BottomMargin>1.27cm</BottomMargin>
+        <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
     </ReportSection>
@@ -761,6 +786,6 @@ RdlBauldjMTarXPN3OFwOBwOx0gTgbVUKnH/GLESzkRKlrwcsaaN3kPO8xjdXkCyYq8ALkfKqDgcDofD
 bcar6BqPJKhMqBJi41QoZnTL6s+gavPosTpmkDqKA8GyfWxgRI9Vr6z/D5GSNLV/x/rekoq9LhV4nfr7NhV6m+ixLG5RIVhQkZhnGAxyngdNOfn9ufWWS28qcfT8HO3NhsiJQIfD4XDsZIx1JgmHw+FwOByOEYfnLoHD4XA4HA6HE4EOh8PhcDgcDicCHQ6Hw+FwOBxOBDocDofD4XA49gj+/wAat5xJoDdXrgAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>cc80bd92-c19a-496a-8869-5ca129dbcf5a</rd:ReportID>
 </Report>

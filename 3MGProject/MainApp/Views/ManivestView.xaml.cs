@@ -81,6 +81,14 @@ namespace MainApp.Views
 
             }
         }
+
+        private void dg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid dg = (DataGrid)sender;
+            var item = (Manifest)dg.SelectedItem;
+            if (item != null)
+                vm.ShowDetails(item);
+        }
     }
 
 
@@ -135,7 +143,7 @@ namespace MainApp.Views
             AddNewManifestCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewManifestAction };
             PreFlightPrintPreviewCommand = new CommandHandler { CanExecuteAction = x => ManifestSelected != null, ExecuteAction = PreFlightPrintPreviewAction };
             SetTakeOFF = new CommandHandler { CanExecuteAction = SetTakeOFFValidate, ExecuteAction = SetTakOFFAction };
-
+            InsertNewSMUCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = InsertNewSMUAction };
             Source = new ObservableCollection<Manifest>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             SourceView.Filter = DataFilter;
@@ -147,6 +155,29 @@ namespace MainApp.Views
             LoadData(startDate,endDate);
         }
 
+        [Authorize("Manager")]
+        private void InsertNewSMUAction(object obj)
+        {
+
+            if(User.CanAccess(MethodBase.GetCurrentMethod()))
+            {
+                if(!ManifestSelected.IsTakeOff)
+                {
+                    var form = new Views.BrowseSMU();
+                    var vm = new Views.BrowseSMUViewModel(ManifestSelected) { WindowClose = form.Close };
+                    form.DataContext = vm;
+                    form.ShowDialog();
+                }
+                else
+                {
+                    Helpers.ShowErrorMessage("Pesawat Telah Berangkat,Data Tidak Dapat Diubha");
+                }
+            }
+
+          
+
+        }
+
         private async void PreFlightPrintPreviewAction(object obj)
         {
             try
@@ -154,9 +185,16 @@ namespace MainApp.Views
                 var header = new List<Manifest>();
                 header.Add(ManifestSelected);
                 var details = await context.ManifestPreFlightDetails(ManifestSelected);
+                var newDetails = details.GroupBy(O => O.ColliesId).ToList();
+                List<PreFligtManifest> list = new List<PreFligtManifest>();
+                foreach(var item in newDetails)
+                {
+                    list.Add(item.FirstOrDefault());
+                }
+                
 
                 Helpers.PrintWithFormActionTwoSource("Print Preview", new ReportDataSource { Name = "Header", Value = header },
-                    new ReportDataSource { Name = "DataSet1", Value = details },
+                    new ReportDataSource { Name = "DataSet1", Value =list.OrderBy(O=>O.SMUId) },
                     "MainApp.Reports.Layouts.PreFlightManifest.rdlc", null);
 
             }
@@ -294,8 +332,9 @@ namespace MainApp.Views
                     {
                         selected.Details.Add(item);
                     }
-                    GridWidth = new GridLength(30, GridUnitType.Star);
+                    
                 }
+                GridWidth = new GridLength(30, GridUnitType.Star);
             }
             catch (Exception ex)
             {
@@ -343,6 +382,7 @@ namespace MainApp.Views
         public CommandHandler AddNewManifestCommand { get; }
         public CommandHandler PreFlightPrintPreviewCommand { get; }
         public CommandHandler SetTakeOFF { get; }
+        public CommandHandler InsertNewSMUCommand { get; }
         public ObservableCollection<Manifest>Source {get;set ;}
         public CollectionView SourceView { get; }
 

@@ -78,6 +78,15 @@ namespace MainApp.Views
               
             }
         }
+
+        private void dg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            vm = (SMUViewModel)this.DataContext;
+            DataGrid dg = (DataGrid)sender;
+            var item = (SMU)dg.SelectedItem;
+            if (item != null)
+                vm.ShowDetails(item);
+        }
     }
 
     public class SMUViewModel : Authorization
@@ -179,28 +188,49 @@ namespace MainApp.Views
 
 
 
-      
+      [Authorize("Manager")]
         private void OutManifestAction(object obj)
         {
-            var form = new Views.BrowseColliesView();
-            var vm = new Views.BrowseColliesViewModel(SelectedItem);
-            form.DataContext = vm;
-            form.ShowDialog();
-
-            if(vm.Success)
+            if(User.CanAccess(MethodBase.GetCurrentMethod()))
             {
-                foreach (var item in vm.Source.Where(O => O.IsSended).ToList())
-                    SelectedItem.Details.Add(new SMUDetail
+                try
+                {
+
+                    if (SelectedItem.IsSended)
                     {
-                        ColliesId = item.Id,
-                        Content = item.Content,
-                        Kemasan = item.Kemasan,
-                        Pcs = item.Pcs,
-                        Weight = item.Weight,
-                        Price = item.Price,
-                        PTIId = item.PtiId
-                    });
+                        var isTakeOff =context.ManifestIsTakeOf(SelectedItem);
+                        if (isTakeOff)
+                            throw new SystemException("Pesawat Telah Berangkat, Data Tidak Dapat Diubah");
+                    }
+
+                    var form = new Views.BrowseColliesView();
+                    var vm = new Views.BrowseColliesViewModel(SelectedItem) { WindowClose=form.Close};
+                    form.DataContext = vm;
+                    form.ShowDialog();
+
+                    if (vm.Success)
+                    {
+                        foreach (var item in vm.Source.Where(O => O.IsSended).ToList())
+                            SelectedItem.Details.Add(new SMUDetail
+                            {
+                                ColliesId = item.Id,
+                                Content = item.Content,
+                                Kemasan = item.Kemasan,
+                                Pcs = item.Pcs,
+                                Weight = item.Weight,
+                                Price = item.Price,
+                                PTIId = item.PtiId
+                            });
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Helpers.ShowErrorMessage(ex.Message);
+                }
             }
+
+
         }
 
         private void PrintCommandAction(object obj)

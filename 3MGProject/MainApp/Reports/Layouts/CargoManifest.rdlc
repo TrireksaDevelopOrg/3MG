@@ -9,22 +9,22 @@
               <Width>0.43354in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.05796in</Width>
+              <Width>0.97046in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.72012in</Width>
+              <Width>1.47528in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77079in</Width>
+              <Width>0.66662in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.07635in</Width>
+              <Width>0.90274in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.32635in</Width>
+              <Width>1.662in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.29612in</Width>
+              <Width>1.57059in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -42,7 +42,9 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -90,7 +92,9 @@
                             <TextRun>
                               <Value>NO</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -133,7 +137,9 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -176,7 +182,9 @@
                             <TextRun>
                               <Value>TOTAL</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -219,7 +227,9 @@
                             <TextRun>
                               <Value>TOTAL </Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -262,7 +272,9 @@
                             <TextRun>
                               <Value>ONLY USED FOR</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -317,7 +329,9 @@
                             <TextRun>
                               <Value>No.</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -364,7 +378,9 @@
                             <TextRun>
                               <Value>SMU</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -406,7 +422,9 @@
                             <TextRun>
                               <Value>ITEM DESCRIPTION</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -448,7 +466,9 @@
                             <TextRun>
                               <Value>COLI</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -490,7 +510,9 @@
                             <TextRun>
                               <Value>WEIGHT</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -532,7 +554,9 @@
                             <TextRun>
                               <Value>SHIPER</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -574,7 +598,9 @@
                             <TextRun>
                               <Value>RECIEVER</Value>
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontFamily>Courier New</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -621,6 +647,7 @@
                             <TextRun>
                               <Value>=RowNumber(Nothing)</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -663,6 +690,7 @@
                             <TextRun>
                               <Value>T</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>D9</Format>
                               </Style>
@@ -670,6 +698,7 @@
                             <TextRun>
                               <Value>=Fields!Id.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>D9</Format>
                               </Style>
@@ -708,6 +737,7 @@
                             <TextRun>
                               <Value>=Fields!Content.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -745,7 +775,9 @@
                             <TextRun>
                               <Value>=Fields!Pcs.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -782,7 +814,9 @@
                             <TextRun>
                               <Value>=Fields!Weight.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
+                                <Format>N</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -819,6 +853,7 @@
                             <TextRun>
                               <Value>=Fields!ShiperName.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -856,6 +891,7 @@
                             <TextRun>
                               <Value>=Fields!RecieverName.Value</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -898,6 +934,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -944,6 +981,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -988,6 +1026,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1032,6 +1071,7 @@
                             <TextRun>
                               <Value>=Sum(Fields!Pcs.Value)</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N</Format>
                               </Style>
@@ -1064,6 +1104,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1077,6 +1118,7 @@
                             <TextRun>
                               <Value>=Sum(Fields!Weight.Value)</Value>
                               <Style>
+                                <FontFamily>arial</FontFamily>
                                 <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                               </Style>
@@ -1109,6 +1151,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -1122,6 +1165,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1166,6 +1210,7 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Courier New</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
@@ -1247,13 +1292,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.92953in</Height>
+    <Height>2.15194cm</Height>
     <Style />
   </Body>
-  <Width>7.75708in</Width>
+  <Width>19.70298cm</Width>
   <Page>
     <PageHeader>
-      <Height>1.62972in</Height>
+      <Height>3.37221cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1266,6 +1311,7 @@
                 <TextRun>
                   <Value>CARGO MANIFEST</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1277,10 +1323,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.625in</Top>
-          <Left>2.72858in</Left>
+          <Top>0.5in</Top>
+          <Left>0.0375in</Left>
           <Height>0.27084in</Height>
-          <Width>2.28199in</Width>
+          <Width>7.71958in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1300,14 +1346,16 @@
                 <TextRun>
                   <Value>MT</Value>
                   <Style>
-                    <FontSize>14pt</FontSize>
+                    <FontFamily>arial</FontFamily>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!Id.Value, "Header")</Value>
                   <Style>
-                    <FontSize>14pt</FontSize>
+                    <FontFamily>arial</FontFamily>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                     <Format>D8</Format>
                   </Style>
@@ -1319,10 +1367,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.5in</Top>
-          <Left>5.83595in</Left>
+          <Top>0.375in</Top>
+          <Left>5.36768in</Left>
           <Height>0.29167in</Height>
-          <Width>1.85417in</Width>
+          <Width>2.3894in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -1343,6 +1391,7 @@
                 <TextRun>
                   <Value>AIRCRAF REGISTRATION:</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1353,10 +1402,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06375in</Top>
+          <Top>0.82625in</Top>
           <Left>0.0375in</Left>
           <Height>0.25in</Height>
-          <Width>1.42194in</Width>
+          <Width>1.5104in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1374,14 +1423,16 @@
                 <TextRun>
                   <Value>MT</Value>
                   <Style>
-                    <FontSize>14pt</FontSize>
+                    <FontFamily>arial</FontFamily>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
                 <TextRun>
                   <Value>=First(Fields!Id.Value, "Header")</Value>
                   <Style>
-                    <FontSize>14pt</FontSize>
+                    <FontFamily>arial</FontFamily>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                     <Format>D8</Format>
                   </Style>
@@ -1391,9 +1442,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.5in</Top>
+          <Top>0.375in</Top>
           <Height>0.29167in</Height>
-          <Width>2.07844in</Width>
+          <Width>2.51138in</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -1414,8 +1465,8 @@
                 <TextRun>
                   <Value>=First(Fields!PlaneCode.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1425,10 +1476,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06375in</Top>
-          <Left>1.49234in</Left>
+          <Top>0.82625in</Top>
+          <Left>1.55484in</Left>
           <Height>0.25in</Height>
-          <Width>0.94821in</Width>
+          <Width>0.65848in</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -1446,6 +1497,7 @@
                 <TextRun>
                   <Value>POINT OF EMBARCATION:</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1456,10 +1508,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.31375in</Top>
+          <Top>1.07625in</Top>
           <Left>0.0375in</Left>
           <Height>0.25in</Height>
-          <Width>1.42194in</Width>
+          <Width>1.5104in</Width>
           <ZIndex>5</ZIndex>
           <Style>
             <Border>
@@ -1477,8 +1529,8 @@
                 <TextRun>
                   <Value>=First(Fields!OriginPortCode.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1488,10 +1540,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.32764in</Top>
-          <Left>1.49234in</Left>
+          <Top>1.09014in</Top>
+          <Left>1.55484in</Left>
           <Height>0.22917in</Height>
-          <Width>0.94821in</Width>
+          <Width>0.65848in</Width>
           <ZIndex>6</ZIndex>
           <Style>
             <Border>
@@ -1509,20 +1561,21 @@
                 <TextRun>
                   <Value>FLIGHT NO:</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06514in</Top>
+          <Top>0.82764in</Top>
           <Left>2.52138in</Left>
           <Height>0.25in</Height>
-          <Width>0.77708in</Width>
+          <Width>0.63402in</Width>
           <ZIndex>7</ZIndex>
           <Style>
             <Border>
@@ -1540,8 +1593,8 @@
                 <TextRun>
                   <Value>=First(Fields!PlaneCode.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1549,10 +1602,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06514in</Top>
-          <Left>3.29846in</Left>
+          <Top>0.82764in</Top>
+          <Left>3.11096in</Left>
           <Height>0.25in</Height>
-          <Width>0.89313in</Width>
+          <Width>0.69729in</Width>
           <ZIndex>8</ZIndex>
           <Style>
             <Border>
@@ -1570,20 +1623,21 @@
                 <TextRun>
                   <Value>POINT OF DISEMBARCATION:</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
               <Style>
-                <TextAlign>Right</TextAlign>
+                <TextAlign>Left</TextAlign>
               </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.31514in</Top>
+          <Top>1.07764in</Top>
           <Left>2.52138in</Left>
           <Height>0.25in</Height>
-          <Width>1.65215in</Width>
+          <Width>1.57781in</Width>
           <ZIndex>9</ZIndex>
           <Style>
             <Border>
@@ -1601,8 +1655,8 @@
                 <TextRun>
                   <Value>=First(Fields!DestinationPortCode.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1612,8 +1666,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.31514in</Top>
-          <Left>4.19298in</Left>
+          <Top>1.07764in</Top>
+          <Left>4.13048in</Left>
           <Height>0.25in</Height>
           <Width>0.89162in</Width>
           <ZIndex>10</ZIndex>
@@ -1633,18 +1687,21 @@
                 <TextRun>
                   <Value>A/C FLIGHT:</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06514in</Top>
-          <Left>4.19159in</Left>
+          <Top>0.82764in</Top>
+          <Left>4.13048in</Left>
           <Height>0.25in</Height>
-          <Width>0.65648in</Width>
+          <Width>0.73228in</Width>
           <ZIndex>11</ZIndex>
           <Style>
             <Border>
@@ -1662,8 +1719,8 @@
                 <TextRun>
                   <Value>=First(Fields!FlightNumber.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1671,10 +1728,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06514in</Top>
-          <Left>4.8721in</Left>
+          <Top>0.82764in</Top>
+          <Left>4.84154in</Left>
           <Height>0.25in</Height>
-          <Width>0.73801in</Width>
+          <Width>0.75913in</Width>
           <ZIndex>12</ZIndex>
           <Style>
             <Border>
@@ -1692,6 +1749,7 @@
                 <TextRun>
                   <Value>DATE :</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1702,10 +1760,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06375in</Top>
-          <Left>6.05939in</Left>
+          <Top>0.82625in</Top>
+          <Left>6.30939in</Left>
           <Height>0.25in</Height>
-          <Width>0.44836in</Width>
+          <Width>0.43585in</Width>
           <ZIndex>13</ZIndex>
           <Style>
             <Border>
@@ -1723,8 +1781,8 @@
                 <TextRun>
                   <Value>=First(Fields!CreatedDate.Value, "Header")</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                     <Format>dd-MMM-yy</Format>
                   </Style>
                 </TextRun>
@@ -1735,10 +1793,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.06375in</Top>
-          <Left>6.49524in</Left>
+          <Top>0.82625in</Top>
+          <Left>6.75913in</Left>
           <Height>0.25in</Height>
-          <Width>1.21183in</Width>
+          <Width>0.93544in</Width>
           <ZIndex>14</ZIndex>
           <Style>
             <Border>
@@ -1756,6 +1814,7 @@
                 <TextRun>
                   <Value>PAGE NO :</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1766,10 +1825,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.31375in</Top>
-          <Left>6.06356in</Left>
+          <Top>1.07625in</Top>
+          <Left>6.31356in</Left>
           <Height>0.25in</Height>
-          <Width>0.62723in</Width>
+          <Width>0.62514in</Width>
           <ZIndex>15</ZIndex>
           <Style>
             <Border>
@@ -1787,8 +1846,8 @@
                 <TextRun>
                   <Value>=Globals!PageNumber</Value>
                   <Style>
+                    <FontFamily>arial</FontFamily>
                     <FontSize>8pt</FontSize>
-                    <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1798,10 +1857,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>1.31375in</Top>
-          <Left>6.62829in</Left>
+          <Top>1.07625in</Top>
+          <Left>6.98701in</Left>
           <Height>0.25in</Height>
-          <Width>0.75077in</Width>
+          <Width>0.70756in</Width>
           <ZIndex>16</ZIndex>
           <Style>
             <Border>
@@ -1814,7 +1873,7 @@
           <Source>Embedded</Source>
           <Value>logotrimg</Value>
           <Sizing>Fit</Sizing>
-          <Left>5.85869in</Left>
+          <Left>5.98369in</Left>
           <Height>0.3545in</Height>
           <Width>1.77339in</Width>
           <ZIndex>17</ZIndex>
@@ -1832,7 +1891,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>2.05894cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1844,16 +1903,19 @@
               <TextRuns>
                 <TextRun>
                   <Value>PREPARED BY:</Value>
-                  <Style />
+                  <Style>
+                    <FontFamily>calibri</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.09183in</Top>
-          <Left>0.84243in</Left>
-          <Height>0.7696in</Height>
+          <Top>0.06944in</Top>
+          <Left>0.71743in</Left>
+          <Height>0.65596in</Height>
           <Width>1.79395in</Width>
           <Style>
             <Border>
@@ -1873,7 +1935,10 @@
               <TextRuns>
                 <TextRun>
                   <Value>AIRCRAF BY:</Value>
-                  <Style />
+                  <Style>
+                    <FontFamily>calibri</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
@@ -1881,8 +1946,8 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.09183in</Top>
-          <Left>5.11298in</Left>
-          <Height>0.7696in</Height>
+          <Left>4.98798in</Left>
+          <Height>0.65596in</Height>
           <Width>2.00799in</Width>
           <ZIndex>1</ZIndex>
           <Style>
@@ -1903,7 +1968,10 @@
               <TextRuns>
                 <TextRun>
                   <Value>APPROVED BY:</Value>
-                  <Style />
+                  <Style>
+                    <FontFamily>calibri</FontFamily>
+                    <FontSize>8pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
@@ -1911,8 +1979,8 @@
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.09183in</Top>
-          <Left>2.896in</Left>
-          <Height>0.7696in</Height>
+          <Left>2.771in</Left>
+          <Height>0.65596in</Height>
           <Width>1.96876in</Width>
           <ZIndex>2</ZIndex>
           <Style>
@@ -1932,12 +2000,13 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>11.69in</PageHeight>
-    <PageWidth>8.27in</PageWidth>
-    <LeftMargin>0.25in</LeftMargin>
-    <RightMargin>0.25in</RightMargin>
-    <TopMargin>0.5in</TopMargin>
-    <BottomMargin>0.25in</BottomMargin>
+    <PageHeight>29.7cm</PageHeight>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.635cm</LeftMargin>
+    <RightMargin>0.635cm</RightMargin>
+    <TopMargin>1.27cm</TopMargin>
+    <BottomMargin>0.635cm</BottomMargin>
+    <ColumnSpacing>1.27cm</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -2216,6 +2285,6 @@ RdlBauldjMTarXPN3OFwOBwOx0gTgbVUKnH/GLESzkRKlrwcsaaN3kPO8xjdXkCyYq8ALkfKqDgcDofD
 bcar6BqPJKhMqBJi41QoZnTL6s+gavPosTpmkDqKA8GyfWxgRI9Vr6z/D5GSNLV/x/rekoq9LhV4nfr7NhV6m+ixLG5RIVhQkZhnGAxyngdNOfn9ufWWS28qcfT8HO3NhsiJQIfD4XDsZIx1JgmHw+FwOByOEYfnLoHD4XA4HA6HE4EOh8PhcDgcDicCHQ6Hw+FwOBxOBDocDofD4XA49gj+/wAat5xJoDdXrgAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>c926a7a6-b8a5-475a-9eb3-2b115e780637</rd:ReportID>
 </Report>

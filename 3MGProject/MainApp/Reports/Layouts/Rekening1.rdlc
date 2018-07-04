@@ -183,6 +183,7 @@
                                 <TextRun>
                                   <Value>TANGGAL</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -223,6 +224,7 @@
                                 <TextRun>
                                   <Value>DESKRIPSI</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -263,6 +265,7 @@
                                 <TextRun>
                                   <Value>DEPOSIT</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -303,6 +306,7 @@
                                 <TextRun>
                                   <Value>NOMOR</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -343,6 +347,7 @@
                                 <TextRun>
                                   <Value>NOMOR</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -383,6 +388,7 @@
                                 <TextRun>
                                   <Value>PENERIMA</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -423,6 +429,7 @@
                                 <TextRun>
                                   <Value>KIRIMAN</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -477,6 +484,7 @@
                                 <TextRun>
                                   <Value>PEMBAYARAN</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -532,6 +540,7 @@
                                 <TextRun>
                                   <Value>SALDO</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -572,6 +581,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -607,6 +617,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -642,6 +653,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -677,6 +689,7 @@
                                 <TextRun>
                                   <Value>MANIFEST</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -712,6 +725,7 @@
                                 <TextRun>
                                   <Value> SMU</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -747,6 +761,7 @@
                                 <TextRun>
                                   <Value>Reciver Name</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -782,6 +797,7 @@
                                 <TextRun>
                                   <Value>JLH COLI</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -834,6 +850,7 @@
                                 <TextRun>
                                   <Value>KG</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -886,6 +903,7 @@
                                 <TextRun>
                                   <Value>BIAYA</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -938,6 +956,7 @@
                                 <TextRun>
                                   <Value>PPN</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -990,6 +1009,7 @@
                                 <TextRun>
                                   <Value>TOTAL</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1042,6 +1062,7 @@
                                 <TextRun>
                                   <Value>AKHIR</Value>
                                   <Style>
+                                    <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -1082,7 +1103,8 @@
                                 <TextRun>
                                   <Value>=Fields!Tanggal.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>d MMM yyyy</Format>
                                   </Style>
                                 </TextRun>
@@ -1124,6 +1146,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1137,7 +1160,8 @@
                                 <TextRun>
                                   <Value>=Fields!Description.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1176,6 +1200,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1189,7 +1214,8 @@
                                 <TextRun>
                                   <Value>=Fields!Kredit.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1231,6 +1257,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1244,7 +1271,8 @@
                                 <TextRun>
                                   <Value>=IIF(Fields!ManifestId.Value&lt;=0,"","MT"+ Format(Fields!ManifestId.Value,"D8").ToString())</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>D8</Format>
                                   </Style>
                                 </TextRun>
@@ -1286,6 +1314,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1299,7 +1328,8 @@
                                 <TextRun>
                                   <Value>=IIF(Fields!SMUId.Value&lt;=0,"","T"+Format(Fields!SMUId.Value,"D9"))</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>D9</Format>
                                   </Style>
                                 </TextRun>
@@ -1341,6 +1371,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1354,7 +1385,8 @@
                                 <TextRun>
                                   <Value>=Fields!ReciverName.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1395,6 +1427,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1408,7 +1441,8 @@
                                 <TextRun>
                                   <Value>=Fields!Pcs.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0;(#,0);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1450,6 +1484,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1463,7 +1498,8 @@
                                 <TextRun>
                                   <Value>=Fields!Weight.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1505,6 +1541,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1518,7 +1555,8 @@
                                 <TextRun>
                                   <Value>=Fields!Biaya.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1560,6 +1598,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1573,7 +1612,8 @@
                                 <TextRun>
                                   <Value>=Fields!PPN.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1615,6 +1655,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1628,7 +1669,8 @@
                                 <TextRun>
                                   <Value>=Fields!Total.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00);''</Format>
                                   </Style>
                                 </TextRun>
@@ -1670,6 +1712,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1683,7 +1726,8 @@
                                 <TextRun>
                                   <Value>=Fields!SaldoAkhir.Value</Value>
                                   <Style>
-                                    <FontSize>8pt</FontSize>
+                                    <FontFamily>calibri</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -1725,6 +1769,7 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -1772,13 +1817,13 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.84306in</Height>
+        <Height>2.14137cm</Height>
         <Style />
       </Body>
-      <Width>11.04793in</Width>
+      <Width>28.06174cm</Width>
       <Page>
         <PageHeader>
-          <Height>0.95917in</Height>
+          <Height>2.43629cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1790,11 +1835,15 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Customer :</Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Value>=Parameters!Shiper.Value</Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -1825,11 +1874,14 @@
                   <TextRuns>
                     <TextRun>
                       <Value>ID: </Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Value>=Parameters!Nomor.Value</Value>
                       <Style>
+                        <FontWeight>Bold</FontWeight>
                         <Format>D5</Format>
                       </Style>
                     </TextRun>
@@ -1875,9 +1927,9 @@
               </Paragraphs>
               <rd:DefaultName>Nomor</rd:DefaultName>
               <Top>0.342in</Top>
-              <Left>2.68039in</Left>
+              <Left>0.04458in</Left>
               <Height>0.35417in</Height>
-              <Width>4.10417in</Width>
+              <Width>10.96585in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1922,12 +1974,13 @@
             </Border>
           </Style>
         </PageHeader>
-        <PageHeight>8.27in</PageHeight>
-        <PageWidth>11.69in</PageWidth>
-        <LeftMargin>0.25in</LeftMargin>
-        <RightMargin>0.25in</RightMargin>
-        <TopMargin>0.25in</TopMargin>
-        <BottomMargin>0.25in</BottomMargin>
+        <PageHeight>29.7cm</PageHeight>
+        <PageWidth>21cm</PageWidth>
+        <LeftMargin>0.635cm</LeftMargin>
+        <RightMargin>0.635cm</RightMargin>
+        <TopMargin>0.635cm</TopMargin>
+        <BottomMargin>0.635cm</BottomMargin>
+        <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style />
       </Page>
     </ReportSection>
@@ -2038,6 +2091,6 @@ RdlBauldjMTarXPN3OFwOBwOx0gTgbVUKnH/GLESzkRKlrwcsaaN3kPO8xjdXkCyYq8ALkfKqDgcDofD
 bcar6BqPJKhMqBJi41QoZnTL6s+gavPosTpmkDqKA8GyfWxgRI9Vr6z/D5GSNLV/x/rekoq9LhV4nfr7NhV6m+ixLG5RIVhQkZhnGAxyngdNOfn9ufWWS28qcfT8HO3NhsiJQIfD4XDsZIx1JgmHw+FwOByOEYfnLoHD4XA4HA6HE4EOh8PhcDgcDicCHQ6Hw+FwOBxOBDocDofD4XA49gj+/wAat5xJoDdXrgAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>207e3272-a399-4ba2-82a5-7a3b36ca44ee</rd:ReportID>
 </Report>

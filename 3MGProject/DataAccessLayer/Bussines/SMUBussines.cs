@@ -45,6 +45,8 @@ namespace DataAccessLayer.Bussines
                     {
                         if(!db.PTI.Update(O => new { O.OnSMU }, new pti { Id = pTISelected.Id, OnSMU = true }, O => O.Id == pTISelected.Id))
                             throw new SystemException("Data Tidak Tersimpan");
+                        else
+                            pTISelected.OnSMU = true;
 
                         var h = User.GenerateHistory(pTISelected.Id, BussinesType.PTI, ChangeType.Update, string.Format("Dibuatkan SMU dengan Nomor T{0:D9}",smudata.Id));
                         if (!db.Histories.Insert(h))
@@ -71,7 +73,7 @@ namespace DataAccessLayer.Bussines
                         Weight = source.Sum(O => O.Weight),
                         Biaya = source.Sum(O=>O.Biaya)
                     };
-                    pTISelected.OnSMU = true;
+                    
                     trans.Commit();
                     return Task.FromResult(sm);
                   
@@ -195,6 +197,23 @@ namespace DataAccessLayer.Bussines
                     trans.Rollback();
                     throw new SystemException(ex.Message);
                 }
+
+            }
+        }
+
+        public bool ManifestIsTakeOf(SMU selectedItem)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var result = db.ManifestDetail.Where(O => O.SMUId == selectedItem.Id).FirstOrDefault();
+                if(result!=null)
+                {
+                    var manifest = db.Manifest.Where(O => O.Id == result.manifestoutgoingId).FirstOrDefault();
+                    if (manifest!=null && manifest.IsTakeOff)
+                        return true;
+                }
+
+                return false;
 
             }
         }

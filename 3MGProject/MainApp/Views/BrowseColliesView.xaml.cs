@@ -82,6 +82,7 @@ namespace MainApp.Views
             {
                 await context.InsertPTIItemToSMU(SMUSelected, Source);
                 Success = true;
+                WindowClose();
             }
             catch (Exception ex)
             {
@@ -94,6 +95,7 @@ namespace MainApp.Views
         public CommandHandler OKCommand { get; }
         public SMU SMUSelected { get; }
         public bool Success { get; private set; }
+        public Action WindowClose { get; internal set; }
 
         private async void LoadOutOfManifestData(int id)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ocph.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-    public class PreFligtManifest
+    public class PreFligtManifest:BaseNotify,ICloneable
     {
         private double _totalWeight;
+        private bool _isSended;
 
         public int Id { get; set; }
         public int SMUId { get; set; }
@@ -20,7 +22,13 @@ namespace DataAccessLayer.Models
         public double Price { get; set; }
         public string Kemasan { get; set; }
         public PayType PayType { get; set; }
-        public bool IsSended { get; set; }
+        public bool IsSended {
+            get { return _isSended; }
+            set
+            {
+                SetProperty(ref _isSended, value);
+            }
+        }
         public string ShiperName { get; set; }
         public int ShiperId { get; set; }
         public string RecieverName { get; set; }
@@ -39,8 +47,15 @@ namespace DataAccessLayer.Models
             set { _totalWeight=value; }
         }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
 
-
+        public PreFligtManifest GetClone()
+        {
+            return (PreFligtManifest)Clone();
+        }
     }
 
 }

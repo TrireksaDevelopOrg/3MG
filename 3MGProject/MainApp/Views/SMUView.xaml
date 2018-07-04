@@ -42,7 +42,7 @@
                         <ColumnDefinition Width="{Binding GridWidth}"/>
                     </Grid.ColumnDefinitions>
                     <Control Visibility="{Binding IsBusy, Converter={StaticResource busyConverter}}" Style="{StaticResource BusyAnimationStyle}"/>
-                    <DataGrid Name="dg" HorizontalAlignment="Center" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding SourceView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid IsReadOnly="True" MouseDoubleClick="dg_MouseDoubleClick" ToolTip="Double Click/Ctrl+Enter=Lihat Detail SMU, Click Kanan=Menampilakn Menu "  Name="dg" HorizontalAlignment="Center" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding SourceView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn MinWidth="100" Header="Nomor SMU" Binding="{Binding Id,StringFormat=T{0:D9}}"/>
                             <DataGridTextColumn MinWidth="88" Header="Nomor PTI " Binding="{Binding PTIId,StringFormat={}{0:D6}}"/>

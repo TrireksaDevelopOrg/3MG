@@ -674,6 +674,7 @@
                               <Value>=Fields!PTIId.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>D6</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>

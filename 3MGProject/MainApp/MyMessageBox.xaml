@@ -13,12 +13,6 @@
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
         <TextBlock Margin="10"  VerticalAlignment="Center" TextWrapping="Wrap" Name="textMessage" />
-        <ListView HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0" ItemsSource="{Binding Buttons}" x:Name="btns" Background="{x:Null}" Grid.Row="1">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+        <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" x:Name="buttonPanel"></WrapPanel>
     </Grid>
 </Window>

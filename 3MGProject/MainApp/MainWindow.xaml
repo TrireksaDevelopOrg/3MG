@@ -95,7 +95,12 @@
                     </MenuItem.Header>
                 </MenuItem>
 
-                <MenuItem Padding="0" x:Name="manifest" Click="manifest_Click" Style="{StaticResource itemMenuStyle}">
+                <MenuItem Style="{StaticResource itemMenuStyle}">
+                    <MenuItem.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Background="{StaticResource clrSecound}"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </MenuItem.ItemsPanel>
                     <MenuItem.Header>
                         <Grid HorizontalAlignment="Right" Margin="3" Width="150">
                             <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
@@ -108,6 +113,35 @@
                             </Grid.Background>
                         </Grid>
                     </MenuItem.Header>
+                    <MenuItem x:Name="preSchedule" Click="preSchedule_Click" Style="{StaticResource itemMenuStyle}">
+                        <MenuItem.Header>
+                            <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                                <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                                <ContentPresenter Margin="5" Content="PRE SCHEDULE FLIGHT" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <Grid.Background>
+                                    <LinearGradientBrush Opacity="0.3">
+                                        <GradientStop Color="Blue" Offset="0.467"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Padding="0" x:Name="manifest" Click="manifest_Click" Style="{StaticResource itemMenuStyle}">
+                        <MenuItem.Header>
+                            <Grid HorizontalAlignment="Right" Margin="3" Width="150">
+                                <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
+                                <ContentPresenter Margin="5" Content="MANIFEST CARGO" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <Grid.Background>
+                                    <LinearGradientBrush Opacity="0.3">
+                                        <GradientStop Color="Blue" Offset="0.467"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                 
                 </MenuItem>
 
 

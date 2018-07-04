@@ -1,0 +1,86 @@
+﻿<Window x:Class="MainApp.Views.PreScheduleManifest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views" WindowState="Maximized"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}"
+        Title="PreScheduleManifest" Height="450" Width="800">
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="*"/>
+                <RowDefinition  Height="auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid KeyDown="dg_KeyDown" ToolTip="Double Click/Ctrl+Enter=detail PTI, Click Kanan=Menampilakn Menu " MouseDoubleClick="dg_MouseDoubleClick" HorizontalAlignment="Center" x:Name="dg" 
+                      ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSended}" Header="On SMU" MinWidth="60" Width="auto"/>
+                    <DataGridTextColumn  Binding="{Binding PTIId,StringFormat={}{0:D6}}" Header="PTI" MinWidth="100" Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Kemasan}" Header="Reciver" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Content}" Header="Reciver" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Pcs}" Header="Pcs" MinWidth="50" Width="auto" ElementStyle="{StaticResource RightCell}"/>
+                    <DataGridTextColumn Binding="{Binding Weight,StringFormat={}{0:N2}}" Header="Weight" MinWidth="75" ElementStyle="{StaticResource RightCell}"/>
+                    <DataGridTextColumn Binding="{Binding TotalWeight,StringFormat={}{0:N2}}" Header="Total Berat" MinWidth="75" ElementStyle="{StaticResource RightCell}"/>
+                    <DataGridTextColumn Binding="{Binding PayType}" Header="Jenis Pembayaran" Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding CreatedDate,StringFormat=dd MMMM yyyy HH:ss}" Header="Tanggal" MinWidth="110" />
+                     </DataGrid.Columns>
+
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                        <MenuItem Header="Sort" >
+                            <MenuItem  Height="auto">
+                                <MenuItem.Template>
+                                    <ControlTemplate>
+                                        <Grid Background="{StaticResource clrSecound}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Grid.Row="0" Content="Status"/>
+                                            <WrapPanel Margin="3,0" Grid.Row="1">
+                                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Aktif}"/>
+                                                <Label VerticalAlignment="Center" Content="OK"/>
+                                            </WrapPanel>
+                                            <WrapPanel Margin="3,0" Grid.Row="2" >
+                                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
+                                                <Label Content="Batal" VerticalAlignment="Center"/>
+
+                                            </WrapPanel>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </MenuItem.Template>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="PRINT" Command="{Binding PrintCommand}"/>
+                        <MenuItem Header="SPLIT ITEM PTI" Command="{Binding SplitCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel>
+                        <TextBlock FontSize="20" HorizontalAlignment="Left" Grid.Column="0" Text="{Binding TotalBerat,StringFormat={}Total Berat: {0:N2} Kg}" />
+                    </WrapPanel>
+                    <WrapPanel  HorizontalAlignment="Right" Grid.Column="1">
+                        <Button Content="Print" Command="{Binding PrintCommand}"/>
+                        <Button Content="Keluar" Command="{Binding CancelCommand}"/>
+                    </WrapPanel>
+                </Grid>
+            </Border>
+
+
+        </Grid>
+
+
+    </Border>
+</Window>

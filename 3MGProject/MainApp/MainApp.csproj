@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="CommandHandler.cs" />
     <Compile Include="DataAccessLayer\Bussines\DashboardBussines.cs" />
+    <Compile Include="FocusAdvancement.cs" />
     <Compile Include="HelperPrint.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IBusyBase.cs" />
@@ -120,6 +121,7 @@
       <DependentUpon>ReportContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="TextBoxEnterKeyUpdateBehavior.cs" />
     <Compile Include="Views\AddNewCity.xaml.cs">
       <DependentUpon>AddNewCity.xaml</DependentUpon>
     </Compile>
@@ -156,6 +158,9 @@
     <Compile Include="Views\BrowserCustomerDeposit.xaml.cs">
       <DependentUpon>BrowserCustomerDeposit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BrowseSMU.xaml.cs">
+      <DependentUpon>BrowseSMU.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
@@ -174,6 +179,9 @@
     <Compile Include="Views\ManivestView.xaml.cs">
       <DependentUpon>ManivestView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PreScheduleManifest.xaml.cs">
+      <DependentUpon>PreScheduleManifest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PTIView.xaml.cs">
       <DependentUpon>PTIView.xaml</DependentUpon>
     </Compile>
@@ -188,6 +196,9 @@
     </Compile>
     <Compile Include="Views\SMUView.xaml.cs">
       <DependentUpon>SMUView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplitItemPTI.xaml.cs">
+      <DependentUpon>SplitItemPTI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SplitSMUView.xaml.cs">
       <DependentUpon>SplitSMUView.xaml</DependentUpon>
@@ -291,6 +302,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BrowseSMU.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -315,6 +330,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PreScheduleManifest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PTIView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -332,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SMUView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplitItemPTI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -371,9 +394,9 @@
     <EmbeddedResource Include="Reports\Layouts\CargoTerangkut.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Kwitansi.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Penjualan.rdlc" />
+    <EmbeddedResource Include="Reports\Layouts\PreScheduleManifest.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\PTI.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\Rekening1.rdlc" />
-    <EmbeddedResource Include="Reports\Layouts\SMU.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\SuratMuatanUdara.rdlc" />
     <EmbeddedResource Include="Reports\Layouts\PreFlightManifest.rdlc" />
     <None Include=".editorconfig" />

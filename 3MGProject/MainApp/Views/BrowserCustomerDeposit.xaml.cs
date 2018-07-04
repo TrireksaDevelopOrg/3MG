@@ -42,6 +42,20 @@ namespace MainApp.Views
             viewmodel.Search = ((TextBox)sender).Text;
        
         }
+
+        private void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                if (viewmodel.SelectedCustomer != null)
+                {
+                    e.Handled = true;
+                    
+                    this.Close();
+                }
+                  
+            }
+        }
     }
 
 

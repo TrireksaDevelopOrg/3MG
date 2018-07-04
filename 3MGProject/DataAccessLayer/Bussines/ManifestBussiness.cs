@@ -108,6 +108,39 @@ namespace DataAccessLayer.Bussines
             }
         }
 
+        public void InsertNewSMU(Manifest manifest ,IEnumerable<SMU> enumerable)
+        {
+            using (var db = new OcphDbContext())
+            {
+                var trans = db.BeginTransaction();
+                try
+                {
+
+                    foreach(var item in enumerable)
+                    {
+                        if (db.ManifestDetail.Insert(new manifestdetails { manifestoutgoingId = manifest.Id, SMUId = item.Id }))
+                        {
+                            if (!db.SMU.Update(O => new { O.IsSended }, new smu { IsSended = false }, O => O.Id == item.Id))
+                                throw new SystemException("SMU Tidak Berhasil di tambah");
+                            var his = User.GenerateHistory(manifest.Id, BussinesType.Manifest, ChangeType.Update,
+                                string.Format("Tambah SMU T{0:D9}", item.Id));
+                            if (!db.Histories.Insert(his))
+                                throw new SystemException("SMU Tidak Berhasil di tambah");
+                        }
+                        else
+                            throw new SystemException("SMU Tidak Berhasil di tambah");
+                    }
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    throw new SystemException(ex.Message);
+                }
+            }
+        }
+
         public Task<List<SMU>> ManifestDetails(Manifest selected)
         {
             using (var db = new OcphDbContext())

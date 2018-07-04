@@ -144,6 +144,11 @@ namespace MainApp
            return MyMessage.Show(message, title, MessageBoxButton.OK);
         }
 
+        internal static MessageBoxResult ShowMessage(string message, string title, MessageBoxButton messageButton)
+        {
+            return MyMessage.Show(message, title, messageButton);
+        }
+
         public static void  ShowChild(Window parent, Window child)
         {
             child.Owner = parent;

@@ -101,17 +101,17 @@ namespace MainApp
             }
         }
 
-        internal void PrintDocument<T>(List<T> source, string layout, ReportParameter[] parameters)
+        internal void PrintDocument(List<ReportDataSource> sources, string layout, ReportParameter[] parameters)
         {
             LocalReport report = new LocalReport();
             report.ReportEmbeddedResource = layout;
-
-            var data = ToDataTable<T>(source);
          
             if (parameters != null)
                 report.SetParameters(parameters);
-            report.DataSources.Add(
-               new ReportDataSource("DataSet1", data));
+           foreach(var item in sources)
+            {
+                report.DataSources.Add(item);
+            }
             Export(report);
             Print();
         }

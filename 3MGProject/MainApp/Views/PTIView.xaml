@@ -45,7 +45,7 @@
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="{Binding GridWidth}"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid HorizontalAlignment="Center" x:Name="dg" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid ToolTip="Double Click/Ctrl+Enter=detail PTI, Click Kanan=Menampilakn Menu " MouseDoubleClick="dg_MouseDoubleClick" HorizontalAlignment="Center" x:Name="dg" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Id,StringFormat={}{0:D6}}" Header="Number" MinWidth="100" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
@@ -101,7 +101,7 @@
                                                         <Label></Label>
                                                         <WrapPanel Grid.Row="1">
                                                             <Label Content="Alasan Pembatalan"/>
-                                                            <TextBox Name="alasan" MinWidth="100" Width="auto"></TextBox>
+                                                            <TextBox Text="{Binding Alasan}" Name="alasan" MinWidth="100" Width="auto"></TextBox>
                                                         </WrapPanel>
                                                         <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding CancelPTI}" 
                                                         CommandParameter="{Binding Text, ElementName=alasan}" 
@@ -116,7 +116,7 @@
                             </DataGrid.ContextMenu>
                         </DataGrid>
                         <GridSplitter Grid.Column="1" HorizontalAlignment="Center" Width="5" />
-                        <DataGrid CommandManager.PreviewCanExecute="detailsDg_PreviewCanExecute" IsReadOnly="True"  MouseDoubleClick="detailsDg_MouseDoubleClick" Name="detailsDg" CellEditEnding="detailsDg_CellEditEnding" Grid.Column="2" RowEditEnding="DataGrid_RowEditEnding" HorizontalAlignment="Center" ItemsSource="{Binding SelectedPTI.Details}"  Margin="10,0,0,10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" >
+                        <DataGrid ToolTip="Double Click = Edit PTI" CommandManager.PreviewCanExecute="detailsDg_PreviewCanExecute" IsReadOnly="True"  MouseDoubleClick="detailsDg_MouseDoubleClick" Name="detailsDg" BeginningEdit="detailsDg_BeginningEdit" CellEditEnding="detailsDg_CellEditEnding" Grid.Column="2"  RowEditEnding="DataGrid_RowEditEnding" HorizontalAlignment="Center" ItemsSource="{Binding SelectedPTI.Details}"  Margin="10,0,0,10" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Content" Binding="{Binding Content}"/>
                                 <DataGridTextColumn MinWidth="70" Width="auto" Header="Kemasan" Binding="{Binding Kemasan}"/>

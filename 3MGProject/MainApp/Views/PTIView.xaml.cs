@@ -45,11 +45,19 @@ namespace MainApp.Views
         {
             detailsDg.IsReadOnly = true;
             collies selectedRow = e.Row.DataContext as collies;
+  
+
+          //  detailsDg.CommitEdit(DataGridEditingUnit.Row, false);
+
             if (e.EditAction== DataGridEditAction.Commit)
             {
                // detailsDg.CommitEdit( DataGridEditingUnit.Row, false);
                if(selectedRow!=null)
-                vm.UpdateItemCollies(selectedRow);
+                {
+                    if(vm.UpdateItemCollies(selectedRow)==null)
+                        detailsDg.CommitEdit( DataGridEditingUnit.Row, false);
+                }
+               
             }
 
             if(e.Row.IsNewItem)
@@ -101,6 +109,8 @@ namespace MainApp.Views
                     var item = Convert.ToDouble(control.Text);
                     colly.Price = item;
                 }
+               
+
             }
            
         }
@@ -144,6 +154,28 @@ namespace MainApp.Views
                 }
             }
          }
+
+        private void dg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            vm = (PTIViewModel)DataContext;
+            DataGrid dg = (DataGrid)sender;
+            var item = (PTI)dg.SelectedItem;
+            if (item != null)
+                vm.ShowDetails(item);
+        }
+
+        private void detailsDg_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            collies selectedRow = e.Row.DataContext as collies;
+            if (vm.ItemIsSended(selectedRow))
+            {
+                e.Cancel = true;
+                e.EditingEventArgs.Handled = false;
+                //.EditingElement.Focusable = false;
+                (sender as DataGrid).CancelEdit(DataGridEditingUnit.Cell);
+            }
+          
+        }
     }
 
     public class PTIViewModel : Authorization,IBusyBase
@@ -230,11 +262,13 @@ namespace MainApp.Views
 
         private bool CancelPTIValidate(object obj)
         {
-            if (ptiContext.IsInRole("Manager").Result)
+            if (ptiContext.IsInRole("Manager").Result && SelectedPTI!=null)
                 return true;
             else
                 return false;
         }
+
+
 
         private void CancelPTIAction(object obj)
         {
@@ -248,6 +282,9 @@ namespace MainApp.Views
                 {
                     ptiContext.SetCancelPTI(SelectedPTI, obj.ToString());
                     Helpers.ShowMessage(string.Format("PTI NO {0:d6} Berhasil Dibatalkan", SelectedPTI.Id));
+                    Alasan = string.Empty;
+                    SelectedPTI = null;
+                    RefreshCommand.Execute(null);
                 }
   
             }
@@ -289,17 +326,17 @@ namespace MainApp.Views
                         SelectedPTI.Details.Add(item);
                     }
 
-                    ReportParameter[] parameters =
-                    {
-                        new ReportParameter("Petugas",SelectedPTI.User),
-                        new ReportParameter("Nomor",SelectedPTI.Id.ToString()),
-                        new ReportParameter("Pengirim",SelectedPTI.ShiperName),
-                        new ReportParameter("AlamatPengirim",string.Format("{0}\r Hanphone :{1}",SelectedPTI.RecieverAddress,SelectedPTI.RecieverHandphone)),
-                        new ReportParameter("Penerima",SelectedPTI.RecieverName),
-                        new ReportParameter("AlamatPenerima",string.Format("{0}\r Hanphone :{1}",SelectedPTI.RecieverAddress,SelectedPTI.RecieverHandphone)),
-                        new ReportParameter("Tanggal",SelectedPTI.CreatedDate.ToShortDateString())};
 
-                    print.PrintDocument(SelectedPTI.Details.ToList(), "MainApp.Reports.Layouts.PTI.rdlc", parameters);
+                    var header = new ReportDataSource()
+                    {
+                        Value = print.ToDataTable<PTI>(new List<PTI> { SelectedPTI }),
+                        Name = "Header"
+                    };
+
+                    var source = new ReportDataSource() { Name = "Detail", Value = print.ToDataTable<collies>(SelectedPTI.Details.ToList()) };
+                    var datasources = new List<ReportDataSource>() { header, source };
+                    
+                    print.PrintDocument(datasources, "MainApp.Reports.Layouts.PTI.rdlc", null);
                 }
             }
         }
@@ -349,27 +386,9 @@ namespace MainApp.Views
                     return;
 
                 IsBusy = true;
-                var form = new Views.AddNewPTI();
+                var form = new Views.AddNewPTI(Source);
                 Helpers.ShowChild(WindowParent, form);
         
-                var vm = (AddNewPTIViewModel)form.DataContext;
-                if (vm.Saved)
-                {
-                    PTI p = new PTI
-                    {
-                         ShiperID=vm.ShiperID, RecieverId=vm.RecieverId,
-                        CreatedDate = vm.CreatedDate,
-                        Id = vm.Id,
-                        PayType = vm.PayType,
-                        Pcs = vm.Collies.Sum(O => O.Pcs),
-                        Weight = vm.Collies.Sum(O => O.Weight),
-                        RecieverName = vm.Reciever.Name,
-                        ShiperName = vm.Shiper.Name,
-                        Biaya = vm.Collies.Sum(O => O.Biaya),
-                        User = Authorization.User.Name
-                    };
-                    Source.Add(p);
-                }
                 SourceView.Refresh();
             }
             catch (Exception ex)
@@ -416,10 +435,13 @@ namespace MainApp.Views
         {
             try
             {
-                return ptiContext.UpdateCollies(colly);
+                var res=ptiContext.UpdateCollies(colly);
+                LoadData(StartDate, EndDate);
+                return res;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Helpers.ShowErrorMessage(ex.Message);
                 return null;
             }
         }
@@ -446,8 +468,10 @@ namespace MainApp.Views
                 selectedRow.Price > 0)
                 {
                     selectedRow.PtiId = SelectedPTI.Id;
-                    ptiContext.AddNewCollyItem(selectedRow);
+                    ptiContext.AddNewCollyItem(SelectedPTI, selectedRow);
+                    SelectedPTI.OnSMU = false;
                     SelectedPTI.Details.Add(selectedRow);
+                    RefreshCommand.Execute(null);
                 }
                 else
                     throw new SystemException("Lengkapi Data dengan Benar");
@@ -477,6 +501,16 @@ namespace MainApp.Views
                     Helpers.ShowErrorMessage(ex.Message);
                 }
             }
+        }
+
+        internal bool ItemIsSended(collies selectedRow)
+        {
+            if (ptiContext.ItemColliIsSended(selectedRow))
+            {
+                Helpers.ShowErrorMessage("Item Telah Terkirim, Data Tidak Dapat Diubah");
+                return true;
+            }
+            return false;
         }
 
         private GridLength myHorizontalInputRegionSize = new GridLength(0, GridUnitType.Pixel);
@@ -517,5 +551,14 @@ namespace MainApp.Views
                 SourceView.Refresh();
             }
         }
+
+        private string alasan;
+
+        public string Alasan
+        {
+            get { return alasan; }
+            set { SetProperty(ref alasan ,value); }
+        }
+
     }
 }

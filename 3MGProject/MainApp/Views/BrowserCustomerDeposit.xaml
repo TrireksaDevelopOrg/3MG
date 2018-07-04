@@ -12,14 +12,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Border Style="{DynamicResource BorderLayoutStyle}">
-            <WrapPanel Margin="5">
-                <Label MinWidth="30" Content="Cari"/>
-                <TextBox Width="200" TextChanged="TextBox_TextChanged" Text="{Binding Search}"></TextBox>
-            </WrapPanel>
-        </Border>
         <Border Grid.Row="1"  Style="{DynamicResource BorderLayoutStyle}">
-            <DataGrid Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" TouchEnter="DataGrid_TouchEnter" SelectedItem="{Binding SelectedCustomer}">
+            <DataGrid Margin="5" TabIndex="0" PreviewKeyDown="DataGrid_PreviewKeyDown" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding SourceView}" TouchEnter="DataGrid_TouchEnter" SelectedItem="{Binding SelectedCustomer}">
                 <DataGrid.Columns>
                     <DataGridTextColumn MinWidth="50" Header="Nama" Width="auto" Binding="{Binding Id,StringFormat={}{0:D6}}"/>
                     <DataGridTextColumn MinWidth="150" Header="Nama" Width="*" Binding="{Binding Name}"/>
@@ -28,6 +22,13 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
+        <Border Style="{DynamicResource BorderLayoutStyle}">
+            <WrapPanel Margin="5">
+                <Label MinWidth="30" Content="Cari"/>
+                <TextBox Width="200" TextChanged="TextBox_TextChanged" Text="{Binding Search}"></TextBox>
+            </WrapPanel>
+        </Border>
+     
         <Border Grid.Row="2" Style="{DynamicResource BorderLayoutStyle}">
             <WrapPanel HorizontalAlignment="Right">
                 <Button Content="Pilih" Command="{Binding SelectedCommand}"></Button>
