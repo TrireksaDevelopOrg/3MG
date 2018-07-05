@@ -319,7 +319,7 @@ namespace MainApp.Views
             }
 
             result.Add(new Saldo { Tanggal = DateTime.Now, SaldoAkhir = saldo, Description = "Saldo Akhir" });
-            var source = new ReportDataSource { Value = result };
+            var source = new ReportDataSource { Value = result.ToList() };
             Helpers.PrintPreviewWithFormAction("Print Preview",source, "MainApp.Reports.Layouts.Rekening1.rdlc", parameters);
         }
         private DateTime selectedDate;

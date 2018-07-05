@@ -43,7 +43,7 @@ namespace MainApp.Views
 
         private bool SaveValidate(object obj)
         {
-            if (Jumlah >= 0 && Jumlah < SelectedItemPTI.Pcs)
+            if (Jumlah > 0 && Jumlah < SelectedItemPTI.Pcs)
                 return true;
             return false;
         }
@@ -57,8 +57,11 @@ namespace MainApp.Views
                 {
                     SelectedItemPTI.Pcs = SelectedItemPTI.Pcs - Jumlah;
                     NewItem = SelectedItemPTI.GetClone();
+                    NewItem.ColliesId = newitem.Id;
                     NewItem.Pcs = Jumlah;
                     Success = true;
+                    Helpers.ShowMessage("Data Berhasil DiSplit");
+                    WindowClose();
                 }
             }
             catch (Exception ex)
@@ -72,7 +75,7 @@ namespace MainApp.Views
 
         public PreFligtManifest SelectedItemPTI { get; }
         public ObservableCollection<PreFligtManifest> SourceView { get; }
-        public CommandHandler SaveCommand { get; }
+        public CommandHandler SaveCommand { get; set;}
         public CommandHandler CancelCommand { get; private set; }
         public Action WindowClose { get; set; }
 

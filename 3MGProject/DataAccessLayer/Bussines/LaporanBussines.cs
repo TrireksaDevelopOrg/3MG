@@ -21,7 +21,7 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     var cmd = db.CreateCommand();
-                    cmd.CommandText = "Penjualan";
+                    cmd.CommandText = "PenjualanByPTI";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.Add(new MySqlParameter("Dari", start));
                     cmd.Parameters.Add(new MySqlParameter("Sampai", end));

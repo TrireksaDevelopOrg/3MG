@@ -116,23 +116,44 @@ namespace DataAccessLayer.Bussines
                 {
                     if (User.CanAccess(MethodBase.GetCurrentMethod()))
                     {
-                        model.Id = db.Schedules.InsertAndGetLastID(model);
-                        if (model.Id > 0)
+                        if(model.Id<=0)
                         {
-
-                            var history = User.GenerateHistory(model.Id, BussinesType.Schedule, ChangeType.Create, "");
-                            if (db.Histories.Insert(history))
+                            model.Id = db.Schedules.InsertAndGetLastID(model);
+                            if (model.Id > 0)
                             {
-                                trans.Commit();
-                                model.User = User.Name;
-                                return Task.FromResult(model);
+
+                                var history = User.GenerateHistory(model.Id, BussinesType.Schedule, ChangeType.Create, "");
+                                if (db.Histories.Insert(history))
+                                {
+                                    trans.Commit();
+                                    model.User = User.Name;
+                                    return Task.FromResult(model);
+                                }
+
+                                else
+                                    throw new SystemException("Data Tidak Tersimpan");
                             }
-                               
+                            else
+                                throw new SystemException("Data Tidak Tersimpan");
+                        }else
+                        {
+                            if (db.Schedules.Update(O=>new {O.Capacities,O.Complete,O.End,O.Start,O.FlightNumber,O.PlaneId,O.PortFrom,O.PortTo,O.Tanggal},model,O=>O.Id==model.Id))
+                            {
+
+                                var history = User.GenerateHistory(model.Id, BussinesType.Schedule, ChangeType.Update, "");
+                                if (db.Histories.Insert(history))
+                                {
+                                    trans.Commit();
+                                    model.User = User.Name;
+                                    return Task.FromResult(model);
+                                }
+
+                                else
+                                    throw new SystemException("Data Tidak Tersimpan");
+                            }
                             else
                                 throw new SystemException("Data Tidak Tersimpan");
                         }
-                        else
-                            throw new SystemException("Data Tidak Tersimpan");
                       } else
                         throw new SystemException(NotHaveAccess);
 ;                   

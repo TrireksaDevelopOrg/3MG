@@ -27,12 +27,12 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Total Berat"/>
-                    <TextBox IsReadOnly="True" Text="{Binding Total}" Width="108"></TextBox>
+                    <TextBox IsReadOnly="True" HorizontalAlignment="Right" Text="{Binding Total,StringFormat={}{0:N2}}" Width="108"></TextBox>
                 </StackPanel>
              
                 <StackPanel>
-                    <Label Content="Coli"/>
-                    <TextBox IsReadOnly="True" Text="{Binding Biaya}" Width="146"></TextBox>
+                    <Label Content="Biaya"/>
+                    <TextBox IsReadOnly="True" HorizontalAlignment="Right" Text="{Binding Biaya,StringFormat={}{0:N2}}" Width="146"></TextBox>
                 </StackPanel>
             </WrapPanel>
 
@@ -40,8 +40,8 @@
 
         <StackPanel Grid.Row="1">
             <WrapPanel Margin="10" HorizontalAlignment="Right">
-                <Button Content="OK"/>
-                <Button Content="Batal"/>
+                <Button Command="{Binding SaveCommand}" Content="OK"/>
+                <Button Command="{Binding CancelCommand}" Content="Batal"/>
             </WrapPanel>
         </StackPanel>
 

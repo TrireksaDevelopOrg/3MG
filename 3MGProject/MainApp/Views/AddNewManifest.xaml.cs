@@ -57,6 +57,7 @@ namespace MainApp.Views
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
             CancelCommand = new CommandHandler { CanExecuteAction =x=>true, ExecuteAction =x=> WindowClose()};
             SplitCommand = new CommandHandler { CanExecuteAction = SplitValidate, ExecuteAction = SplitAction };
+            AddNewSchedule = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = addNewScheduleAction };
 
             Source = new ObservableCollection<SMU>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
@@ -65,6 +66,19 @@ namespace MainApp.Views
             SourceView.Refresh();
             LoadData();
             IsNew = true;
+        }
+
+        private void addNewScheduleAction(object obj)
+        {
+            var form = new Views.AddNewSchecule();
+            form.ShowDialog();
+            var vm = form.DataContext as AddNewScheduleViewModel;
+            if(vm.Success && vm.SchedulteCreated!=null)
+            {
+                SourceSchedules.Add(vm.SchedulteCreated);
+                ScheduleSelected = vm.SchedulteCreated;
+
+            }
         }
 
         private  void SplitAction(object obj)
@@ -264,6 +278,7 @@ namespace MainApp.Views
         public CommandHandler SaveCommand { get; }
         public CommandHandler CancelCommand { get; }
         public CommandHandler SplitCommand { get; }
+        public CommandHandler AddNewSchedule { get; }
         public ObservableCollection<SMU> Source { get; }
         public CollectionView SourceView { get; }
         public ObservableCollection<Schedule> SourceSchedules { get; }

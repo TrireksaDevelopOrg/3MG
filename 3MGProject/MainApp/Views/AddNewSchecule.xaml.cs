@@ -25,13 +25,19 @@ namespace MainApp.Views
     /// </summary>
     public partial class AddNewSchecule : Window
     {
+      
+
         public AddNewSchecule()
         {
             InitializeComponent();
             this.DataContext = new AddNewScheduleViewModel() { WindowClose = Close };
         }
 
-
+        public AddNewSchecule(Schedule selectedSchedule)
+        {
+            InitializeComponent();
+            this.DataContext = new AddNewScheduleViewModel(selectedSchedule) { WindowClose = Close };
+        }
     }
 
     public class AddNewScheduleViewModel : schedules,IDataErrorInfo
@@ -41,11 +47,17 @@ namespace MainApp.Views
         private planes _planeSelected;
         private ports _destiSelected;
         private ports _originSelected;
+        private Schedule selectedSchedule;
 
         public AddNewScheduleViewModel()
         {
+            Load();
+        }
+
+        private void Load()
+        {
             SaveCommand = new CommandHandler { CanExecuteAction = SaveValidate, ExecuteAction = SaveAction };
-            CancelCommand = new CommandHandler { CanExecuteAction =x=>true, ExecuteAction =x=> WindowClose()};
+            CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
             AddNewPortCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewPortAction };
             AddNewPlaneCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddPlaneAction };
             Planes = new ObservableCollection<planes>();
@@ -55,6 +67,24 @@ namespace MainApp.Views
             Destinations = (CollectionView)CollectionViewSource.GetDefaultView(Ports);
             Origins = (CollectionView)CollectionViewSource.GetDefaultView(Ports);
             LoadData();
+        }
+
+        public AddNewScheduleViewModel(Schedule selectedSchedule)
+        {
+            MyTitle = "Edit Schedule";
+            this.selectedSchedule = selectedSchedule;
+            Load();
+            this.Id = selectedSchedule.Id;
+            
+            this.Tanggal = selectedSchedule.Tanggal;
+            this.Start = selectedSchedule.Start;
+            this.End = selectedSchedule.End;
+            this.PlaneId = selectedSchedule.PlaneId;
+            this.PortFrom = selectedSchedule.PortFrom;
+            this.PortTo = selectedSchedule.PortTo;
+            this.Capacities = selectedSchedule.Capasities;
+            this.CreatedDate = selectedSchedule.CreatedDate;
+            this.FlightNumber = selectedSchedule.FlightNumber;
         }
 
         private void AddNewPortAction(object obj)
@@ -87,7 +117,9 @@ namespace MainApp.Views
             try
             {
                 schedules model = (schedules)this;
+
                var result= await context.AddNewSchedule(model);
+
                 if(result!=null)
                 {
                     var newSchedule = new Schedule
@@ -167,16 +199,16 @@ namespace MainApp.Views
 
         }
 
-        public CommandHandler SaveCommand { get; }
-        public CommandHandler CancelCommand { get; }
+        public CommandHandler SaveCommand { get; set; }
+        public CommandHandler CancelCommand { get; set; }
 
-        public CommandHandler AddNewPortCommand { get; }
-        public CommandHandler AddNewPlaneCommand { get; }
-        public ObservableCollection<planes> Planes { get; }
-        public ObservableCollection<ports> Ports { get; }
-        public CollectionView PlanesView { get; }
-        public CollectionView Destinations { get; }
-        public CollectionView Origins { get; }
+        public CommandHandler AddNewPortCommand { get; set; }
+        public CommandHandler AddNewPlaneCommand { get; set; }
+        public ObservableCollection<planes> Planes { get; set; }
+        public ObservableCollection<ports> Ports { get; set; }
+        public CollectionView PlanesView { get; set; }
+        public CollectionView Destinations { get; set; }
+        public CollectionView Origins { get; set; }
         public Action WindowClose { get; internal set; }
         public bool Success { get; internal set; }
 

@@ -4,6 +4,7 @@ using Ocph.DAL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,9 +65,10 @@ namespace MainApp.Views
             PrintCommand = new CommandHandler { CanExecuteAction = x => TotalBerat > 0, ExecuteAction = PrintActiont };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
 
-
+           
             Source = new ObservableCollection<PreFligtManifest>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
+            SourceView.SortDescriptions.Add(new SortDescription("PTIID", ListSortDirection.Ascending));
             RefreshCommand.Execute(null);
             
         }

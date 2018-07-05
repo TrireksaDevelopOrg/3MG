@@ -11,13 +11,22 @@ namespace DataAccessLayer.Models
     {
         private double _totalWeight;
         private bool _isSended;
+        private int _pcs;
 
         public int Id { get; set; }
         public int SMUId { get; set; }
         public int PTIId { get; set; }
         public int ColliesId { get; set; }
         public string Content { get; set; }
-        public int Pcs { get; set; }
+        public int Pcs {
+            get { return _pcs; }
+            set
+            {
+                SetProperty(ref _pcs, value);
+                TotalWeight = value * Weight;
+            }
+
+        }
         public double Weight { get; set; }
         public double Price { get; set; }
         public string Kemasan { get; set; }

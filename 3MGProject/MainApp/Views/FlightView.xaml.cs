@@ -53,10 +53,26 @@ namespace MainApp.Views
             MyTitle = "FLIGHT SCHEDULE";
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
             AddNewJadwal = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewJadwalAction };
+            EditScheduleCommand = new CommandHandler { CanExecuteAction = x => SelectedSchedule != null, ExecuteAction = EditSchedule };
             Source = new ObservableCollection<Schedule>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
             date = DateTime.Now;
             LoadData(date);
+        }
+
+        private void EditSchedule(object obj)
+        {
+            var form = new Views.AddNewSchecule(SelectedSchedule);
+            form.ShowDialog();
+            var vm = (AddNewScheduleViewModel)form.DataContext;
+            if (vm.Success && vm.SchedulteCreated != null)
+            {
+                SelectedSchedule.FlightNumber = vm.SchedulteCreated.FlightNumber;
+                SelectedSchedule.Capasities = vm.SchedulteCreated.Capasities;
+                SelectedSchedule.Start = vm.SchedulteCreated.Start;
+                SelectedSchedule.End = vm.SchedulteCreated.End;
+            }
+            SourceView.Refresh();
         }
 
         public async void LoadData(DateTime date)
@@ -80,6 +96,7 @@ namespace MainApp.Views
 
         public CommandHandler CancelCommand { get; }
         public CommandHandler AddNewJadwal { get; }
+        public CommandHandler EditScheduleCommand { get; }
         public ObservableCollection<Schedule> Source { get; }
         public CollectionView SourceView { get; }
         public Action WindowClose { get; internal set; }
@@ -95,5 +112,14 @@ namespace MainApp.Views
             }
             SourceView.Refresh();
         }
+
+        private Schedule selectedSchedule;
+
+        public Schedule SelectedSchedule
+        {
+            get { return selectedSchedule; }
+            set { SetProperty(ref selectedSchedule ,value); }
+        }
+
     }
 }
