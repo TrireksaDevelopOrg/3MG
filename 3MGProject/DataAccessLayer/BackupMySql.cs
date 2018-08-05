@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-
     public delegate void delMessage (string message);
     public delegate void delOnComplete(string message);
 
@@ -86,6 +85,30 @@ namespace DataAccessLayer
         {
             get { return tableName; }
             set { SetProperty(ref tableName, value); }
+        }
+
+
+        public Task<bool> NormalizationCollySender()
+        {
+            using (var db = new OcphDbContext())
+            {
+                try
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "NormalisasiCollies";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    var reader = cmd.ExecuteNonQuery();
+                    if (reader > 0)
+                        return Task.FromResult(true);
+                    else
+                        return Task.FromResult(false);
+                }
+                catch (Exception ex)
+                {
+                    OnError?.Invoke(ex.Message);
+                    return Task.FromResult(false);
+                }
+            }
         }
 
 

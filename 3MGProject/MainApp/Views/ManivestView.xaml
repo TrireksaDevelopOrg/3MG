@@ -53,15 +53,14 @@
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
-                                <MenuItem Header="Manifest Print Preview" Command="{Binding PrintPreviewCommand}"/>
-                                <MenuItem Header="Pre Flight Manifest Print Preview" Command="{Binding PreFlightPrintPreviewCommand}"/>
-                                <MenuItem Header="Print" Command="{Binding PrintCommand}"/>
+                                <Separator></Separator>
+                                <MenuItem Header="Edit Schedule" Command="{Binding EditScheduleCommand}"></MenuItem>
                                 <MenuItem Header="Set Pesawat Berangkat" Command="{Binding SetTakeOFF}"/>
-                                <MenuItem Height="auto" Header="Sort">
-                                    <MenuItem Height="auto" Header="Sort">
+                                <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Sort">
+                                    <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Sort">
                                         <MenuItem.Template>
                                             <ControlTemplate>
-                                                <Grid Margin="30,3">
+                                                <Grid Background="{StaticResource clrSecound}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="auto"/>
                                                         <RowDefinition Height="auto"/>
@@ -82,11 +81,16 @@
                                         </MenuItem.Template>
                                     </MenuItem>
                                 </MenuItem>
-                                <MenuItem Header="Batalkan Manifes" Command="{Binding CreateManifest}">
+                                <Separator></Separator>
+                                <MenuItem Header="Manifest Print Preview" Command="{Binding PrintPreviewCommand}"/>
+                                <MenuItem Header="Pre Flight Manifest Print Preview" Command="{Binding PreFlightPrintPreviewCommand}"/>
+                                <MenuItem Header="Print" Command="{Binding PrintCommand}"/>
+                                <Separator></Separator>
+                                <MenuItem Style="{StaticResource subMenuStyle}" Header="Batalkan Manifes" Command="{Binding CreateManifest}">
                                     <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Alasan">
                                         <MenuItem.Template>
                                             <ControlTemplate>
-                                                <Grid Margin="25,3" Background="{StaticResource clrSecound}">
+                                                <Grid Background="{StaticResource clrSecound}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="auto"/>
                                                         <RowDefinition Height="auto"/>

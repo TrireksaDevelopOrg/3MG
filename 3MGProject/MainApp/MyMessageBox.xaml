@@ -10,9 +10,12 @@
     <Grid Height="auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
-        <TextBlock Margin="10"  VerticalAlignment="Center" TextWrapping="Wrap" Name="textMessage" />
-        <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" x:Name="buttonPanel"></WrapPanel>
+        <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" x:Name="buttonPanel"></WrapPanel>
+        <TextBlock Margin="10" Grid.Row="0" VerticalAlignment="Center" TextWrapping="Wrap" Name="textMessage" />
+        <StackPanel Name="customPanel" Grid.Row="1"/>
+      
     </Grid>
 </Window>

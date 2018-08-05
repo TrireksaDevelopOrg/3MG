@@ -220,6 +220,7 @@ namespace MainApp.Views
         public CommandHandler AddNewPTICommand { get; }
         public CommandHandler CancelCommand { get; }
         public CommandHandler CreateSMU { get; }
+        public CommandHandler HistoryCommand { get; }
         public CommandHandler RefreshCommand { get; }
         public CommandHandler PrintPreviewhCommand { get; }
         public CommandHandler CancelPTI { get; }
@@ -237,6 +238,7 @@ namespace MainApp.Views
             AddNewPTICommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewPTIAction };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction =x=>WindowClose()};
             CreateSMU = new CommandHandler { CanExecuteAction = CreateSMUValidate, ExecuteAction = CreateSMUAction };
+            HistoryCommand = new CommandHandler { CanExecuteAction = x => SelectedPTI != null, ExecuteAction = HistoryCommandAction };
             var date = DateTime.Now;
             startDate = new DateTime(date.Year, date.Month, 1,date.Hour,date.Minute,date.Second);
             endDate = startDate.AddMonths(1).AddDays(-1);
@@ -248,15 +250,29 @@ namespace MainApp.Views
             RefreshCommand.Execute(null);
         }
 
+        private async void HistoryCommandAction(object obj)
+        {
+            var domain = new HistoryDomain();
+            var list = await domain.GetPTIHistory(SelectedPTI);
+            if (list != null)
+            {
+                var form = new Views.HistoryView(list, "PTI HISTORIES");
+                form.ShowDialog();
+            }
+        }
+
         private bool DataFilter(object obj)
         {
             var data = (PTI)obj;
-            if (data != null && data.ActiveStatus == DataAccessLayer.ActivedStatus.OK && this.Aktif)
-                return true;
-            if (data != null && data.ActiveStatus == DataAccessLayer.ActivedStatus.Cancel && this.Batal)
-                return true;
 
-            return false;
+            if (data != null && data.ActiveStatus != DataAccessLayer.ActivedStatus.OK && this.Aktif)
+                return false;
+            if (data != null && data.ActiveStatus != DataAccessLayer.ActivedStatus.Cancel && this.Batal)
+                return false;
+            if (data != null && this.NotOnSMU && data.OnSMU)
+                return false;
+
+            return true;
         }
 
 
@@ -280,6 +296,7 @@ namespace MainApp.Views
                     Helpers.ShowErrorMessage(string.Format("PTI NO {0:D6} Telah Berstatus Batal", SelectedPTI.Id));
                 else
                 {
+
                     ptiContext.SetCancelPTI(SelectedPTI, obj.ToString());
                     Helpers.ShowMessage(string.Format("PTI NO {0:d6} Berhasil Dibatalkan", SelectedPTI.Id));
                     Alasan = string.Empty;
@@ -552,7 +569,20 @@ namespace MainApp.Views
             }
         }
 
+
+        public bool NotOnSMU
+        {
+            get { return _notOnSMU; }
+            set
+            {
+                SetProperty(ref _notOnSMU, value);
+                SourceView.Refresh();
+            }
+        }
+
+
         private string alasan;
+        private bool _notOnSMU;
 
         public string Alasan
         {

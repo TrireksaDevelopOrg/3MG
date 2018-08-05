@@ -999,7 +999,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Price.Value</Value>
+                              <Value>=Fields!Price.Value-(Fields!Price.Value*0.1)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>n2</Format>
@@ -1054,7 +1054,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Biaya.Value</Value>
+                              <Value>=Fields!Biaya.Value-(Fields!Biaya.Value*0.1)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>n2</Format>
@@ -1516,7 +1516,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Biaya.Value)</Value>
+                              <Value>=Sum(Fields!Biaya.Value-(Fields!Biaya.Value*0.1))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1828,7 +1828,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Biaya.Value, "Details")*(10/100)</Value>
+                              <Value>=Sum(Fields!Biaya.Value*0.1)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2081,7 +2081,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Biaya.Value, "Details") +(Sum(Fields!Biaya.Value, "Details") * (10 / 100))</Value>
+                              <Value>=Sum(Fields!Biaya.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>

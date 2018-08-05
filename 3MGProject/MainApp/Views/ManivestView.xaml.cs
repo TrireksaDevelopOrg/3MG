@@ -141,6 +141,10 @@ namespace MainApp.Views
             CancelManifest = new CommandHandler { CanExecuteAction = Cancelmanifest, ExecuteAction = CancelManifestAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshAction };
             AddNewManifestCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = AddNewManifestAction };
+
+            EditScheduleCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = EditScheduleAction };
+
+
             PreFlightPrintPreviewCommand = new CommandHandler { CanExecuteAction = x => ManifestSelected != null, ExecuteAction = PreFlightPrintPreviewAction };
             SetTakeOFF = new CommandHandler { CanExecuteAction = SetTakeOFFValidate, ExecuteAction = SetTakOFFAction };
             InsertNewSMUCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = InsertNewSMUAction };
@@ -153,6 +157,33 @@ namespace MainApp.Views
             Aktif = true;
             Batal = false;
             LoadData(startDate,endDate);
+        }
+
+        [Authorize("Manager")]
+        private async void EditScheduleAction(object obj)
+        {
+            try
+            {
+                ScheduleBussines scheduleContext = new ScheduleBussines();
+                var schedules = await scheduleContext.GetScheduleById(ManifestSelected.SchedulesId);
+                if (schedules != null)
+                {
+                    var form = new Views.AddNewSchecule(schedules);
+                    form.ShowDialog();
+                    var vm = (AddNewScheduleViewModel)form.DataContext;
+                    if (vm.Success && vm.SchedulteCreated != null)
+                    {
+                        ManifestSelected.PlaneName = vm.SchedulteCreated.PlaneName;
+                        ManifestSelected.Tanggal = vm.SchedulteCreated.Tanggal;
+                    }
+                    SourceView.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                Helpers.ShowErrorMessage(ex.Message);
+            }
+            
         }
 
         [Authorize("Manager")]
@@ -380,6 +411,7 @@ namespace MainApp.Views
         public CommandHandler CancelManifest { get; }
         public CommandHandler RefreshCommand { get; }
         public CommandHandler AddNewManifestCommand { get; }
+        public CommandHandler EditScheduleCommand { get; }
         public CommandHandler PreFlightPrintPreviewCommand { get; }
         public CommandHandler SetTakeOFF { get; }
         public CommandHandler InsertNewSMUCommand { get; }

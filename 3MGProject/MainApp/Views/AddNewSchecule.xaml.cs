@@ -52,6 +52,7 @@ namespace MainApp.Views
         public AddNewScheduleViewModel()
         {
             Load();
+            Tanggal = DateTime.Now;
         }
 
         private void Load()
@@ -83,8 +84,15 @@ namespace MainApp.Views
             this.PortFrom = selectedSchedule.PortFrom;
             this.PortTo = selectedSchedule.PortTo;
             this.Capacities = selectedSchedule.Capasities;
-            this.CreatedDate = selectedSchedule.CreatedDate;
-            this.FlightNumber = selectedSchedule.FlightNumber;
+            this.CreatedDate = Tanggal;
+            SetFligtNumber(selectedSchedule.FlightNumber);
+           // this.FlightNumber = selectedSchedule.FlightNumber;
+        }
+
+        private async void SetFligtNumber(string flightNumber)
+        {
+            await Task.Delay(1000);
+            FlightNumber = flightNumber;
         }
 
         private void AddNewPortAction(object obj)

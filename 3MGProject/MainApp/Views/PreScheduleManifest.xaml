@@ -16,7 +16,7 @@
                       ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{Binding IsSended}" Header="On SMU" MinWidth="60" Width="auto"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="" MinWidth="60" Width="auto"/>
                     <DataGridTextColumn  Binding="{Binding PTIId,StringFormat={}{0:D6}}" Header="PTI" MinWidth="100" Width="auto"/>
                     <DataGridTextColumn Binding="{Binding ShiperName}" Header="Shiper" Width="*"/>
                     <DataGridTextColumn Binding="{Binding RecieverName}" Header="Reciver" Width="*" />

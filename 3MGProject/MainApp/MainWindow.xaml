@@ -159,7 +159,7 @@
                         </Grid>
                     </MenuItem.Header>
                 </MenuItem>
-                <MenuItem Padding="0" x:Name="schedule" Click="schedule_Click" Style="{StaticResource itemMenuStyle}">
+                <!--MenuItem Padding="0" x:Name="schedule" Click="schedule_Click" Style="{StaticResource itemMenuStyle}">
                     <MenuItem.Header>
                         <Grid HorizontalAlignment="Right" Margin="3" Width="150">
                             <Image  Opacity="0.1" Stretch="Uniform" Source="Images/package.png"/>
@@ -172,7 +172,7 @@
                             </Grid.Background>
                         </Grid>
                     </MenuItem.Header>
-                </MenuItem>
+                </-->
                 <MenuItem Padding="0" x:Name="LAPORAN" Click="laporan_Click" Style="{StaticResource itemMenuStyle}">
                     <MenuItem.Header>
                         <Grid HorizontalAlignment="Right" Margin="3" Width="150">

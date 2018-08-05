@@ -1799,7 +1799,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=First(Fields!CreatedDate.Value, "DataSet1")</Value>
+                  <Value>=First(Fields!Tanggal.Value, "DataSet1")</Value>
                   <Style>
                     <FontFamily>arial</FontFamily>
                     <FontWeight>Bold</FontWeight>

@@ -169,8 +169,8 @@ namespace DataAccessLayer.Bussines
                         {
                             Description = string.Format("SMU T{0:D9}",item.Id),
                             Debet = item.Biaya, SMUId=item.Id,
-                            Tanggal = item.CreatedDate,  Biaya=item.Biaya, CreatedDate=item.CreatedDate, ManifestId=item.ManifestId,
-                              Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName, Total=item.Total, Weight=item.Weight
+                            Tanggal = item.CreatedDate,  Biaya=item.Biaya-(item.Biaya*0.1), CreatedDate=item.CreatedDate, ManifestId=item.ManifestId,
+                              Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName, Total=item.Biaya, Weight=item.Weight
                         });
                     }
 

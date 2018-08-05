@@ -59,7 +59,7 @@ namespace DataAccessLayer.Bussines
                         {
                             var date = DateTime.Now;
                             Tuple<bool, double> cukup = CustomerDepositCukup(item.ShiperId, item.Total);
-                            var debet = new debetdeposit { CreatedDate = date, SMUId = item.Id };
+                            var debet = new debetdeposit { CreatedDate =scheduleSelected.Tanggal , SMUId = item.Id };
                             if (cukup.Item1)
                             {
                                 var depId = db.DebetDeposit.InsertAndGetLastID(debet);

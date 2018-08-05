@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" Style="{StaticResource WindowKey}"
-        Title="AddNewSchecule" Height="375" Width="400">
+        Title="AddNewSchecule" Height="400" Width="400">
     <Window.Resources>
         <Style TargetType="DatePickerTextBox">
             <Setter Property="Height" Value="27"/>
@@ -24,6 +24,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1">
+                <Label Margin="3" Content="Tanggal"/>
                 <Label Margin="3" Content="Pesawat"/>
                 <Label Margin="3" Content="Kode"/>
                 <Label Margin="3" Content="Dari"/>
@@ -33,41 +34,42 @@
                 <Label  Content="Kapasitas (Kg)"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <Grid Margin="0,3,3,0">
+                <DatePicker Margin="3" Height="28" SelectedDate="{Binding Tanggal}"/>
+                <Grid Margin="3" Height="28">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*"/>
                         <ColumnDefinition Width="10*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Margin="3,3,0,3"  SelectedItem="{Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
+                    <ComboBox Grid.Column="0" Margin="0"   SelectedItem="{Binding PlaneSelected}" SelectedValue="{Binding PlaneId}" 
                           SelectedValuePath="Id" DisplayMemberPath="Name"                          
                           ItemsSource="{Binding PlanesView}"  />
-                    <Button Command="{Binding AddNewPlaneCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                    <Button Command="{Binding AddNewPlaneCommand}" Margin="0" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                 </Grid>
-                <TextBox BorderThickness="1" BorderBrush="AliceBlue" Margin="3" Text="{Binding FlightNumber}"/>
+                <TextBox BorderThickness="1" BorderBrush="AliceBlue" Margin="3,3" Text="{Binding FlightNumber}"/>
 
 
-                <Grid Margin="0,0,3,0">
+                <Grid Margin="3" Height="28">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*"/>
                         <ColumnDefinition Width="10*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Margin="3,3,0,3" SelectedItem="{Binding OriginSelected}" SelectedValue="{Binding PortFrom}" 
+                    <ComboBox Grid.Column="0" Margin="0" SelectedItem="{Binding OriginSelected}" SelectedValue="{Binding PortFrom}" 
                        DisplayMemberPath="Name" SelectedValuePath="Id"  Name="origin" ItemsSource="{Binding Origins}"/>
-                    <Button Command="{Binding AddNewPortCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                    <Button Command="{Binding AddNewPortCommand}" Margin="0" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                 </Grid>
 
 
-                <Grid Margin="0,0,3,0">
+                <Grid Height="28" Margin="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90*"/>
                         <ColumnDefinition Width="10*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Margin="3,3,0,3" SelectedItem="{Binding DestinationSelected}" SelectedValue="{Binding PortTo}" 
+                    <ComboBox Grid.Column="0" Margin="0" SelectedItem="{Binding DestinationSelected}" SelectedValue="{Binding PortTo}" 
                           SelectedValuePath="Id" DisplayMemberPath="Name"   Name="destination" ItemsSource="{Binding Destinations}"/>
-                    <Button Command="{Binding AddNewPortCommand}" Margin="1,3,0,3" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
+                    <Button Command="{Binding AddNewPortCommand}" Margin="0" Grid.Column="1" Width="auto" Height="27" Content="+" VerticalContentAlignment="Center"></Button>
                 </Grid>
-                <DatePickerTextBox Text="{Binding Start}"/>
-                <DatePickerTextBox Text="{Binding End}"/>
+                <DatePickerTextBox Height="28" Text="{Binding Start}"/>
+                <DatePickerTextBox Height="28" Text="{Binding End}"/>
                 <TextBox Text="{Binding Capacities,StringFormat={}{0:N2}}"/>
             </StackPanel>
             <Border Margin="5"  BorderThickness="0.5" BorderBrush="#FF176BB2" Grid.Row="2" Grid.ColumnSpan="2">

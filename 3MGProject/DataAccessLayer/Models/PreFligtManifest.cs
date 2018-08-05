@@ -12,6 +12,7 @@ namespace DataAccessLayer.Models
         private double _totalWeight;
         private bool _isSended;
         private int _pcs;
+        private bool _isSelected;
 
         public int Id { get; set; }
         public int SMUId { get; set; }
@@ -38,6 +39,18 @@ namespace DataAccessLayer.Models
                 SetProperty(ref _isSended, value);
             }
         }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                SetProperty(ref _isSelected, value);
+            }
+        }
+
+
+
         public string ShiperName { get; set; }
         public int ShiperId { get; set; }
         public string RecieverName { get; set; }

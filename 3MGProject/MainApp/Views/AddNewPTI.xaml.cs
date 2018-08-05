@@ -26,18 +26,14 @@ namespace MainApp.Views
     /// </summary>
     public partial class AddNewPTI : Window
     {
-        
-
         AddNewPTIViewModel viewmodel;
         public AddNewPTI(ObservableCollection<DataAccessLayer.Models.PTI> source)
         {
             InitializeComponent();
-            
             viewmodel = new AddNewPTIViewModel() { WindowClose = Close };
             viewmodel.ParentSource = source;
             this.DataContext = viewmodel;
             comboPayType.ItemsSource = Enum.GetValues(typeof(PayType)).Cast<PayType>();
-
         }
 
 

@@ -27,7 +27,7 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     
-                    var smudata = new smu {  PTIId=pTISelected.Id, CreatedDate = DateTime.Now};
+                    var smudata = new smu {  PTIId=pTISelected.Id, CreatedDate=pTISelected.CreatedDate};
                     smudata.Id = db.SMU.InsertAndGetLastID(smudata);
                     if (smudata.Id <= 0)
                         throw new SystemException("Data Tidak Tersimpan");
@@ -247,7 +247,7 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     //remove selected Move
-                    foreach(var item in destinationSource)
+                    foreach(var item in destinationSource.ToList())
                     {
                         if (!db.SMUDetails.Delete(O => O.SMUId == item.Id && O.colliesId == item.ColliesId))
                             throw new SystemException("Smu Gagal di Split");
@@ -279,8 +279,10 @@ namespace DataAccessLayer.Bussines
 
                     }
 
+
+                    var memo = string.Format("Split Dari SMU T{0:D9}", smuSelected.Id);
                    
-                    var history = User.GenerateHistory(smudata.Id, BussinesType.SMU, ChangeType.Create, "");
+                    var history = User.GenerateHistory(smudata.Id, BussinesType.SMU, ChangeType.Create,memo);
                     if (!db.Histories.Insert(history))
                         throw new SystemException("Gagal Simpan Data");
 
@@ -288,12 +290,12 @@ namespace DataAccessLayer.Bussines
                     {
                         CreatedDate = smuSelected.CreatedDate,
                         Id = smudata.Id,
-                        IsSended = false,
+                        IsSended = false, 
                         Pcs = source.Sum(O => O.Pcs),
                         RecieverId = smuSelected.RecieverId,
-                        RecieverName = ptiModel.RecieverName,
+                        RecieverName = smuSelected.RecieverName,
                         ShiperId = ptiModel.ShiperID,
-                        ShiperName = ptiModel.ShiperName,
+                        ShiperName = smuSelected.ShiperName,
                         Weight = source.Sum(O => O.Weight),
                         Biaya = source.Sum(O => O.Biaya)
                     };

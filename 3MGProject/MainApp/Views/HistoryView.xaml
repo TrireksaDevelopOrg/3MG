@@ -1,0 +1,53 @@
+﻿<Window x:Class="MainApp.Views.HistoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Style="{StaticResource WindowKey}"
+        Title="HistoryView" Height="600" Width="740">
+  
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListView Margin="3" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" ItemsSource="{Binding SourceView}" Background="{x:Null}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="10" BorderThickness="0,0,0,1" BorderBrush="White">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel HorizontalAlignment="Right">
+                                <WrapPanel HorizontalAlignment="Right">
+                                    <Label FontSize="15" Padding="0,0" Content="{Binding BussinesType}"></Label>
+                                    <Label FontSize="15" Padding="0,0" Content="{Binding ChangeType}"></Label>
+                                </WrapPanel>
+                                <TextBlock Margin="0" Padding="0" Foreground="White"  FontSize="12" HorizontalAlignment="Right" Text="{Binding CreatedDate,StringFormat='dd-MM-yyyy HH:mm:ss'}" />
+                            </StackPanel>
+                            <Label Height="auto" FontWeight="DemiBold" FontSize="20"  Grid.Row="0" Content="{Binding Name}"></Label>
+                            <WrapPanel Margin="20,0" Grid.Row="1">
+                                <StackPanel HorizontalAlignment="Center" Width="100">
+                                    <TextBlock Foreground="White" FontSize="15" FontWeight="Bold" Text="{Binding BussinesType,StringFormat=Nomor {0}}"></TextBlock>
+                                    <TextBlock Foreground="White" FontSize="15"  TextWrapping="Wrap" Text="{Binding Number}"/>
+                                </StackPanel>
+                                <StackPanel Margin="20,3">
+                                    <TextBlock Foreground="White" FontSize="15"  FontWeight="Bold" Text="Keterangan"/>
+                                    <TextBlock Foreground="White" FontSize="13" TextWrapping="Wrap" Text="{Binding Note}"/>
+                                </StackPanel>
+                            </WrapPanel>
+                        </Grid>
+                    </Border>
+
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <Button Grid.Row="1" Content="Close" HorizontalAlignment="Right" Command="{Binding CancelCommand}"/>
+    </Grid>
+</Window>

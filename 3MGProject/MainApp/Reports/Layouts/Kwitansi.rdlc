@@ -713,18 +713,17 @@
             </Style>
           </Rectangle>
         </ReportItems>
-        <Height>13.82652cm</Height>
+        <Height>5.44351in</Height>
         <Style />
       </Body>
-      <Width>19.94165cm</Width>
+      <Width>7.68438in</Width>
       <Page>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
-        <LeftMargin>1.27cm</LeftMargin>
-        <RightMargin>1.27cm</RightMargin>
-        <TopMargin>1.27cm</TopMargin>
-        <BottomMargin>1.27cm</BottomMargin>
-        <ColumnSpacing>1.27cm</ColumnSpacing>
+        <PageHeight>11.69in</PageHeight>
+        <PageWidth>8.27in</PageWidth>
+        <LeftMargin>0.25in</LeftMargin>
+        <RightMargin>0.25in</RightMargin>
+        <TopMargin>0.25in</TopMargin>
+        <BottomMargin>0.25in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
@@ -786,6 +785,6 @@ RdlBauldjMTarXPN3OFwOBwOx0gTgbVUKnH/GLESzkRKlrwcsaaN3kPO8xjdXkCyYq8ALkfKqDgcDofD
 bcar6BqPJKhMqBJi41QoZnTL6s+gavPosTpmkDqKA8GyfWxgRI9Vr6z/D5GSNLV/x/rekoq9LhV4nfr7NhV6m+ixLG5RIVhQkZhnGAxyngdNOfn9ufWWS28qcfT8HO3NhsiJQIfD4XDsZIx1JgmHw+FwOByOEYfnLoHD4XA4HA6HE4EOh8PhcDgcDicCHQ6Hw+FwOBxOBDocDofD4XA49gj+/wAat5xJoDdXrgAAAABJRU5ErkJggg==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>cc80bd92-c19a-496a-8869-5ca129dbcf5a</rd:ReportID>
 </Report>

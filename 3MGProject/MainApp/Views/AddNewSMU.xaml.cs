@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace MainApp.Views
 {
@@ -31,6 +32,27 @@ namespace MainApp.Views
             dg.Items.Refresh();
             vm.CheckAll = res.Value;
            
+        }
+
+        private void dg_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var selected =(collies) (sender as DataGrid).SelectedItem;
+            if(selected!=null)
+            {
+                selected.IsSended = !selected.IsSended;
+            }
+        }
+
+        private void dg_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space || e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                var item = dg.SelectedItem as collies;
+                if (item != null)
+                {
+                    item.IsSended = !item.IsSended;
+                }
+            }
         }
     }
 

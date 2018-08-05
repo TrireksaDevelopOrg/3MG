@@ -35,10 +35,10 @@
             <Border Style="{StaticResource BorderLayoutStyle}" Grid.Row="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*"/>
+                        <ColumnDefinition Width="30*"/>
                         <ColumnDefinition Width="60*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
+                    <StackPanel Margin="5" Grid.Column="0">
                         <Label Content="Nomor Manifest"/>
                         <Label Content="Tanggal"/>
                         <Label Content="Jadwal"/>
@@ -48,17 +48,17 @@
                         <Label Content="Tujuan"/>
                         <Label Content="Kapasitas Muatan"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Text="{Binding Id,StringFormat=MT{0:D8}}"/>
-                        <Border Height="27" Margin="3">
-                            <TextBlock VerticalAlignment="Center" Text="{Binding CreatedDate,StringFormat=dd MMMM yyyy}"/>
+                    <StackPanel Grid.Column="1" Margin="8">
+                        <TextBlock Margin="5" Text="{Binding Id,StringFormat=MT{0:D8}}"/>
+                        <Border Height="28">
+                            <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding ScheduleSelected.Tanggal,StringFormat=dd MMMM yyyy}"/>
                         </Border>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <ComboBox Margin="3,3,0,3"  SelectedValuePath="Id" SelectedValue="{Binding SchedulesId}" SelectedItem="{Binding ScheduleSelected}" ItemsSource="{Binding  SourceViewSchedules}" HorizontalContentAlignment="Stretch">
+                            <ComboBox  SelectedValuePath="Id" SelectedValue="{Binding SchedulesId}" SelectedItem="{Binding ScheduleSelected}" ItemsSource="{Binding  SourceViewSchedules}" HorizontalContentAlignment="Stretch">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Margin="2" Text="{Binding PlaneName}"/>
@@ -127,7 +127,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid MouseDoubleClick="DataGrid_MouseDoubleClick" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SMUSelected}"
+                    <DataGrid Name="dg" MouseDoubleClick="DataGrid_MouseDoubleClick" KeyDown="DataGrid_KeyDown" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SMUSelected}"
                           AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding IsSended}"/>

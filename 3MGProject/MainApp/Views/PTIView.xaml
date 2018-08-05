@@ -65,21 +65,18 @@
                                             <MenuItem.Template>
                                                 <ControlTemplate>
                                                     <Grid Background="{StaticResource clrSecound}">
+                                                        
                                                         <Grid.RowDefinitions>
-                                                            <RowDefinition Height="auto"/>
                                                             <RowDefinition Height="auto"/>
                                                             <RowDefinition Height="auto"/>
                                                         </Grid.RowDefinitions>
                                                         <Label Grid.Row="0" Content="Status"/>
-                                                        <WrapPanel Margin="3,0" Grid.Row="1">
-                                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Aktif}"/>
-                                                            <Label VerticalAlignment="Center" Content="OK"/>
-                                                        </WrapPanel>
-                                                        <WrapPanel Margin="3,0" Grid.Row="2" >
-                                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
-                                                            <Label Content="Batal" VerticalAlignment="Center"/>
-
-                                                        </WrapPanel>
+                                                        <StackPanel Grid.Row="1">
+                                                            <CheckBox VerticalAlignment="Center" Content="Status Aktif" IsChecked="{Binding Aktif}"/>
+                                                            <CheckBox VerticalAlignment="Center" Content="Status Batal" IsChecked="{Binding Batal}"/>
+                                                            <CheckBox Content="Tidak Ter-SMU" VerticalAlignment="Center" IsChecked="{Binding NotOnSMU}"/>
+                                                        </StackPanel>
+                                                        
                                                     </Grid>
                                                 </ControlTemplate>
                                             </MenuItem.Template>
@@ -112,6 +109,7 @@
                                             </MenuItem.Template>
                                         </MenuItem>
                                     </MenuItem>
+                                    <MenuItem Header="History" Command="{Binding HistoryCommand}"></MenuItem>
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
@@ -144,6 +142,19 @@
                                     </Style.Triggers>
                                 </Style>
                             </DataGrid.CellStyle>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSended}" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <SolidColorBrush Color="Orange" Opacity="0.2"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
                     

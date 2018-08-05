@@ -102,7 +102,7 @@
                                                 <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Cetak Rekening">
                                                     <MenuItem.Template>
                                                         <ControlTemplate>
-                                                            <Grid Margin="25,5">
+                                                            <Grid Background="{StaticResource clrSecound}" Margin="25,5">
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition/>
                                                                     <RowDefinition/>

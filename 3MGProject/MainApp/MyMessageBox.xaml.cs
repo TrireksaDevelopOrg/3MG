@@ -34,10 +34,10 @@ namespace MainApp
             switch (type)
             {
                 case MessageBoxButton.OK:
-                   buttonPanel.Children.Add(new Button { Content = "OK" });
+                   buttonPanel.Children.Add(new Button { Content = "OK", Focusable = true });
                     break;
                 case MessageBoxButton.YesNo:
-                    buttonPanel.Children.Add(new Button { Content = "Ya" });
+                    buttonPanel.Children.Add(new Button { Content = "Ya" , Focusable=true});
                     buttonPanel.Children.Add(new Button { Content = "Tidak" });
                     break;
                 case MessageBoxButton.YesNoCancel:
@@ -58,6 +58,9 @@ namespace MainApp
             {
                 item.Click += Item_Click;
             }
+            var firstButton = this.buttonPanel.Children.OfType<Button>().FirstOrDefault();
+            firstButton.Focus();
+
         }
 
         private void Item_Click(object sender, RoutedEventArgs e)

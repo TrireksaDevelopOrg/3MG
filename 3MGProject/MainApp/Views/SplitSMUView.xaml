@@ -48,7 +48,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid ItemsSource="{Binding OriginView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid ItemsSource="{Binding OriginView}" x:Name="orgGrid" MouseDoubleClick="orgGrid_MouseDoubleClick" KeyDown="orgGrid_KeyDown" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Selected}"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Content}" MinWidth="75" Width="*" Header="Isi" />
@@ -89,7 +89,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid ItemsSource="{Binding DestinationView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                    <DataGrid Name="desGrid" MouseDoubleClick="desGrid_MouseDoubleClick" KeyDown="desGrid_KeyDown" ItemsSource="{Binding DestinationView}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn Binding="{Binding Selected}"/>
                             <DataGridTextColumn IsReadOnly="True" Binding="{Binding Content}" Width="*" Header="Isi" />

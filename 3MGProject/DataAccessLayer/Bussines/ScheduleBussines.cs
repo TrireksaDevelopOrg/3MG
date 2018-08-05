@@ -108,12 +108,16 @@ namespace DataAccessLayer.Bussines
         {
             var date = DateTime.Now;
             model.CreatedDate = date;
-            model.Tanggal = date;
             using (var db = new OcphDbContext())
             {
                 var trans = db.BeginTransaction();
                 try
                 {
+                    var manifest = db.Manifest.Where(O => O.SchedulesId == model.Id).FirstOrDefault();
+                    if (manifest != null && manifest.IsTakeOff)
+                        throw new SystemException("Data Tidak Dapat Di Ubah Pesawat Telah Berangkat");
+
+
                     if (User.CanAccess(MethodBase.GetCurrentMethod()))
                     {
                         if(model.Id<=0)
@@ -137,7 +141,7 @@ namespace DataAccessLayer.Bussines
                                 throw new SystemException("Data Tidak Tersimpan");
                         }else
                         {
-                            if (db.Schedules.Update(O=>new {O.Capacities,O.Complete,O.End,O.Start,O.FlightNumber,O.PlaneId,O.PortFrom,O.PortTo,O.Tanggal},model,O=>O.Id==model.Id))
+                            if (db.Schedules.Update(O=>new {O.Capacities,O.Complete,O.End,O.Start,O.FlightNumber,O.PlaneId,O.PortFrom,O.PortTo,O.Tanggal,O.CreatedDate},model,O=>O.Id==model.Id))
                             {
 
                                 var history = User.GenerateHistory(model.Id, BussinesType.Schedule, ChangeType.Update, "");
@@ -164,6 +168,28 @@ namespace DataAccessLayer.Bussines
                     throw new SystemException(ex.Message);
                 }
             
+            }
+        }
+
+        public Task<Schedule> GetScheduleById(int Id)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+                    var cmd = db.CreateCommand();
+                    cmd.CommandText = "GetScheduleById";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new MySqlParameter("Id", Id));
+                    var reader = cmd.ExecuteReader();
+                    var result = Ocph.DAL.Mapping.MappingProperties<Schedule>.MappingTable(reader);
+                    return Task.FromResult(result.FirstOrDefault());
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException(ex.Message);
             }
         }
     }

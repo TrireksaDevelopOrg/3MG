@@ -181,13 +181,73 @@ namespace DataAccessLayer.Bussines
                 var trans = db.BeginTransaction();
                 try
                 {
+                    var sp = string.Format("Ptistatus");
+                    var cmd = db.CreateCommand();
 
-                    if (selectedPTI.OnSMU)
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = sp;
+                    cmd.Parameters.Add(new MySql.Data.MySqlClient.MySqlParameter("Id", selectedPTI.Id));
+                    var dr = cmd.ExecuteReader();
+                    var statuses = MappingProperties<PreFligtManifest>.MappingTable(dr);
+
+                    dr.Close();
+                    if(statuses!=null && statuses.Count>0)
                     {
-                        ActivedStatus ac = ActivedStatus.Cancel;
-                        var result = db.SMU.Where(O => O.PTIId == selectedPTI.Id && O.ActiveStatus!=ac ).FirstOrDefault();
-                        if(result!=null)
-                            throw new SystemException("PTI Telah Dibuatkan SMU, Batalkan SMU Lebih Dulu");
+                        if(statuses.Count>1)
+                        {
+                            foreach(var item in statuses)
+                            {
+                                var man = db.Manifest.Where(O => O.Id == item.Id).FirstOrDefault();
+                                if(man!=null && !man.IsTakeOff)
+                                {
+                                    if (!db.ManifestDetail.Delete(O => O.SMUId == item.SMUId))
+                                    {
+                                        throw new SystemException(string.Format("PTI Tidak Dapat Dibatalkan, Keluarkan SMU T{0} dari Manifest MT{1}",item.SMUId,item.Id));
+                                    }
+                                   
+                                }
+                                else if(man!=null && man.IsTakeOff)
+                                {
+                                    throw new SystemException(string.Format("PTI Tidak Dapat Dibatalkan, \r\n PTI telah diberangkatkan dengan Manifest MT{0:D8} \r\n dan SMU T{1:D9}",item.Id, item.SMUId));
+                                }
+
+
+                                if(item.SMUId>0)
+                                {
+                                    ActivedStatus ac = ActivedStatus.Cancel;
+                                    if (!db.SMU.Update(O => new { O.ActiveStatus }, new smu { ActiveStatus = ac }, O => O.Id == item.SMUId))
+                                        throw new SystemException("Tidak Dapat Membatalkan SMU");
+                                    var his = User.GenerateHistory(item.Id, BussinesType.Manifest, ChangeType.Update, "Pembatalan PTI");
+                                    if (!db.Histories.Insert(his))
+                                        throw new SystemException("Gagal Diubah");
+                                }
+
+                            }
+                          
+                        }else
+                        {
+                            var e = statuses.FirstOrDefault();
+                            if (e!=null && e.SMUId>0 && e.Id>0)
+                            {
+                                var man = db.Manifest.Where(O => O.Id == e.Id).FirstOrDefault();
+                                if(man!=null && man.IsTakeOff)
+                                {
+                                    throw new SystemException(string.Format("PTI Tidak Dapat Dibatalkan, \r\n PTI telah diberangkatkan dengan Manifest MT{0:D8} \r\n dan SMU T{1:D9}", e.Id, e.SMUId));
+                                }else if(man != null && !man.IsTakeOff)
+                                {
+                                    if(db.ManifestDetail.Delete(O=>O.SMUId==e.SMUId))
+                                    {
+                                        ActivedStatus ac = ActivedStatus.Cancel;
+                                        if (!db.SMU.Update(O => new { O.ActiveStatus }, new smu { ActiveStatus = ac }, O => O.Id == e.SMUId))
+                                            throw new SystemException("Tidak Dapat Membatalkan SMU");
+                                        var his = User.GenerateHistory(e.Id, BussinesType.Manifest, ChangeType.Update, "Pembatalan PTI");
+                                        if (!db.Histories.Insert(his))
+                                            throw new SystemException("Gagal Diubah");
+
+                                    }
+                                }
+                            }
+                        }
                     }
                       
                     ActivedStatus active = ActivedStatus.Cancel;
@@ -217,7 +277,7 @@ namespace DataAccessLayer.Bussines
             }
         }
 
-   
+        
 
         public Task<List<PTI>> GetPTIFromTo(DateTime startDate, DateTime endDate)
         {

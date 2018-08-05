@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using Ocph.DAL.Mapping;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Bussines
@@ -70,7 +71,7 @@ namespace DataAccessLayer.Bussines
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     var reader = cmd.ExecuteReader();
                     var result = MappingProperties<PreFligtManifest>.MappingTable(reader);
-                    return Task.FromResult(result);
+                    return Task.FromResult(result.OrderBy(O=>O.PTIId).ToList());
                 }
                 catch (Exception ex)
                 {

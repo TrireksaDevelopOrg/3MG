@@ -87,8 +87,8 @@
             </Border>
       
             <Border Grid.Row="1" Style="{StaticResource BorderLayoutStyle}" Grid.Column="1">
-                <DataGrid Name="dg" ItemsSource="{Binding SourceView}" AutoGenerateColumns="False"
-                          CanUserAddRows="False"  CanUserDeleteRows="False"
+                <DataGrid Name="dg" ItemsSource="{Binding SourceView}" AutoGenerateColumns="False" ToolTip="Double Click/Space Untuk Memilih Item"
+                          CanUserAddRows="False"  CanUserDeleteRows="False" MouseDoubleClick="dg_MouseDoubleClick" KeyDown="dg_KeyDown"
                           >
                     <DataGrid.Columns>
                         <DataGridTextColumn IsReadOnly="True" Width="*" Binding="{Binding Content}" Header="Content"/>

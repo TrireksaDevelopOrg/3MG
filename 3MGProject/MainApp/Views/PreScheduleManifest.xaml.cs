@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Bussines;
 using DataAccessLayer.Models;
+using Microsoft.Reporting.WinForms;
 using Ocph.DAL;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace MainApp.Views
                 var item = dg.SelectedItem as PreFligtManifest;
                 if(item!=null)
                 {
-                    item.IsSended = !item.IsSended;
+                    item.IsSelected = !item.IsSelected;
                 }
                 vm.HitungTotal();
                
@@ -76,8 +77,25 @@ namespace MainApp.Views
         private void PrintActiont(object obj)
         {
 
-            var reportDataSource = new Microsoft.Reporting.WinForms.ReportDataSource() { Name = "DataSet1", Value = Source.Where(O => O.IsSended).ToList() };
-            Helpers.PrintPreviewWithFormAction("PRE SCHEDULE FLIGHT", reportDataSource, "MainApp.Reports.Layouts.PreScheduleManifest.rdlc", null);
+            var message = new MyMessageBox("Print Pre Shcedule", "Tentukan Tanggal", MessageBoxButton.YesNo);
+            var picker = new DatePicker() { Margin=new Thickness(10,3,0,0), Width=200};
+            picker.SelectedDate = DateTime.Now;
+            message.customPanel.Children.Add(picker);
+            message.ShowDialog();
+            if(message.MessageResult== MessageBoxResult.Yes)
+            {
+                var reportDataSource = new Microsoft.Reporting.WinForms.ReportDataSource() { Name = "DataSet1", Value = Source.Where(O => O.IsSelected).OrderBy(O=>O.PTIId).ToList() };
+
+
+
+                Helpers.PrintPreviewWithFormAction("PRE SCHEDULE FLIGHT", reportDataSource, "MainApp.Reports.Layouts.PreScheduleManifest.rdlc",
+                    new ReportParameter[] {
+                        new ReportParameter("Tanggal", picker.SelectedDate.Value.ToShortDateString())
+                    }
+                    
+                    );
+            }
+         
         }
 
         private void SplitAction(object obj)
@@ -125,7 +143,7 @@ namespace MainApp.Views
 
         public Task HitungTotal()
         {
-            TotalBerat = Source.Where(O => O.IsSended).Sum(O => O.TotalWeight);
+            TotalBerat = Source.Where(O => O.IsSelected).Sum(O => O.TotalWeight);
             return Task.FromResult(0);
         }
 

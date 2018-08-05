@@ -44,8 +44,9 @@ namespace MainApp.Views
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            var result = await vm.NormalizationCollySender();
             vm.BackupAction();
         }
 
@@ -76,8 +77,7 @@ namespace MainApp.Views
         public string GetFileName()
         {
             var date = DateTime.Now;
-
-            return string.Format(@"\Data{0}{1:D2}{2:D2}{3}{4}.sql", date.Year, date.Month, date.Day, date.Hour, date.Minute);
+            return string.Format(@"\Data{0}{1:D2}{2:D2}{3:D2}{4:D2}{5:D2}.sql", date.Year, date.Month, date.Day, date.Hour, date.Minute,date.Second);
         }
 
         private void BackUpViewModel_OnComplete(string message)

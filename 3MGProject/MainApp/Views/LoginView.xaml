@@ -17,6 +17,9 @@
                 <RowDefinition/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <Image Width="150" Margin="25" VerticalAlignment="Center" Source="/MainApp;component/Images/logotrimgCopy.png" Stretch="Fill" Height="27"/>
+            </StackPanel>
             <Grid Margin="10" Grid.Row="1">
                 <Control Visibility="{Binding IsBusy, Converter={StaticResource busyConverter}}" Style="{StaticResource BusyAnimationStyle}"/>
                 <StackPanel>

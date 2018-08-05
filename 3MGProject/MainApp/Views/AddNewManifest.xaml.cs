@@ -42,6 +42,18 @@ namespace MainApp.Views
             }
 
         }
+
+        private void DataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space || e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                var item = dg.SelectedItem as SMU;
+                if (item != null)
+                {
+                    item.IsSended = !item.IsSended;
+                }
+            }
+        }
     }
 
 
@@ -91,9 +103,10 @@ namespace MainApp.Views
             {
                 Source.Remove(SMUSelected);
                 Source.Add(viewmodel.SplitResult.Item1);
+                viewmodel.SplitResult.Item2.PropertyChanged += Item_PropertyChanged;
                 Source.Add(viewmodel.SplitResult.Item2);
                 string message = string.Format("Telah Di Split Ke :\r SMU : T{0:d9} \r SMU : T{1:D9}", viewmodel.SplitResult.Item1.Id, viewmodel.SplitResult.Item2.Id);
-               Helpers.ShowMessage(message, string.Format("SMU T{0:D8}"+ viewmodel.SplitResult.Item1.Id));
+               Helpers.ShowMessage(message, string.Format("SMU T{0:D8}", viewmodel.SplitResult.Item1.Id));
             }
 
         }
@@ -158,11 +171,11 @@ namespace MainApp.Views
             try
             {
                 this.CreatedDate = DateTime.Now;
-                var scedules = await scheduleBussines.GetSchedules(DateTime.Now);
-                foreach (var item in scedules.Where(O => !O.Complete))
-                {
-                    this.SourceSchedules.Add(item);
-                }
+                //var scedules = await scheduleBussines.GetSchedules(DateTime.Now);
+                //foreach (var item in scedules.Where(O => !O.Complete))
+                //{
+                  //  this.SourceSchedules.Add(item);
+                //}
                 var data = await context.GetSMUForCreateManifest();
                 foreach (var item in data)
                 {

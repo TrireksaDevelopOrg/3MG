@@ -28,6 +28,48 @@ namespace MainApp.Views
         {
             InitializeComponent();
         }
+
+        private void orgGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dataSMU = ((DataGrid)sender).SelectedItem as SMUDetail;
+            if (dataSMU != null)
+            {
+                dataSMU.Selected = !dataSMU.Selected;
+            }
+        }
+
+        private void orgGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space || e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                var item = orgGrid.SelectedItem as SMUDetail;
+                if (item != null)
+                {
+                    item.Selected = !item.Selected;
+                }
+            }
+        }
+
+        private void desGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var dataSMU = ((DataGrid)sender).SelectedItem as SMUDetail;
+            if (dataSMU != null)
+            {
+                dataSMU.Selected= !dataSMU.Selected;
+            }
+        }
+
+        private void desGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space || e.Key == Key.Enter || e.Key == Key.Return)
+            {
+                var item = desGrid.SelectedItem as SMUDetail;
+                if (item != null)
+                {
+                    item.Selected= !item.Selected;
+                }
+            }
+        }
     }
 
 

@@ -49,7 +49,7 @@
                         <WrapPanel>
                             <Label Height="auto" FontSize="14" Width="150" FontWeight="Bold" Content="Tanggal"/>
                             <Border Height="28" Margin="3">
-                                <TextBlock FontSize="14" Text="{Binding CreatedDate,StringFormat=dd MMM yyyy}" Width="200" VerticalAlignment="Center"/>
+                                <DatePicker FontSize="14" SelectedDate="{Binding CreatedDate,StringFormat=dd MMM yyyy}" Width="150" VerticalAlignment="Center"/>
                             </Border>
                         </WrapPanel>
                         <WrapPanel>
@@ -131,9 +131,15 @@
                 <DataGrid  Name="dg" Margin="5,3,5,0" PreviewKeyDown="dg_PreviewKeyDown"  CellStyle="{StaticResource dgCell}" ItemsSource="{Binding SourceView,ValidatesOnDataErrors=True,NotifyOnValidationError=True}" AddingNewItem="DataGrid_AddingNewItem" RowEditEnding="DataGrid_RowEditEnding" AutoGenerateColumns="False" >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Isi"/>
-                        <DataGridComboBoxColumn Width="100" x:Name="kemasan" Header="Kemasan"
-                    SelectedValueBinding="{Binding Kemasan, Mode=TwoWay}"  
-                    DisplayMemberPath="{Binding Kemasan}" ItemsSource="{Binding Source={StaticResource Kemasans}}" />
+                        <DataGridTemplateColumn  MinWidth="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ComboBox IsEditable="True" Text="{Binding Kemasan}" IsSynchronizedWithCurrentItem="False" SelectedItem="{Binding Kemasan}"  ItemsSource="{Binding Source={StaticResource Kemasans}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                       
                         <DataGridTextColumn Binding="{Binding Pcs}" Width="*" Header="Jumlah"/>
                         <DataGridTextColumn Binding="{Binding Weight}" Width="*" Header="Berat Satuan"/>
                         <DataGridTextColumn Binding="{Binding Price,StringFormat={}{0:N2}}" Width="*" Header="Harga"/>

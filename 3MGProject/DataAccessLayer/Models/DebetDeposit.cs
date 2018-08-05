@@ -11,6 +11,7 @@ namespace DataAccessLayer.Models
     {
         private double _ppn;
         private double total;
+        private double _biaya;
 
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -18,7 +19,17 @@ namespace DataAccessLayer.Models
         public int colliesId { get; set; }
         public int Pcs { get; set; }
         public double Weight { get; set; }
-        public double Biaya { get; set; }
+        public double Biaya {
+            get {
+                return _biaya - (_biaya * 0.1);
+            }
+            set
+            {
+                _biaya = value;
+            }
+
+
+        }
         public PayType PayType { get; set; }
         public int PTIId { get; set; }
         public string ShiperName { get; set; }
@@ -31,12 +42,12 @@ namespace DataAccessLayer.Models
             get
             {
                 if (_ppn <= 0)
-                    _ppn = Biaya + (Biaya * 10 / 100);
+                    _ppn = _biaya*0.1;
                 return _ppn;
             }
             set { SetProperty(ref _ppn, value); }
         }
 
-        public virtual double Total { get { return Biaya + PPN; } set { total = value; } }
+        public virtual double Total { get { return _biaya; } set { total = value; } }
     }
 }
