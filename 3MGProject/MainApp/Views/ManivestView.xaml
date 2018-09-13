@@ -84,7 +84,7 @@
                                 <Separator></Separator>
                                 <MenuItem Header="Manifest Print Preview" Command="{Binding PrintPreviewCommand}"/>
                                 <MenuItem Header="Pre Flight Manifest Print Preview" Command="{Binding PreFlightPrintPreviewCommand}"/>
-                                <MenuItem Header="Print" Command="{Binding PrintCommand}"/>
+                                <!--MenuItem Header="Print" Command="{Binding PrintCommand}"/-->
                                 <Separator></Separator>
                                 <MenuItem Style="{StaticResource subMenuStyle}" Header="Batalkan Manifes" Command="{Binding CreateManifest}">
                                     <MenuItem Style="{StaticResource subMenuStyle}" Height="auto" Header="Alasan">

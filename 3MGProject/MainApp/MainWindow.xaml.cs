@@ -29,7 +29,7 @@ namespace MainApp
         public MainWindow()
         {
             InitializeComponent();
-            viewmodel = new MainWindowViewModel() {MyTitle="PT. Tri M.G Airlines", WindowClose=Close, WindowParent = this };
+            viewmodel = new MainWindowViewModel() {MyTitle="App Cargo - Tri M.G Airlines", WindowClose=Close, WindowParent = this };
             this.DataContext = viewmodel;
             this.Loaded += MainWindow_Loaded;
         }

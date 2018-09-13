@@ -202,6 +202,18 @@ namespace MainApp.Views
             }
         }
 
+        private string cari;
+
+        public string Cari
+        {
+            get { return cari; }
+            set {
+
+                SetProperty(ref cari ,value);
+                SourceView.Refresh();
+            }
+        }
+
 
         private PTI selectedPTI;
 
@@ -265,6 +277,13 @@ namespace MainApp.Views
         {
             var data = (PTI)obj;
 
+            if (!string.IsNullOrEmpty(Cari))
+            {
+                string pti = string.Format("{0:D8}", data.Id);
+                if (!pti.Contains(Cari))
+                    return false;
+            }
+
             if (data != null && data.ActiveStatus != DataAccessLayer.ActivedStatus.OK && this.Aktif)
                 return false;
             if (data != null && data.ActiveStatus != DataAccessLayer.ActivedStatus.Cancel && this.Batal)
@@ -275,7 +294,6 @@ namespace MainApp.Views
             return true;
         }
 
-
         private bool CancelPTIValidate(object obj)
         {
             if (ptiContext.IsInRole("Manager").Result && SelectedPTI!=null)
@@ -283,8 +301,6 @@ namespace MainApp.Views
             else
                 return false;
         }
-
-
 
         private void CancelPTIAction(object obj)
         {
@@ -376,6 +392,7 @@ namespace MainApp.Views
 
         private void RefreshAction(object obj)
         {
+            cari = string.Empty;
             LoadData(StartDate, EndDate);
         }
 

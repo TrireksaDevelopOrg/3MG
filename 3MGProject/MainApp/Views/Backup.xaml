@@ -6,38 +6,41 @@
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowStartupLocation="CenterScreen"
         Title="Backup" Height="220" Width="500">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="30*"/>
-        </Grid.RowDefinitions>
-        <Border Height="40" VerticalAlignment="Bottom">
-            <Grid Margin="5">
-                <ProgressBar Padding="5" Name="progress" Minimum="0" Maximum="{Binding TotalData}"  Value="{Binding ProgressValue}" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <Label Content="{Binding TableName}" HorizontalAlignment="Center"/>
-            </Grid>    
-        </Border>
-         <StackPanel Grid.Row="1">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBox Margin="5" IsReadOnly="True" Text="{Binding DataPath}" />
-                </StackPanel>
-                <Button Grid.Column="1"  Width="30" Click="Button_Click" Height="28" HorizontalAlignment="Right">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/MainApp;component/Images/FlatFoldericon.png"/>
-                    </Button.Background>
-                </Button>
-            </Grid>
-        </StackPanel>
-        <WrapPanel VerticalAlignment="Bottom" Grid.Row="2" HorizontalAlignment="Right" Width="172">
-            <Button Content="SIMPAN" Click="Button_Click_1"/>
-            <Button Content="KELUAR" Click="Button_Click_2"/>
-        </WrapPanel>
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+            <Border Height="40" VerticalAlignment="Bottom">
+                <Grid Margin="5">
+                    <ProgressBar Padding="5" Name="progress" Minimum="0" Maximum="{Binding TotalData}"  Value="{Binding ProgressValue}" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                    <Label Content="{Binding TableName}" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+            <StackPanel Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBox Margin="5" IsReadOnly="True" Text="{Binding DataPath}" />
+                    </StackPanel>
+                    <Button Grid.Column="1"  Width="30" Click="Button_Click" Height="28" HorizontalAlignment="Right">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/MainApp;component/Images/FlatFoldericon.png"/>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <WrapPanel VerticalAlignment="Bottom" Grid.Row="2" HorizontalAlignment="Right" Width="172">
+                <Button Content="SIMPAN" Click="Button_Click_1"/>
+                <Button Content="KELUAR" Click="Button_Click_2"/>
+            </WrapPanel>
 
-    </Grid>
+        </Grid>
+    </Border>
+   
 </Window>

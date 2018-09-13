@@ -723,7 +723,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value> SMU</Value>
+                                  <Value> PTI</Value>
                                   <Style>
                                     <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -740,6 +740,11 @@
                             <Border>
                               <Style>None</Style>
                             </Border>
+                            <BottomBorder>
+                              <Color>Black</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
                             <LeftBorder>
                               <Color>Gray</Color>
                               <Style>Solid</Style>
@@ -1146,7 +1151,6 @@
                             <PaddingRight>2pt</PaddingRight>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1316,18 +1320,18 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="SMUNumber">
+                        <Textbox Name="PTIId2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!SMUId.Value&lt;=0,"","T"+Format(Fields!SMUId.Value,"D9"))</Value>
+                                  <Value>=IIF(Fields!PTIId.Value&lt;=0,"",Format(Fields!PTIId.Value,"D6").ToString())</Value>
                                   <Style>
                                     <FontFamily>calibri</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>D9</Format>
+                                    <Format>D6</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1336,33 +1340,13 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>SMUNumber</rd:DefaultName>
+                          <rd:DefaultName>PTIId</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>Gray</Color>
                               <Style>Solid</Style>
                               <Width>0.25pt</Width>
                             </Border>
-                            <TopBorder>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                              <Width>0.25pt</Width>
-                            </TopBorder>
-                            <BottomBorder>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                              <Width>0.25pt</Width>
-                            </BottomBorder>
-                            <LeftBorder>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                              <Width>0.25pt</Width>
-                            </LeftBorder>
-                            <RightBorder>
-                              <Color>Gray</Color>
-                              <Style>Solid</Style>
-                              <Width>0.25pt</Width>
-                            </RightBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>

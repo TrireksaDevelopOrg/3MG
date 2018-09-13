@@ -168,7 +168,7 @@ namespace DataAccessLayer.Bussines
                         list.Add(new Saldo
                         {
                             Description = string.Format("SMU T{0:D9}",item.Id),
-                            Debet = item.Biaya, SMUId=item.Id,
+                            Debet = item.Biaya, SMUId=item.Id, PTIId=item.PTIId,
                             Tanggal = item.CreatedDate,  Biaya=item.Biaya-(item.Biaya*0.1), CreatedDate=item.CreatedDate, ManifestId=item.ManifestId,
                               Pcs=item.Pcs, PPN=item.PPN,  ReciverName=item.RecieverName, Total=item.Biaya, Weight=item.Weight
                         });

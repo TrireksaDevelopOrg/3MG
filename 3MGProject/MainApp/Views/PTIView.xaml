@@ -162,9 +162,10 @@
 
                 </Border>
                 <Border Grid.Row="2" Style="{StaticResource BorderLayoutStyle}">
-                    <WrapPanel HorizontalAlignment="Right">
-                        <Button Command="{Binding CancelCommand}"  Content="Close"/>
-                    </WrapPanel>
+                    <Grid>
+                        <TextBox Text="{Binding Cari}" Width="150"  HorizontalAlignment="Left"/>
+                        <Button Command="{Binding CancelCommand}"  HorizontalAlignment="Right" Content="Close"/>
+                    </Grid>
                 </Border>
 
             </Grid>

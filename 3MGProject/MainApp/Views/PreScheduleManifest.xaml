@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" WindowState="Maximized"
-        mc:Ignorable="d" Style="{StaticResource WindowKey}"
-        Title="PreScheduleManifest" Height="450" Width="800">
+        mc:Ignorable="d" Style="{StaticResource WindowKey}" 
+        Title="PreScheduleManifest" >
     <Border Style="{StaticResource BorderLayoutStyle}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="*"/>
                 <RowDefinition  Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid KeyDown="dg_KeyDown" ToolTip="Double Click/Ctrl+Enter=detail PTI, Click Kanan=Menampilakn Menu " MouseDoubleClick="dg_MouseDoubleClick" HorizontalAlignment="Center" x:Name="dg" 
+            <DataGrid KeyDown="dg_KeyDown" ToolTip="Double Click/Ctrl+Enter=detail PTI, Click Kanan=Menampilakn Menu " 
+                      MouseDoubleClick="dg_MouseDoubleClick" HorizontalAlignment="Center" x:Name="dg" 
                       ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedPTI}" IsReadOnly="True"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                 <DataGrid.Columns>
@@ -31,32 +32,23 @@
 
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
-                        <MenuItem Header="Sort" >
-                            <MenuItem  Height="auto">
-                                <MenuItem.Template>
-                                    <ControlTemplate>
-                                        <Grid Background="{StaticResource clrSecound}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Content="Status"/>
-                                            <WrapPanel Margin="3,0" Grid.Row="1">
-                                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Aktif}"/>
-                                                <Label VerticalAlignment="Center" Content="OK"/>
-                                            </WrapPanel>
-                                            <WrapPanel Margin="3,0" Grid.Row="2" >
-                                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding Batal}"/>
-                                                <Label Content="Batal" VerticalAlignment="Center"/>
-
-                                            </WrapPanel>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </MenuItem.Template>
-                            </MenuItem>
+                        <MenuItem Command="{Binding RefreshCommand}">
+                            <MenuItem.Header>
+                                <Grid Width="150">
+                                    <TextBlock Text="Refresh" HorizontalAlignment="Left" />
+                                    <TextBlock Text="F2" Width="auto"  HorizontalAlignment="Right" />
+                                </Grid>
+                            </MenuItem.Header>
                         </MenuItem>
+                        <MenuItem Command="{Binding CariCommand}">
+                            <MenuItem.Header>
+                                <Grid Width="150">
+                                    <TextBlock Text="Cari" HorizontalAlignment="Left" />
+                                    <TextBlock Text="F4" Width="auto"  HorizontalAlignment="Right" />
+                                </Grid>
+                            </MenuItem.Header>
+                        </MenuItem>
+                      
                         <MenuItem Header="PRINT" Command="{Binding PrintCommand}"/>
                         <MenuItem Header="SPLIT ITEM PTI" Command="{Binding SplitCommand}"/>
                     </ContextMenu>

@@ -5,45 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d" Style="{StaticResource WindowKey}" WindowStartupLocation="CenterScreen"
-        Title="SplitItemPTI" Height="200" Width="400">
+        Title="SplitItemPTI" Height="223.333" Width="410">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Height"  Value="28"/>
             <Setter Property="MinWidth" Value="80"/>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Border Style="{StaticResource BorderLayoutStyle}">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            <Label Content="Jumlah Yang Anda Butuhkan Untuk Di Split ?"/>
-            <WrapPanel>
-                <StackPanel>
-                    <Label Content="Coli"/>
-                    <TextBox  Text="{Binding Jumlah}" Width="95"></TextBox>
-                </StackPanel>
-                <StackPanel>
-                    <Label Content="Total Berat"/>
-                    <TextBox IsReadOnly="True" HorizontalAlignment="Right" Text="{Binding Total,StringFormat={}{0:N2}}" Width="108"></TextBox>
-                </StackPanel>
-             
-                <StackPanel>
-                    <Label Content="Biaya"/>
-                    <TextBox IsReadOnly="True" HorizontalAlignment="Right" Text="{Binding Biaya,StringFormat={}{0:N2}}" Width="146"></TextBox>
-                </StackPanel>
-            </WrapPanel>
+            <StackPanel Grid.Row="0">
+                <Label Content="Jumlah Yang Akan Diberangkatkan Adalah ?"/>
+                <WrapPanel Margin="0,10">
+                    <StackPanel >
+                        <Label Height="auto" Padding="0" Content="Coli"/>
+                        <TextBox  TextAlignment="Right" Text="{Binding Jumlah}" Width="95"></TextBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Height="auto" Padding="0" Content="Total Berat"/>
+                        <TextBox IsReadOnly="True" TextAlignment="Right" HorizontalAlignment="Right" Text="{Binding Total,StringFormat={}{0:N2}}" Width="108"></TextBox>
+                    </StackPanel>
 
-        </StackPanel>
+                    <StackPanel>
+                        <Label Height="auto" Padding="0" Content="Biaya"/>
+                        <TextBox IsReadOnly="True" TextAlignment="Right" HorizontalAlignment="Right" Text="{Binding Biaya,StringFormat={}{0:N2}}" Width="146"></TextBox>
+                    </StackPanel>
+                </WrapPanel>
 
-        <StackPanel Grid.Row="1">
-            <WrapPanel Margin="10" HorizontalAlignment="Right">
-                <Button Command="{Binding SaveCommand}" Content="OK"/>
-                <Button Command="{Binding CancelCommand}" Content="Batal"/>
-            </WrapPanel>
-        </StackPanel>
+            </StackPanel>
 
-    </Grid>
+            <StackPanel Grid.Row="1">
+                <WrapPanel Margin="8,0" HorizontalAlignment="Right">
+                    <Button Command="{Binding SaveCommand}" Content="OK"/>
+                    <Button Command="{Binding CancelCommand}" Content="Batal"/>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+
 </Window>

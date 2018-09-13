@@ -10,10 +10,7 @@ namespace DataAccessLayer.Bussines
 {
     public class DepositBussines:Authorization
     {
-        public DepositBussines():base(typeof(DepositBussines))
-        {
-
-        }
+        public DepositBussines() : base(typeof(DepositBussines)) { }
 
         [Authorize("Accounting")]
         public void AddNewDeposit(Deposit dep)
@@ -32,9 +29,7 @@ namespace DataAccessLayer.Bussines
                         var history = User.GenerateHistory(dep.Id, BussinesType.Deposit, ChangeType.Create, "");
                         if(!db.Histories.Insert(history))
                             throw new SystemException("Deposti Tidak Tersimpan");
-
                         trans.Commit();
-
                     }
                     else
                     {
@@ -44,7 +39,6 @@ namespace DataAccessLayer.Bussines
                         var history = User.GenerateHistory(dep.Id, BussinesType.Deposit, ChangeType.Update, "");
                         if (!db.Histories.Insert(history))
                             throw new SystemException("Deposti Tidak Tersimpan");
-
                         dep.User = User.Name;
                         trans.Commit();
                     }

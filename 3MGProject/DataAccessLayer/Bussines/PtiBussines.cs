@@ -90,18 +90,18 @@ namespace DataAccessLayer.Bussines
                 try
                 {
                     var sisa = selectedItemPTI.Pcs - jumlah;
-                    if (!db.Collies.Update(O => new { O.Pcs }, new collies { Pcs = sisa }, O => O.Id == selectedItemPTI.ColliesId))
+                    if (!db.Collies.Update(O => new { O.Pcs }, new collies { Pcs = jumlah }, O => O.Id == selectedItemPTI.ColliesId))
                         throw new SystemException("Item PTI Tidak Berhasil Di Split");
 
-                    var newItem = new collies { Content = selectedItemPTI.Content, IsSended = false, Kemasan = selectedItemPTI.Kemasan, Pcs = jumlah,
+                    var newItem = new collies { Content = selectedItemPTI.Content, IsSended = false, Kemasan = selectedItemPTI.Kemasan, Pcs = sisa,
                         Price = selectedItemPTI.Price, PtiId = selectedItemPTI.PTIId, Weight = selectedItemPTI.Weight };
                     newItem.Id = db.Collies.InsertAndGetLastID(newItem);
                     if(newItem.Id<=0)
                         throw new SystemException("Item PTI Tidak Berhasil Di Split");
 
-                    var note = string.Format("Split PTI {0:D6} item {1:D7} Menjadi {2} Colly dan {3}Colly", selectedItemPTI.PTIId,
-                         selectedItemPTI.ColliesId, sisa, jumlah);
-                    var hist = User.GenerateHistory(selectedItemPTI.Id, BussinesType.PTI, ChangeType.Update, note);
+                    var note = string.Format("Split PTI No {0:D6} item {1:D7} ({2}Colly) Menjadi {3} Colly dan {4}Colly", selectedItemPTI.PTIId,
+                         selectedItemPTI.ColliesId, selectedItemPTI.Pcs, sisa, jumlah);
+                    var hist = User.GenerateHistory(selectedItemPTI.PTIId, BussinesType.PTI, ChangeType.Update, note);
 
                     if(!db.Histories.Insert(hist))
                         throw new SystemException("Item PTI Tidak Berhasil Di Split");
@@ -217,7 +217,8 @@ namespace DataAccessLayer.Bussines
                                     ActivedStatus ac = ActivedStatus.Cancel;
                                     if (!db.SMU.Update(O => new { O.ActiveStatus }, new smu { ActiveStatus = ac }, O => O.Id == item.SMUId))
                                         throw new SystemException("Tidak Dapat Membatalkan SMU");
-                                    var his = User.GenerateHistory(item.Id, BussinesType.Manifest, ChangeType.Update, "Pembatalan PTI");
+                                    var his = User.GenerateHistory(item.SMUId, BussinesType.SMU, ChangeType.Cancel, 
+                                        "System Membatalkan SMU NO "+item.SMUId+" Karena PTI  DI Batalkan : "+alasan);
                                     if (!db.Histories.Insert(his))
                                         throw new SystemException("Gagal Diubah");
                                 }
@@ -237,10 +238,19 @@ namespace DataAccessLayer.Bussines
                                 {
                                     if(db.ManifestDetail.Delete(O=>O.SMUId==e.SMUId))
                                     {
+                                        var his = User.GenerateHistory(man.Id, BussinesType.Manifest, ChangeType.Update,
+                                                "System Membatalkan SMU NO " + e.SMUId + " Dari Manifest No :"+man.Id+" Karena PTI  DI Batalkan : " + alasan);
+
+                                        if (!db.Histories.Insert(his))
+                                            throw new SystemException("Gagal Diubah");
+
+
+
                                         ActivedStatus ac = ActivedStatus.Cancel;
                                         if (!db.SMU.Update(O => new { O.ActiveStatus }, new smu { ActiveStatus = ac }, O => O.Id == e.SMUId))
                                             throw new SystemException("Tidak Dapat Membatalkan SMU");
-                                        var his = User.GenerateHistory(e.Id, BussinesType.Manifest, ChangeType.Update, "Pembatalan PTI");
+                                        his = User.GenerateHistory(e.SMUId, BussinesType.SMU, ChangeType.Cancel,
+                                                  "System Membatalkan SMU NO " + e.SMUId + " Karena PTI  DI Batalkan : " + alasan);
                                         if (!db.Histories.Insert(his))
                                             throw new SystemException("Gagal Diubah");
 

@@ -35,21 +35,54 @@ namespace MainApp.Views
 
         private void dg_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var item = dg.SelectedItem as PreFligtManifest;
+            if (item != null)
+            {
+                item.IsSelected = !item.IsSelected;
+            }
+            vm.HitungTotal();
+        }
 
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+            if(e.Key== Key.Escape && vm!=null)
+            {
+                vm.Cari = string.Empty;
+            }
+
+            if (e.Key == Key.F4)
+            {
+                var searchBox = new SearchView();
+                searchBox.OnCari += SearchBox_OnCari;
+                searchBox.ShowDialog();
+            }
+
+            if (e.Key == Key.Escape)
+            {
+                vm.Cari = string.Empty;
+            }
         }
 
         private void dg_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key== Key.Space || e.Key== Key.Enter || e.Key== Key.Return)
+            if (e.Key == Key.Space || e.Key == Key.Enter || e.Key == Key.Return)
             {
                 var item = dg.SelectedItem as PreFligtManifest;
-                if(item!=null)
+                if (item != null)
                 {
                     item.IsSelected = !item.IsSelected;
                 }
                 vm.HitungTotal();
-               
             }
+
+
+        }
+
+        private void SearchBox_OnCari(string message)
+        {
+            vm.Cari = message;
         }
     }
 
@@ -57,21 +90,53 @@ namespace MainApp.Views
     public class PreScheduleManifestViewModel : BaseNotify
     {
 
+        private string cari;
+
+        public string Cari
+        {
+            get { return cari; }
+            set
+            {
+                SetProperty(ref cari, value);
+                SourceView.Refresh();
+            }
+        }
+
+
         private LaporanBussines context = new LaporanBussines();
         public PreScheduleManifestViewModel()
         {
-
             SplitCommand = new CommandHandler { CanExecuteAction = x => SelectedPTI!=null, ExecuteAction = SplitAction };
             RefreshCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = RefreshAction };
             PrintCommand = new CommandHandler { CanExecuteAction = x => TotalBerat > 0, ExecuteAction = PrintActiont };
             CancelCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = x => WindowClose() };
-
-           
             Source = new ObservableCollection<PreFligtManifest>();
             SourceView = (CollectionView)CollectionViewSource.GetDefaultView(Source);
+            SourceView.Filter = DataFilter;
             SourceView.SortDescriptions.Add(new SortDescription("PTIID", ListSortDirection.Ascending));
             RefreshCommand.Execute(null);
-            
+        }
+
+        public bool DataFilter(object obj)
+        {
+            try
+            {
+                var item = (PreFligtManifest)obj;
+                if (item != null && !string.IsNullOrEmpty(Cari))
+                {
+                    var pti = string.Format("{0:D8}", item.PTIId);
+                    if (pti.Contains(Cari) || item.ShiperName.ToUpper().Contains(Cari.ToUpper()) || item.RecieverName.ToUpper().Contains(Cari.ToUpper()))
+                        return true;
+                    else
+                        return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                return true;
+            }
+            return true;
         }
 
         private void PrintActiont(object obj)
@@ -113,6 +178,7 @@ namespace MainApp.Views
 
         private async void RefreshAction(object obj)
         {
+            Cari = string.Empty;
             var datas = await context.GetDataBufferStock();
             Source.Clear();
             if(datas.Count>0)

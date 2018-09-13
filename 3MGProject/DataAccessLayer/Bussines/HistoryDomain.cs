@@ -27,7 +27,7 @@ namespace DataAccessLayer.Bussines
                     return Task.FromResult(list);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Task.FromResult(list);
             }

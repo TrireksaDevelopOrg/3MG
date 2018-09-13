@@ -6,37 +6,37 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.29191in</Width>
+              <Width>0.26968in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.57815in</Width>
+              <Width>0.45024in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.68943in</Width>
+              <Width>0.69739in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.12023in</Width>
+              <Width>1.12819in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.40147in</Width>
+              <Width>0.37924in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63608in</Width>
+              <Width>0.64404in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.59169in</Width>
+              <Width>0.59965in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.66367in</Width>
+              <Width>0.67163in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.93315in</Width>
+              <Width>0.94111in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.72391in</Width>
+              <Width>0.80735in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.91367in</Width>
+              <Width>0.92163in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -1348,7 +1348,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Fields!Pcs.Value * Fields!Weight.Value * (Fields!Price.Value-(Fields!Price.Value*0.1)))</Value>
+                              <Value>=(Fields!Pcs.Value * Fields!Weight.Value * Fields!Price.Value)*0.1</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -1782,7 +1782,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum((Fields!Pcs.Value * Fields!Weight.Value * (Fields!Price.Value-(Fields!Price.Value*0.1))))</Value>
+                              <Value>=Sum((Fields!Pcs.Value * Fields!Weight.Value * Fields!Price.Value)*0.1)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
@@ -2163,7 +2163,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum((Fields!Pcs.Value * Fields!Weight.Value * (Fields!Price.Value-(Fields!Price.Value*0.1))))</Value>
+                              <Value>=Sum((Fields!Pcs.Value * Fields!Weight.Value * Fields!Price.Value)*0.1)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2263,7 +2263,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03476in</Size>
+                <Size>0.04272in</Size>
                 <CellContents>
                   <Textbox Name="Textbox99">
                     <CanGrow>true</CanGrow>
@@ -2309,7 +2309,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.03476in</Size>
+                    <Size>0.04272in</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -2350,7 +2350,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.03476in</Size>
+                        <Size>0.04272in</Size>
                         <CellContents>
                           <Textbox Name="Textbox94">
                             <CanGrow>true</CanGrow>
@@ -2409,7 +2409,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.03476in</Size>
+                <Size>0.04272in</Size>
                 <CellContents>
                   <Textbox Name="Textbox98">
                     <CanGrow>true</CanGrow>
@@ -2448,7 +2448,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.06952in</Size>
+                    <Size>0.08544in</Size>
                     <CellContents>
                       <Textbox Name="Textbox93">
                         <CanGrow>true</CanGrow>
@@ -2503,7 +2503,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>0.06952in</Size>
+                    <Size>0.08544in</Size>
                     <CellContents>
                       <Textbox Name="Textbox10">
                         <CanGrow>true</CanGrow>
@@ -2549,7 +2549,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.03476in</Size>
+                    <Size>0.04272in</Size>
                     <CellContents>
                       <Textbox Name="Textbox70">
                         <CanGrow>true</CanGrow>
@@ -2590,7 +2590,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.03476in</Size>
+                        <Size>0.04272in</Size>
                         <CellContents>
                           <Textbox Name="Textbox97">
                             <CanGrow>true</CanGrow>
@@ -2636,7 +2636,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.03476in</Size>
+                <Size>0.04272in</Size>
                 <CellContents>
                   <Textbox Name="Textbox3">
                     <CanGrow>true</CanGrow>
@@ -2675,7 +2675,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>0.03476in</Size>
+                    <Size>0.04272in</Size>
                     <CellContents>
                       <Textbox Name="Textbox101">
                         <CanGrow>true</CanGrow>
@@ -2716,7 +2716,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.03476in</Size>
+                        <Size>0.04272in</Size>
                         <CellContents>
                           <Textbox Name="Textbox102">
                             <CanGrow>true</CanGrow>
@@ -2765,7 +2765,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.04167in</Top>
         <Height>1.29567in</Height>
-        <Width>7.64764in</Width>
+        <Width>7.6383in</Width>
         <Style>
           <Border>
             <Style>None</Style>
