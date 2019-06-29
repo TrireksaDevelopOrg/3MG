@@ -213,19 +213,41 @@ namespace DataAccessLayer.Bussines
 
             using (var db = new OcphDbContext())
             {
+                var trans = db.BeginTransaction();
                 try
                 {
+                    var details = from a in db.ManifestDetail.Where(O => O.manifestoutgoingId == manifestSelected.Id)
+                                  join b in db.SMU.Select() on a.SMUId equals b.Id
+                                  join c in db.PTI.Select() on b.PTIId equals c.Id
+                                  select new Tuple<int, int, PayType,bool>(b.Id, c.Id, c.PayType,b.IsSended);
+                    foreach(var item in details)
+                    {
+                        int smuid = item.Item1;
+
+                        if (!item.Item4 && !db.SMU.Update(O => new { O.IsSended }, new smu { IsSended = true }, O => O.Id == smuid))
+                             throw new SystemException("Data Tidak Tersimpan");
+
+                        if (item.Item3== PayType.Deposit)
+                        {
+                           if(db.DebetDeposit.Where(O => O.SMUId == smuid).FirstOrDefault()==null)
+                            {
+                                if(!db.DebetDeposit.Insert(new debetdeposit {SMUId=smuid, CreatedDate=DateTime.Now}))
+                                    throw new SystemException("Data Tidak Tersimpan");
+                            }
+                        }
+                    }
+
                     if(!db.Manifest.Update(O=> new {O.IsTakeOff  },new manifestoutgoing {IsTakeOff=true },O=>O.Id==manifestSelected.Id))
                     {
                         throw new SystemException("Data Tidak Tersimpan");
                     }
 
                     manifestSelected.IsTakeOff = true;
-
+                    trans.Commit();
                 }
                 catch (Exception ex)
                 {
-
+                    trans.Rollback();
                     throw new SystemException(ex.Message);
                 }
             }
